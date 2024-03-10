@@ -19,7 +19,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('myapp.urls')) # se coloca vacío para que no vaya nada al incio 
+    path('', include('SistemaContableApp.urls')) # se coloca vacío para que no vaya nada al incio 
 
    
 ]
+

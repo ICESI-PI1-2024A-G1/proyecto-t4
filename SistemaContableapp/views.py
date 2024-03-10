@@ -26,4 +26,3 @@ def solicitud(request):
         #'solicitudes' : solicitud
    })
     
-
