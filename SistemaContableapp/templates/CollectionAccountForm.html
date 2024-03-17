@@ -1,0 +1,11 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block content %}
+<h1>Aquí va el formulario de cuenta de cobro, jeje</h1>
+<form method="POST" autocomplete="off">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit">Enviar</button>
+{% endblock %}
+
