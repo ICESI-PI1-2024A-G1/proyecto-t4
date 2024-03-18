@@ -1,15 +1,55 @@
-<nav>
-    <ul>
-        <li>
-            <a href="/" style="font-size: 20px;">🏠Home</a>
-        </li>
-        
-        <li>
-            <a href="/solicitudes" style="font-size: 20px;">🖹Solicitud </a>
-        </li>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounting management</title>
+    <link rel="stylesheet" href="{% static '/styles/baseStyle.css' %}">
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<body>
+    <nav class="header">
+        <div class="container">
+            <div class="btn-menu">
+                <label for="btn-menu" class="logoMenu">
+                    <img src="..\static\images\menu.png" alt="logoMenu">
+                </label>
+            </div>
+            <div class="title"> 
+                <h1>Accounting management</h1>
+            </div>
+            <div class="logoProfile">
+                <img src="..\static\images\flecha.png" alt="drop-down logo" width="50" height="50"> 
+             </div>
+            <div class="logoProfile">
+                <img src="..\static\images\logoUser.png" alt="logoUser"> 
+            </div>
+            <div class="logoProfile">
+                <img src="..\static\images\logoicesi.png" alt="logo de la icesi"> 
+             </div>
+            
+            
+        </div>
 
-    </ul>
-</nav>
-
-{% block content %}
-{% endblock %}
+        <input type="checkbox" id="btn-menu">
+        <div class="container-menu">
+            <div class="cont-menu">
+                <nav>
+                    <a href="/">Home</a>
+                    <a href="/solicitudes">Formulario de solicitud</a>
+                    <a href="#">Ventanilla única</a>
+                    <a href="#">Notificaciones</a>
+                </nav>
+                <label for="btn-menu", class="icon-equis"> ✖️ </label>
+            </div>
+        </div>
+    </nav>
+    {% block content %}{% endblock %}
+</body>
+</html>
