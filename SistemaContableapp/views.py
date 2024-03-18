@@ -14,11 +14,17 @@ from .forms import CreateNewTask
 
 #---------------Tutorial---------------------------    
 
+
+
+def login(request):
+     return render(request, 'login.html')
+
 def index(request):
     title = "Hola Gabriela, ¡Bienvenida al Sistema Contable"
     return render(request,'index.html', {
         'title' : title 
     })
+
 
 def solicitud(request):
       solicitud= Solicitud.objects.all()
