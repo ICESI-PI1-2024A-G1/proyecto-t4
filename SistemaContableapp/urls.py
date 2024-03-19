@@ -1,11 +1,15 @@
 
-from django.urls  import path 
+from django.urls  import path,include
+from django.contrib import admin
+from django.conf import settings
 from . import views
 
 urlpatterns = [
 
-    path('', views.index), 
-    path('solicitudes/', views.solicitud)
+    path('', views.login, name='login_redirect'),
+
+    path('accounts/', include('django.contrib.auth.urls')), 
+ 
     #path('about/', views.about),
     #path('hello/<str:username>', views.hello),
     #path('projects/', views.projects),

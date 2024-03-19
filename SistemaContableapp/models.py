@@ -16,11 +16,5 @@ class Task(models.Model):
     def __str__(self):
         return self.title + '-' + self.project.name
 #-------------------------Tutorial---------------------------------
-class Solicitud(models.Model):
-    nombre_completo = models.CharField(max_length=200)
-    tipo_documento = models.CharField(max_length=400)
-    proveedor = models.CharField(max_length=200)
-    descripcion = models.TextField()
-    tipo_solicitud = models.CharField(max_length=400)
-    archivos_adjuntos = models.FileField(upload_to='archivos_solicitud/')
+
 
