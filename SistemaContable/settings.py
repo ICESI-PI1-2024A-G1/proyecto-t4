@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_renderpdf',
     'SistemaContableApp'
+    
 ]
 
 MIDDLEWARE = [
@@ -124,3 +126,12 @@ STATIC_ROOT = (os.path.join(BASE_DIR, 'SistemaContableApp/static'),)
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+EMAIL_HOST = 'smtp.office365.com' 
+DEFAULT_FROM_EMAIL = 'usuariosolicitante0@outlook.com'
+EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
+EMAIL_HOST_PASSWORD = 'Pindy000' 
+EMAIL_PORT = 587 
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
