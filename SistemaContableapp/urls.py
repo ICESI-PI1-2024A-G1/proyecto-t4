@@ -9,6 +9,7 @@ urlpatterns = [
     path('', views.login, name='login_redirect'),
 
     path('accounts/', include('django.contrib.auth.urls')), 
+    path('base/',name = 'base.html')
  
     #path('about/', views.about),
     #path('hello/<str:username>', views.hello),
