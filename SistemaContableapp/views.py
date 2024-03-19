@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from .models import Project
 from .models import Task
-from .models import Solicitud
+
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect   
 from .forms import CreateNewTask
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+
 # Create your views here.
 
 #def hello (request, username):
@@ -16,8 +19,9 @@ from .forms import CreateNewTask
 
 
 
+
 def login(request):
-     return render(request, 'login.html')
+     return render(request, 'registration/login.html')
 
 def index(request):
     title = "Hola Gabriela, ¡Bienvenida al Sistema Contable"
@@ -25,10 +29,16 @@ def index(request):
         'title' : title 
     })
 
+#def login(request):
+    #if request.method == 'POST':
+       # email = request.POST.get('email')
+       # password = request.POST.get('password')
 
-def solicitud(request):
-      solicitud= Solicitud.objects.all()
-      return render(request, 'solicitudes.html', {
-        #'solicitudes' : solicitud
-   })
-    
+        #user = authenticate(request, email=email, password=password)
+       # if user is not None:
+            #login(request, user)
+            #return redirect('') # ruta del tablero 
+       # else:
+           # messages.error(request, 'Correo inválido. Inténtalo de nuevo.')
+
+    #return render(request, 'registration/login.html')

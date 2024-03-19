@@ -6,9 +6,10 @@ from . import views
 
 urlpatterns = [
 
-    path('', views.index), 
+    path('', views.login, name='login_redirect'),
+
     path('accounts/', include('django.contrib.auth.urls')), 
-    path('solicitudes/', views.solicitud)
+ 
     #path('about/', views.about),
     #path('hello/<str:username>', views.hello),
     #path('projects/', views.projects),
