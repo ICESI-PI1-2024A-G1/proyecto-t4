@@ -18,7 +18,9 @@ class CreateNewTask(forms.Form):
 class ChargeAccountForm(forms.ModelForm):
     class Meta:
         model = Charge_account
-        fields = ["concept",
+        fields = ["name",
+                  "identification",
+                  "concept",
                   "value",
                   "retention_392_401",
                   "retention_383",
@@ -27,7 +29,6 @@ class ChargeAccountForm(forms.ModelForm):
                   "city",
                   "date",
                   "cex",
-                  "user",
                   "bank",
                   "type",
                   "account_number"]

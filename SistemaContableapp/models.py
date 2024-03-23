@@ -1,41 +1,6 @@
 from django.db import models
 
  #Create your models here.
-class Project(models.Model):
-    name = models.CharField(max_length=200)
-    def __str__(self):
-        return self.name
-
-class Task(models.Model):
-     
-    title = models.CharField(max_length=200)
-    decription = models.TextField()
-    project= models.ForeignKey(Project, on_delete=models.CASCADE)
-    done = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.title + '-' + self.project.name
-#-------------------------Tutorial---------------------------------
-class Solicitud(models.Model):
-    nombre_completo = models.CharField(max_length=200)
-    tipo_documento = models.CharField(max_length=400)
-    proveedor = models.CharField(max_length=200)
-    descripcion = models.TextField()
-    tipo_solicitud = models.CharField(max_length=400)
-    archivos_adjuntos = models.FileField(upload_to='archivos_solicitud/')
-
-#--------------------------Project-------------------------------
-    
-class User(models.Model):
-
-    name = models.CharField(max_length = 20)
-    last_name = models.CharField(max_length = 20)
-    identification = models.CharField(max_length = 10)
-    password = models.CharField(max_length = 20)
-    email = models.EmailField()
-
-    def __str__(self):
-        return self.name 
 
 class Requisition(models.Model):
 
@@ -48,11 +13,14 @@ class Requisition(models.Model):
     radicate = models.CharField(max_length = 20)
     payment_order_code = models.CharField(max_length = 20)
     date = models.DateField()
+    name = models.CharField(max_length = 40,default = "")
+    idNumber = models.CharField(max_length = 10,default = "")
+    charge = models.CharField(max_length = 40,default = "")
+    dependency = models.CharField(max_length = 40,default = "")
     cenco = models.CharField(max_length = 20)
     value = models.DecimalField(decimal_places = 10,max_digits = 20)
     concept = models.TextField()
     description = models.TextField()
-    user = models.ForeignKey(User, on_delete = models.PROTECT)
     bank = models.CharField(max_length = 20)
     type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
     account_number = models.CharField(max_length = 20)
@@ -70,6 +38,8 @@ class Legalization(models.Model):
 
     legalization_date = models.DateField()
     cost_center = models.CharField(max_length = 30)
+    name = models.CharField(max_length = 40,default = "")
+    identificationNumber = models.CharField(max_length = 10,default = "")
     dependency = models.CharField(max_length = 30)
     destiny = models.CharField(max_length = 20)
     travel_date = models.DateField()
@@ -81,7 +51,6 @@ class Legalization(models.Model):
     descount_in_one_quote = models.BooleanField()
     elaborator_name = models.CharField(max_length = 20)
     orderer_name = models.CharField(max_length = 20)
-    user = models.ForeignKey(User, on_delete = models.PROTECT)
     bank = models.CharField(max_length = 20)
     type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
     account_number = models.CharField(max_length = 20)
@@ -113,6 +82,8 @@ class Advance(models.Model):
     payment_order_code = models.CharField(max_length = 20)
     date = models.DateField()
     cost_center = models.CharField(max_length = 20)
+    name = models.CharField(max_length = 40,default = "")
+    identificationNumber = models.CharField(max_length = 10,default = "")
     dependency = models.CharField(max_length = 30)
     destiny_city = models.CharField(max_length = 30)
     travel_date = models.DateField()
@@ -124,7 +95,6 @@ class Advance(models.Model):
     elaborator_name = models.CharField(max_length = 20)
     orderer_name = models.CharField(max_length = 20)
     value = models.DecimalField
-    user = models.ForeignKey(User, on_delete = models.PROTECT)
     bank = models.CharField(max_length = 20)
     type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
     account_number = models.CharField(max_length = 20)
@@ -144,6 +114,8 @@ class Charge_account(models.Model):
         ('current','Corriente')
     ]
 
+    name = models.CharField(max_length = 40,default = "")
+    identification = models.CharField(max_length = 10,default = "")
     concept = models.TextField()
     value = models.CharField(max_length = 20)
     retention_392_401 = models.BooleanField()
@@ -153,10 +125,10 @@ class Charge_account(models.Model):
     city = models.CharField(max_length = 20)
     date = models.DateField()
     cex = models.CharField(max_length = 20)
-    user = models.ForeignKey(User, on_delete = models.PROTECT)
     bank = models.CharField(max_length = 20)
     type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
     account_number = models.CharField(max_length = 20)
+    
 
 
 class Exterior_payment(models.Model):
@@ -210,7 +182,6 @@ class Following(models.Model):
     cenco = models.CharField(max_length = 20)
     cex_number = models.CharField(max_length = 20)
     observations = models.TextField()
-    manager = models.ForeignKey(User, on_delete = models.PROTECT)
     close_date = models.DateField()
     
     #revisor = models.ForeignKey(User, on_delete = models.PROTECT)
@@ -225,7 +196,6 @@ class Audit(models.Model):
     date = models.DateField()
     comments = models.TextField()
     assigned_request = models.ForeignKey(Following, on_delete = models.CASCADE)
-    responsible = models.ForeignKey(User, on_delete = models.PROTECT)
 
 
 

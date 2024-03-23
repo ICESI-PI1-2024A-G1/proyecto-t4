@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Project, Task, Charge_account
-from .models import Task
+from .models import  Charge_account
+
 
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
@@ -67,20 +67,20 @@ def createChargeAccountForm(request):
         if form.is_valid():
             form = form.save(commit=False)
             form.save()
-            data = {
-                "concept" : request.POST.get(),
-                "value"  : request.POST.get(),
-                "retention_392_401"  : request.POST.get(),
-                "retention_383" : request.POST.get(),
-                "declarant"  : request.POST.get(),
-                "colombian_resident"  : request.POST.get(),
-                "city"  : request.POST.get(),
-                "date"  : request.POST.get(),
-                "cex"  : request.POST.get(),
-                "user"  : request.POST.get(),
-                "bank"  : request.POST.get(),
-                "type"  : request.POST.get(),
-                "account_number"  : request.POST.get()
+            data = { "name" : request.POST.get('name'),
+                "identification" : request.POST.get('identification'),
+                "concept" : request.POST.get('concept'),
+                "value"  : request.POST.get('value'),
+                "retention_392_401"  : request.POST.get('retention_392_401'),
+                "retention_383" : request.POST.get('retention_383'),
+                "declarant"  : request.POST.get('declarant'),
+                "colombian_resident"  : request.POST.get('colombian_resident'),
+                "city"  : request.POST.get('city'),
+                "date"  : request.POST.get('date'),
+                "cex"  : request.POST.get('cex'),
+                "bank"  : request.POST.get('bank'),
+                "type"  : request.POST.get('type'),
+                "account_number"  : request.POST.get('account_number')
             }
             sendmailChargeAccountToPdf(data)
             return redirect("viewChargeAccountForm")
