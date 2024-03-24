@@ -8,4 +8,5 @@ urlpatterns = [
     path('', views.login, name='login_redirect'),
     path('accounts/', include('django.contrib.auth.urls')), 
     path('chargeAccountForm/', views.createChargeAccountForm, name = "viewChargeAccountForm"),
+    path('Ventanilla unica resumida/', views.ventanilla_unica)
 ]
