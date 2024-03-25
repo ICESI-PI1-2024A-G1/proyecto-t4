@@ -25,6 +25,8 @@ def index(request):
         'title' : title 
     })
 
+def solicitudPagoExterior(request):
+    return render(request, 'solicitudPagoExterior.html')
 
 def login(request):
      return render(request, 'registration/login.html')

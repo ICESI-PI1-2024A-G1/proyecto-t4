@@ -8,4 +8,6 @@ urlpatterns = [
     path('', views.login, name='login_redirect'),
     path('accounts/', include('django.contrib.auth.urls')), 
     path('chargeAccountForm/', views.createChargeAccountForm, name = "viewChargeAccountForm"),
+    path('home/', views.index, name='home'),
+    path('solicitudPagoExterior/', views.solicitudPagoExterior, name='solicitudPagoExterior'),
 ]
