@@ -12,7 +12,9 @@ class CreateNewTask(forms.Form):
               field.widget.attrs['class'] = 'form-control'
               
           
-          
+      
+class DateInput(forms.DateInput):
+    input_type = 'date'    
               
          
 class ChargeAccountForm(forms.ModelForm):
@@ -20,18 +22,24 @@ class ChargeAccountForm(forms.ModelForm):
         model = Charge_account
         fields = ["name",
                   "identification",
-                  "concept",
-                  "value",
-                  "retention_392_401",
-                  "retention_383",
-                  "declarant",
-                  "colombian_resident",
+                  "phone",
                   "city",
+                  "addres",
                   "date",
-                  "cex",
+                  "value_letters",
+                  "value_numbers",
+                  "concept",
                   "bank",
                   "type",
-                  "account_number"]
+                  "account_number",
+                  "cex",
+                  "retentions",
+                  "declarant",
+                  "colombian_resident"
+                  ]
+        widgets = {
+            'date': DateInput()
+        }
     
     def __init__(self, *args, **kwargs): # Adiciona 
         super().__init__(*args, **kwargs)  

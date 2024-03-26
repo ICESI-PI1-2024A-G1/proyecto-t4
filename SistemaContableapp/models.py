@@ -110,24 +110,26 @@ class Expense_balance(models.Model):
 class Charge_account(models.Model):
 
     BANK_ACCOUNT_TYPE =[
-        ('saving','De ahorros'),
-        ('current','Corriente')
+        ('De ahorros','De ahorros'),
+        ('Corriente','Corriente')
     ]
 
     name = models.CharField(max_length = 40,default = "")
     identification = models.CharField(max_length = 10,default = "")
-    concept = models.TextField()
-    value = models.CharField(max_length = 20)
-    retention_392_401 = models.BooleanField()
-    retention_383 = models.BooleanField()
-    declarant = models.BooleanField()
-    colombian_resident = models.BooleanField()
+    phone = models.CharField(max_length = 13,default = "")
     city = models.CharField(max_length = 20)
+    addres = models.CharField(max_length = 50)
     date = models.DateField()
-    cex = models.CharField(max_length = 20)
+    value_letters = models.CharField(max_length = 60)
+    value_numbers = models.CharField(max_length = 15)
+    concept = models.TextField()
     bank = models.CharField(max_length = 20)
     type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
     account_number = models.CharField(max_length = 20)
+    cex = models.CharField(max_length = 20)
+    retentions = models.BooleanField()
+    declarant = models.BooleanField()
+    colombian_resident = models.BooleanField()
     
 
 

@@ -26,7 +26,7 @@
                             <div class="overlap">
                                 <div class="div-3">
                                     <div class="text-wrapper-2">No. De telefono</div>
-                                    <div class="div-2">...</div>
+                                    <div class="div-2">{{ form.phone|add_class:"div-2" }}</div>
                                 </div>
                                 <div class="div-4">
                                     <div class="text-wrapper-2">Ciudad</div>
@@ -35,7 +35,7 @@
                             </div>
                             <div class="field-addres">
                                 <div class="text-wrapper-2">Dirección</div>
-                                <div class="div-2">...</div>
+                                <div class="div-2">{{form.addres|add_class:"div-2"}}</div>
                             </div>
                             <div class="field-date">
                                 <div class="text-wrapper-2">Fecha</div>
@@ -43,11 +43,11 @@
                             </div>
                             <div class="field-value-letters">
                                 <div class="text-wrapper-2">Valor en letras</div>
-                                <div class="div-2">{{ form.value|add_class:"div-2" }}</div>
+                                <div class="div-2">{{ form.value_letters|add_class:"div-2" }}</div>
                             </div>
                             <div class="field-value-numbers">
                                 <div class="text-wrapper-2">Valor en numeros</div>
-                                <div class="div-2">{{ form.value|add_class:"div-2" }}</div>
+                                <div class="div-2">{{ form.value_numbers|add_class:"div-2" }}</div>
                             </div>
                             <div class="field-concept">
                                 <div class="text-wrapper-2">concepto</div>
@@ -86,8 +86,7 @@
                                 </p>
                                 <div class="field-a">
                                     <p class="text-a">(marque la casilla si es su respuesta es afirmativa)</p>
-                                    <div class="div-5">{{ form.retention_392_401|add_class:"div-5" }}</div>
-                                    <div class="div-5">{{ form.retention_383|add_class:"div-5" }}</div>
+                                    <div class="div-5">{{ form.retentions|add_class:"div-5" }}</div>
                                 </div>
                             </div>
                             <p class="warning">Si no marca ninguna opción, se aplicará la retención de los artículos 392 y 401 del ET.</p>
@@ -105,7 +104,7 @@
                                 </p>
                                 <div class="div-5">{{ form.colombian_resident|add_class:"div-5" }}</div>
                             </div>
-                            <button type="submit">Enviar</button>
+                            <button type="submit" class="button-enviar">Enviar</button>
                         </div>
                     </div>
                 </div>
