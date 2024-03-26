@@ -16,6 +16,7 @@ from django.template.loader import get_template
 from django.conf import settings
 from django.core.mail import EmailMessage
 import weasyprint
+from weasyprint import HTML, CSS
 
 # Create your views here.
 
@@ -43,47 +44,102 @@ def login(request):
 
     #return render(request, 'registration/login.html')
 
-def sendmailChargeAccountToPdf(data):
-    messageBody = get_template("sendChargeAccountForm.html").render(data)
-
-    # Generar PDF a partir del HTML
-    pdf = weasyprint.HTML(string=messageBody).write_pdf()
+def sendFormAsPdf(template_name, css_file, subject, recipient_email, form_data, pdf_filename):
+    message_body = get_template(template_name).render(form_data)
+    css = CSS(filename=css_file)
+    pdf = weasyprint.HTML(string=message_body).write_pdf(stylesheets=[css])
 
     email = EmailMessage(
-        "CollectionAccount Form",
-        "Please find the CollectionAccount Form attached.",
+        subject,
+        "Aqui se encuentra una solicitud requerida",
         settings.DEFAULT_FROM_EMAIL,
-        to=["pinedapablo6718@gmail.com"]
+        to=[recipient_email]
     )
-
-    # Adjuntar el PDF generado
-    email.attach('collection_account.pdf', pdf, 'application/pdf')
-
+    email.attach(f'{pdf_filename}.pdf', pdf, 'application/pdf')
     return email.send()
 
-def createChargeAccountForm(request):
-    if request.method == 'POST':
-        form = ChargeAccountForm(request.POST, request.FILES)
+
+def createForm(request, form_class, template_name, pdf_template_name, css_file, subject, recipient_email, pdf_filename, redirectTo):
+    if request.method == "POST":
+        form = form_class(request.POST, request.FILES)
         if form.is_valid():
-            form = form.save(commit=False)
-            form.save()
-            data = { "name" : request.POST.get('name'),
-                "identification" : request.POST.get('identification'),
-                "concept" : request.POST.get('concept'),
-                "value"  : request.POST.get('value'),
-                "retention_392_401"  : request.POST.get('retention_392_401'),
-                "retention_383" : request.POST.get('retention_383'),
-                "declarant"  : request.POST.get('declarant'),
-                "colombian_resident"  : request.POST.get('colombian_resident'),
-                "city"  : request.POST.get('city'),
-                "date"  : request.POST.get('date'),
-                "cex"  : request.POST.get('cex'),
-                "bank"  : request.POST.get('bank'),
-                "type"  : request.POST.get('type'),
-                "account_number"  : request.POST.get('account_number')
-            }
-            sendmailChargeAccountToPdf(data)
-            return redirect("viewChargeAccountForm")
+            form_instance = form.save(commit=False)
+            form_instance.save()
+            form_data = form.cleaned_data
+            sendFormAsPdf(pdf_template_name, css_file, subject, recipient_email, form_data, pdf_filename)
+            return redirect(redirectTo)
     else:
-        form = ChargeAccountForm()
-    return render(request, "chargeAccountForm.html", {"form": form})
+        form = form_class()
+
+    return render(request, template_name, {"form": form})
+
+
+email="pinedapablo6718@gmail.com"
+
+def createChargeAccountForm(request):
+    return createForm(
+        request,
+        ChargeAccountForm,
+        "chargeAccountForm.html",
+        "sendChargeAccountForm.html",
+        "SistemaContableApp/static/styles/sendChargeAccountForm.css",
+        "Solicitud de cuenta de cobro",
+        email,
+        "Cuenta de cobro",
+        createChargeAccountForm
+    )
+
+"""    
+def createExteriorPaymentForm(request):
+    return createForm(
+        request,
+        ExteriorPaymentForm,
+        "exteriorPaymentForm.html",
+        "sendExteriorPaymentForm.html",
+        "SistemaContableApp/static/styles/sendExteriorPaymentForm.css",
+        "Solicitud de requisición de pago al exterior",
+        email,
+        "Pago al exterior",
+        createExteriorPaymentForm
+    )
+    
+def createRequisitionForm(request):
+    return createForm(
+        request,
+        RequisitionForm,
+        "requisionForm.html",
+        "sendRequisitionForm.html",
+        "SistemaContableApp/static/styles/sendRequisitionForm.css",
+        "Solicitud de requisición",
+        email,
+        "Requisición",
+        createRequisitionForm
+    )
+    
+    
+def createAdvanceForm(request):
+    return createForm(
+        request,
+        AdvanceForm,
+        "advanceForm.html",
+        "sendAdvanceForm.html",
+        "SistemaContableApp/static/styles/sendAdvanceForm.css",
+        "Solicitud de anticipo",
+        email,
+        "Anticipo",
+        createAdvanceForm
+    )
+    
+def createLegalizationForm(request):
+    return createForm(
+        request,
+        LegalizationForm,
+        "legalizationForm.html",
+        "sendLegalizationForm.html",
+        "SistemaContableApp/static/styles/sendLegalizationForm.css",
+        "Solicitud de legalización de gastos de viaje",
+        email,
+        "Legalización de gastos de viaje",
+        createLegalizationForm
+    )
+    """

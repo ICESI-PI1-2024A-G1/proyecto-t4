@@ -1,0 +1,368 @@
+.main-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.main-content .charge-account-form {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.charge-account-form .container-relative {
+    position: relative;
+}
+
+.charge-account-form .div {
+    background-color: #ffffff;
+    width: 1440px;
+    height: 1024px;
+    position: relative;
+}
+
+.charge-account-form .text-wrapper {
+    position: absolute;
+    width: 409px;
+    height: 57px;
+    top: 45px;
+    left: 521px;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 25px;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.charge-account-form .field-name {
+    display: inline-flex;
+    top: 149px;
+    left: 94px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.charge-account-form .text-wrapper-2 {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.charge-account-form .div-2 {
+    position: relative;
+    width: 500px;
+    height: 30px;
+    background-color: #e2edfa;
+}
+
+.charge-account-form .field-id {
+    display: inline-flex;
+    top: 218px;
+    left: 94px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.charge-account-form .overlap {
+    position: absolute;
+    width: 508px;
+    height: 137px;
+    top: 287px;
+    left: 94px;
+}
+
+.charge-account-form .div-3 {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.charge-account-form .div-4 {
+    display: inline-flex;
+    top: 68px;
+    left: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.charge-account-form .field-addres {
+    display: inline-flex;
+    top: 425px;
+    left: 94px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.charge-account-form .field-date {
+    display: inline-flex;
+    top: 494px;
+    left: 94px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.charge-account-form .field-value-letters {
+    top: 563px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    left: 94px;
+}
+
+.charge-account-form .field-value-numbers {
+    top: 633px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    left: 94px;
+}
+
+.charge-account-form .field-concept {
+    display: flex;
+    width: 508px;
+    height: 122px;
+    top: 702px;
+    left: 94px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.charge-account-form .box-concepto {
+    position: relative;
+    width: 504px;
+    height: 90px;
+    margin-bottom: -7px;
+    margin-right: -4px;
+    background-color: #e2edfa;
+}
+
+.charge-account-form .field-bank {
+    display: inline-flex;
+    top: 149px;
+    left: 846px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.charge-account-form .field-account-type {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 218px;
+    left: 846px;
+}
+
+.charge-account-form .overlap-group {
+    position: absolute;
+    width: 508px;
+    height: 137px;
+    top: 287px;
+    left: 846px;
+}
+
+.charge-account-form .overlap-group-2 {
+    position: absolute;
+    width: 628px;
+    height: 251px;
+    top: 432px;
+    left: 776px;
+}
+
+.charge-account-form .text-one {
+    position: absolute;
+    width: 628px;
+    height: 106px;
+    top: 0;
+    left: 60px;
+    font-family: "Poppins-Light", Helvetica;
+    font-weight: 300;
+    color: #000000;
+    font-size: 10px;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.charge-account-form .text-two {
+    position: absolute;
+    width: 508px;
+    height: 83px;
+    top: 101px;
+    left: 70px;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 10px;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.charge-account-form .field-a {
+    display: flex;
+    width: 292px;
+    height: 75px;
+    top: 176px;
+    left: 178px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.charge-account-form .text-a {
+    position: relative;
+    width: 283px;
+    height: 36px;
+    margin-top: -1px;
+    font-family: "Poppins-Light", Helvetica;
+    font-weight: 300;
+    color: #000000;
+    font-size: 10px;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.charge-account-form .div-5 {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 25px;
+    left: 50px;
+    border: 1px solid;
+    border-color: #ffffff00;
+}
+
+.charge-account-form .warning {
+    position: absolute;
+    width: 434px;
+    height: 16px;
+    top: 694px;
+    left: 868px;
+    font-family: "Poppins-Light", Helvetica;
+    font-weight: 300;
+    color: #000000;
+    font-size: 10px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.charge-account-form .field-b {
+    display: flex;
+    width: 292px;
+    height: 75px;
+    top: 732px;
+    left: 798px;
+    overflow: hidden;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.charge-account-form .text-b {
+    position: relative;
+    width: 288px;
+    height: 36px;
+    margin-top: -1px;
+    margin-right: -216px;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.charge-account-form .span {
+    font-weight: 700;
+}
+
+.charge-account-form .text-wrapper-3 {
+    font-family: "Poppins-Light", Helvetica;
+    font-weight: 300;
+    font-size: 10px;
+}
+
+.charge-account-form .box-b {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 25px;
+    left: 50px;
+}
+
+.charge-account-form .field-c {
+    display: flex;
+    flex-direction: column;
+    width: 263px;
+    height: 75px;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 732px;
+    left: 1138px;
+    overflow: hidden;
+}
+
+.charge-account-form .text-c {
+    position: relative;
+    width: 500px;
+    height: 36px;
+    margin-top: -1px;
+    margin-right: -245px;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.charge-account-form .button-enviar {
+    display: flex;
+    width: 323px;
+    height: 54px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 8px 16px;
+    position: absolute;
+    top: 885px;
+    left: 558px;
+    background-color: #0059a1;
+    font-weight: bold;
+}
