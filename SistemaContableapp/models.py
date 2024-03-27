@@ -127,9 +127,9 @@ class Charge_account(models.Model):
     type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
     account_number = models.CharField(max_length = 20)
     cex = models.CharField(max_length = 20)
-    retentions = models.BooleanField()
-    declarant = models.BooleanField()
-    colombian_resident = models.BooleanField()
+    retentions = models.BooleanField(default=False)
+    declarant = models.BooleanField(default=False)
+    colombian_resident = models.BooleanField(default=False)
     
 
 

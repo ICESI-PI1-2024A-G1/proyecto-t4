@@ -1,11 +1,4 @@
-.main-content {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.main-content .charge-account-form {
+.charge-account-form {
     background-color: #ffffff;
     display: flex;
     flex-direction: row;
@@ -13,13 +6,9 @@
     width: 100%;
 }
 
-.charge-account-form .container-relative {
-    position: relative;
-}
-
 .charge-account-form .div {
     background-color: #ffffff;
-    width: 1440px;
+    width: 1280px;
     height: 1024px;
     position: relative;
 }
@@ -28,8 +17,8 @@
     position: absolute;
     width: 409px;
     height: 57px;
-    top: 45px;
-    left: 521px;
+    top: 46px;
+    left: 419px;
     font-family: "Poppins-Bold", Helvetica;
     font-weight: 700;
     color: #000000;
@@ -41,12 +30,45 @@
 .charge-account-form .field-name {
     display: inline-flex;
     top: 149px;
-    left: 94px;
+    left: 50px;
     flex-direction: column;
     align-items: flex-start;
     padding: 9px 4px;
     position: absolute;
 }
+
+.charge-account-form .text-nombre {
+    position: absolute;
+    height: 21px;
+    top: 8px;
+    left: 4px;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.charge-account-form .box-nombre {
+    position: absolute;
+    width: 500px;
+    height: 30px;
+    top: 30px;
+    left: 4px;
+    background-color: #e2edfa;
+}
+
+.charge-account-form .field-id {
+    display: inline-flex;
+    top: 218px;
+    left: 50px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
 
 .charge-account-form .text-wrapper-2 {
     position: relative;
@@ -67,22 +89,14 @@
     background-color: #e2edfa;
 }
 
-.charge-account-form .field-id {
-    display: inline-flex;
-    top: 218px;
-    left: 94px;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 9px 4px;
-    position: absolute;
-}
+
 
 .charge-account-form .overlap {
     position: absolute;
     width: 508px;
     height: 137px;
     top: 287px;
-    left: 94px;
+    left: 50px;
 }
 
 .charge-account-form .div-3 {
@@ -108,7 +122,7 @@
 .charge-account-form .field-addres {
     display: inline-flex;
     top: 425px;
-    left: 94px;
+    left: 50px;
     flex-direction: column;
     align-items: flex-start;
     padding: 9px 4px;
@@ -118,7 +132,7 @@
 .charge-account-form .field-date {
     display: inline-flex;
     top: 494px;
-    left: 94px;
+    left: 50px;
     flex-direction: column;
     align-items: flex-start;
     padding: 9px 4px;
@@ -132,7 +146,7 @@
     align-items: flex-start;
     padding: 9px 4px;
     position: absolute;
-    left: 94px;
+    left: 50px;
 }
 
 .charge-account-form .field-value-numbers {
@@ -142,7 +156,7 @@
     align-items: flex-start;
     padding: 9px 4px;
     position: absolute;
-    left: 94px;
+    left: 50px;
 }
 
 .charge-account-form .field-concept {
@@ -150,7 +164,7 @@
     width: 508px;
     height: 122px;
     top: 702px;
-    left: 94px;
+    left: 50px;
     flex-direction: column;
     align-items: flex-start;
     padding: 9px 4px;
@@ -169,7 +183,7 @@
 .charge-account-form .field-bank {
     display: inline-flex;
     top: 149px;
-    left: 846px;
+    left: 694px;
     flex-direction: column;
     align-items: flex-start;
     padding: 9px 4px;
@@ -183,7 +197,7 @@
     padding: 9px 4px;
     position: absolute;
     top: 218px;
-    left: 846px;
+    left: 694px;
 }
 
 .charge-account-form .overlap-group {
@@ -191,7 +205,7 @@
     width: 508px;
     height: 137px;
     top: 287px;
-    left: 846px;
+    left: 694px;
 }
 
 .charge-account-form .overlap-group-2 {
@@ -199,7 +213,7 @@
     width: 628px;
     height: 251px;
     top: 432px;
-    left: 776px;
+    left: 670px;
 }
 
 .charge-account-form .text-one {
@@ -207,7 +221,7 @@
     width: 628px;
     height: 106px;
     top: 0;
-    left: 60px;
+    left: 0;
     font-family: "Poppins-Light", Helvetica;
     font-weight: 300;
     color: #000000;
@@ -270,7 +284,7 @@
     width: 434px;
     height: 16px;
     top: 694px;
-    left: 868px;
+    left: 716px;
     font-family: "Poppins-Light", Helvetica;
     font-weight: 300;
     color: #000000;
@@ -285,8 +299,7 @@
     width: 292px;
     height: 75px;
     top: 732px;
-    left: 798px;
-    overflow: hidden;
+    left: 646px;
     flex-direction: column;
     align-items: flex-start;
     padding: 9px 4px;
@@ -298,7 +311,7 @@
     width: 288px;
     height: 36px;
     margin-top: -1px;
-    margin-right: -216px;
+    margin-right: -4px;
     font-family: "Poppins-Bold", Helvetica;
     font-weight: 400;
     color: #000000;
@@ -334,7 +347,7 @@
     padding: 9px 4px;
     position: absolute;
     top: 732px;
-    left: 1138px;
+    left: 986px;
     overflow: hidden;
 }
 
@@ -352,6 +365,7 @@
     line-height: normal;
 }
 
+
 .charge-account-form .button-enviar {
     display: flex;
     width: 323px;
@@ -360,9 +374,9 @@
     justify-content: center;
     gap: 10px;
     padding: 8px 16px;
-    position: absolute;
+    position: relative;
     top: 885px;
-    left: 558px;
+    left: 450px;
     background-color: #0059a1;
     font-weight: bold;
 }

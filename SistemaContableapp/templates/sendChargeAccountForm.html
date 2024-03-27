@@ -40,12 +40,12 @@
 				  <div class="valor-numeros">(valor en números)</div>
 				  <div class="money-symbol">$</div>
 				</div>
-				<div class="input-valor-numeros">{{value}}</div>
+				<div class="input-valor-numeros">{{value_numbers}}</div>
 			  </div>
 			  <div class="line-valor-letras">
 				___________________________________________________________
 			  </div>
-			  <div class="input-valor-letras">{{value}}</div>
+			  <div class="input-valor-letras">{{value_letters}}</div>
 			  <div class="valor-letras">(valor en letras)</div>
 			  <div class="line-la-suma-de">
 				_________________________________________________________________________________________
@@ -71,6 +71,16 @@
 			</div>
 			<div class="middle-area">
 			  <div class="c">
+				{% if colombian_resident is True%}
+				<div class="div-2" style="background-color: black;"></div>
+				{% else %}
+				<div class="div-2"></div>
+				{% endif %}
+				{% if colombian_resident is False %}
+				<div class="box-no-c" style="background-color: black;"></div>
+				{% else %}
+				<div class="box-no-c"></div>
+				{% endif %}
 				<div class="box-no-c"></div>
 				<div class="no-c">NO</div>
 				<div class="div-2"></div>
@@ -78,6 +88,16 @@
 				<p class="p">c. Soy residente fiscal en Colombia</p>
 			  </div>
 			  <div class="b">
+				{% if declarant is True%}
+				<div class="div-2" style="background-color: black;"></div>
+				{% else %}
+				<div class="div-2"></div>
+				{% endif %}
+				{% if declarant is False%}
+				<div class="box-no-b" style="background-color: black;"></div>
+				{% else %}
+				<div class="box-no-b"></div>
+				{% endif %}
 				<div class="box-no-b"></div>
 				<div class="no-b">NO</div>
 				<div class="div-2"></div>
@@ -86,16 +106,25 @@
 			  </div>
 			  <p class="warning">Si no marca ninguna opción, se aplicará la retención de los artículos 392 y 401 del ET.</p>
 			  <div class="a">
+				{% if retentions is True %}
+				<div class="box-si-a" style="background-color: black;"></div>
+				{% else %}
+				<div class="box-si-a"></div>
+				{% endif %}
+				{% if retentions is False %}
+				<div class="box-no-a" style="background-color: black;"></div>
+				{% else %}
 				<div class="box-no-a"></div>
+				{% endif %}
 				<div class="no-a">NO</div>
 				<p class="no-a-text">Retención en la fuente artículo 383 del Estatuto Tributario</p>
-				<div class="box-si-a"></div>
 				<div class="si-a">SI</div>
 				<p class="si-a-text">Retención en la fuente artículos 392 y 401 del Estatuto Tributario</p>
 				<p class="a-text">
-				  a. Se tomarán costos y deducciones asociados a las rentas de trabajo por los servicios prestados:
+					a. Se tomarán costos y deducciones asociados a las rentas de trabajo por los servicios prestados:
 				</p>
-			  </div>
+			</div>
+			
 			  <p class="second-text">
 				Los ingresos recibidos como persona natural por concepto de renta de trabajo no proveniente de una relación
 				laboral, legal<br />o reglamentaria correspondiente a los servicios prestados a LA UNIVERSIDAD ICESI durante
@@ -130,9 +159,9 @@
 				<div class="box-nombre-banco"></div>
 				<div class="nombre-banco">Nombre del Banco</div>
 			  </div>
-			  <div class="input-telefono">label</div>
+			  <div class="input-telefono">{{phone}}</div>
 			  <div class="telefono">Teléfono</div>
-			  <div class="input-direccion">label</div>
+			  <div class="input-direccion">{{addres}}</div>
 			  <div class="direccion">Dirección</div>
 			  <div class="input-cc">{{identification}}</div>
 			  <div class="CC">C.C.</div>
