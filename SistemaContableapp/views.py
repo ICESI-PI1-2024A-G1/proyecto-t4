@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import  Charge_account
+from .models import  Exterior_payment
 
 
 from django.http import HttpResponse, JsonResponse
@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from .forms import CreateNewTask
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .forms import CreateNewTask, ChargeAccountForm, ExteriorPaymentForm
+from .forms import CreateNewTask, ExteriorPaymentForm
 from django.conf import settings 
 from django.template.loader import get_template  
 from django.core.mail import get_connection, EmailMessage
@@ -80,18 +80,6 @@ def createForm(request, form_class, template_name, pdf_template_name, css_file, 
 email="pinedapablo6718@gmail.com"
 email2="daniela32156@hotmail.com"
 
-def createChargeAccountForm(request):
-    return createForm(
-        request,
-        ChargeAccountForm,
-        "chargeAccountForm.html",
-        "sendChargeAccountForm.html",
-        "SistemaContableApp/static/styles/sendChargeAccountForm.css",
-        "Solicitud de cuenta de cobro",
-        email,
-        "Cuenta de cobro",
-        createChargeAccountForm
-    )
     
 def createExteriorPaymentForm(request):
     return createForm(
