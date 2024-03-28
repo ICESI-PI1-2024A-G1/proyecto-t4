@@ -44,7 +44,7 @@ def login(request):
 
     #return render(request, 'registration/login.html')
 
-def sendFormAsPdf(template_name, css_file, subject, recipient_email, form_data, pdf_filename):
+def sendFormAsPdf(request, template_name, css_file, subject, recipient_email, form_data, pdf_filename):
     message_body = get_template(template_name).render(form_data)
     css = CSS(filename=css_file)
     pdf = weasyprint.HTML(string=message_body).write_pdf(stylesheets=[css])
@@ -56,7 +56,11 @@ def sendFormAsPdf(template_name, css_file, subject, recipient_email, form_data, 
         to=[recipient_email]
     )
     email.attach(f'{pdf_filename}.pdf', pdf, 'application/pdf')
-    return email.send()
+    try:
+        email.send()
+        messages.success(request, 'la solicitud se envió correctamente a ventanilla unica')
+    except Exception as e:
+        messages.error(request, 'Error al enviar la solicitud a ventanilla unica')
 
 
 def createForm(request, form_class, template_name, pdf_template_name, css_file, subject, recipient_email, pdf_filename, redirectTo):
@@ -66,12 +70,16 @@ def createForm(request, form_class, template_name, pdf_template_name, css_file, 
             form_instance = form.save(commit=False)
             form_instance.save()
             form_data = form.cleaned_data
-            sendFormAsPdf(pdf_template_name, css_file, subject, recipient_email, form_data, pdf_filename)
+            sendFormAsPdf(request, pdf_template_name, css_file, subject, recipient_email, form_data, pdf_filename)
+            messages.success(request, 'El formulario se ha creado correctamente y se ha enviado en pdf.')
             return redirect(redirectTo)
+        else:
+            form = form_class()
+            messages.error(request, 'Error al crear el formulario.')
+            return render(request, template_name, {"form": form})
     else:
         form = form_class()
-
-    return render(request, template_name, {"form": form})
+        return render(request, template_name, {"form": form})
 
 
 email="pinedapablo6718@gmail.com"

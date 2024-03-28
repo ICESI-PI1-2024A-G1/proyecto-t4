@@ -2,10 +2,12 @@
 {% load static %}
 {% load my_filters %}
 {% block content %}
+{% include 'partials/messages.html' %}
 <!DOCTYPE html>
 <html>
     <head>
         <link rel='stylesheet' type='text/css' href="{% static '/styles/requisitionForm.css' %}">
+        <link rel="stylesheet" type='text/css' href="{% static '/styles/messages.css' %}">
     </head>
     <body>
         <form method="POST" autocomplete="off">
