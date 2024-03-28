@@ -1,0 +1,99 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load my_filters %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel='stylesheet' type='text/css' href="{% static '/styles/exteriorPaymentForm.css' %}">
+</head>
+
+<body>
+  <form method="POST" autocomplete="off">
+    {% csrf_token %}
+    <div class="main-content">
+      <div class="pago-exterior-form">
+        <div class="div">
+          <p class="text-wrapper">Formulario de requisición de pago al exterior</p>
+          <div class="field-nombre">
+            <div class="text-wrapper-2">Nombre</div>
+            <div class="div-2">{{ form.beneficiary_name|add_class:"div-2" }}</div>
+          </div>
+          <div class="overlap">
+            <div class="div-3">
+              <div class="text-wrapper-2">Apellido</div>
+              <div class="div-2">{{ form.beneficiary_last_name|add_class:"div-2" }}</div>
+            </div>
+            <div class="field-tipo-de">
+              <div class="text-wrapper-2">Tipo de identificación</div>
+              <div class="div-2">{{ form.beneficiary_document_type|add_class:"div-2" }}</div>
+            </div>
+          </div>
+          <div class="field-nombre-del">
+            <div class="text-wrapper-2">Nombre de la entidad bancaria</div>
+            <div class="div-2">{{ form.bank_name|add_class:"div-2" }}</div>
+          </div>
+          <div class="overlap-group">
+            <div class="div-3">
+              <div class="text-wrapper-2">Número de identificación</div>
+              <div class="div-2">{{ form.beneficiary_document_no|add_class:"div-2" }}</div>
+            </div>
+            <div class="div-4">
+              <div class="text-wrapper-2">Número de pasaporte</div>
+              <div class="div-2">{{ form.passport_number|add_class:"div-2" }}</div>
+            </div>
+          </div>
+          <div class="field-ciudad">
+            <div class="text-wrapper-2">Ciudad de&nbsp;&nbsp;expedición del pasaporte</div>
+            <div class="div-2">{{ form.passport_expedition_city|add_class:"div-2" }}</div>
+          </div>
+          <div class="field-domicilio">
+            <div class="text-wrapper-2">Datos de domicilio</div>
+            <div class="box-domicilio">{{ form.address|add_class:"box-domicilio" }}</div>
+          </div>
+          <div class="field-tipo-de-cuenta">
+            <div class="text-wrapper-2">Tipo de cuenta</div>
+            <div class="div-2">{{ form.account_type|add_class:"div-2" }}</div>
+          </div>
+          <div class="field-codigo-swift">
+            <div class="text-wrapper-2">Código Swift</div>
+            <div class="div-2">{{ form.swift_code|add_class:"div-2" }}</div>
+          </div>
+          <div class="overlap-2">
+            <div class="div-3">
+              <div class="text-wrapper-2">Tipo de código IBAN/ABA</div>
+              <div class="div-2">{{ form.iban_aba_code_type|add_class:"div-2" }}</div>
+            </div>
+            <div class="div-4">
+              <div class="text-wrapper-2">Código IBAN/ABA</div>
+              <div class="div-2">{{ form.iban_aba_code|add_class:"div-2" }}</div>
+            </div>
+          </div>
+          <div class="overlap-group-2">
+            <div class="div-3">
+              <div class="text-wrapper-2">Nombre de la cuenta</div>
+              <div class="div-2">{{ form.account_name|add_class:"div-2" }}</div>
+            </div>
+            <div class="field-numero-de-la">
+              <div class="text-wrapper-2">Número de la cuenta</div>
+              <div class="box-nmero-de-la">{{ form.account_number|add_class:"div-2" }}</div>
+            </div>
+            <div class="field-direccin-de-la">
+              <div class="text-wrapper-2">Dirección de la entidad</div>
+              <div class="box-direccin-de-la">{{ form.bank_address|add_class:"box-direccin-de-la" }}</div>
+            </div>
+          </div>
+          <button type="submit" class="button-enviar">Enviar</button>
+          <div class="text-wrapper-4">DATOS DEL BENEFICIARIO</div>
+          <div class="p">DATOS DE LA ENTIDAD BANCARIA</div>
+        </div>
+      </div>
+    </div>
+  </form>
+</body>
+
+</html>
+
+{% endblock %}

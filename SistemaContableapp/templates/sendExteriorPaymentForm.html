@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' type='text/css' href="{% static '/styles/sendExteriorPaymentForm.css' %}">
+  </head>
+  <body>
+    <div class="page">
+      <div class="overlap-group">
+        <div class="overlap">
+          <div class="inputdirecci-n">{{bank_address}}</div>
+          <p class="text-wrapper">Dirección de la entidad :</p>
+        </div>
+        <div class="input-numero-cuenta">{{account_number}}</div>
+        <p class="div">Número de la cuenta :</p>
+        <div class="input-nombre-cuenta">{{account_name}}</div>
+        <p class="p">Nombre de la cuenta :</p>
+        <div class="text-wrapper-2">Código IBAN/ABA:</div>
+        <div class="text-wrapper-3">Tipo de código IBAN/ABA:</div>
+        <div class="input-swift">{{swift_code}}</div>
+        <div class="inputtipoiban-ABA">{{iban_aba_code_type}}</div>
+        <div class="text-wrapper-4">Código Swift :</div>
+        <div class="input-tipo-cuenta">{{account_type}}</div>
+        <div class="inputcodigoiban-ABA">{{iban_aba_code}}</div>
+        <p class="text-wrapper-5">Tipo de cuenta (Ahorros o Corriente) :</p>
+        <div class="overlap-2">
+          <div class="input-banco">{{bank_name}}</div>
+          <p class="text-wrapper-1">Nombre de la entidad bancaria :</p>
+        </div>
+        <p class="text-wrapper-6">DATOS DE LA ENTIDAD BANCARIA DEL BENEFICIARIO</p>
+        <div class="input-domicilio">{{address}}</div>
+        <div class="text-wrapper-7">Datos de Domicilio:</div>
+        <p class="text-wrapper-8">Ciudad de expedición del pasaporte:</p>
+        <div class="input-pasaporte">{{passport_number}}</div>
+        <div class="input-ciudad">{{passport_expedition_city}}</div>
+        <div class="text-wrapper-9">Númeo de Pasaporte:</div>
+        <div class="input-identificacion">{{beneficiary_document_no}}</div>
+        <div class="text-wrapper-10">Número de identificación :</div>
+        <div class="text-wrapper-11">Tipo de identificación:</div>
+        <div class="input-nombre">{{beneficiary_name}} {{beneficiary_last_name}}</div>
+        <div class="text-wrapper-12">{{beneficiary_document_type}}</div>
+        <div class="text-wrapper-13">Nombre Completo :</div>
+        <div class="text-wrapper-14">DATOS DEL BENEFICIARIO</div>
+        <p class="text-wrapper-15">SOLICITUD DATOS REQUISICIÓN DE PAGO AL EXTERIOR</p>
+      </div>
+    </div>
+  </body>
+</html>
