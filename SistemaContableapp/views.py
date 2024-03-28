@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from .forms import CreateNewTask
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .forms import CreateNewTask, ChargeAccountForm
+from .forms import CreateNewTask, ChargeAccountForm, RequisitionForm
 from django.conf import settings 
 from django.template.loader import get_template  
 from django.core.mail import get_connection, EmailMessage
@@ -88,6 +88,19 @@ def createChargeAccountForm(request):
         "Cuenta de cobro",
         createChargeAccountForm
     )
+    
+def createRequisitionForm(request):
+    return createForm(
+        request,
+        RequisitionForm,
+        "requisitionForm.html",
+        "sendRequisitionForm.html",
+        "SistemaContableApp/static/styles/sendRequisitionForm.css",
+        "Solicitud de requisición",
+        email,
+        "Requisición",
+        createRequisitionForm
+    )
 
 """    
 def createExteriorPaymentForm(request):
@@ -103,18 +116,6 @@ def createExteriorPaymentForm(request):
         createExteriorPaymentForm
     )
     
-def createRequisitionForm(request):
-    return createForm(
-        request,
-        RequisitionForm,
-        "requisionForm.html",
-        "sendRequisitionForm.html",
-        "SistemaContableApp/static/styles/sendRequisitionForm.css",
-        "Solicitud de requisición",
-        email,
-        "Requisición",
-        createRequisitionForm
-    )
     
     
 def createAdvanceForm(request):

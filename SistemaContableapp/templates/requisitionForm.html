@@ -1,0 +1,85 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load my_filters %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel='stylesheet' type='text/css' href="{% static '/styles/requisitionForm.css' %}">
+    </head>
+    <body>
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+
+            <div class="requisition-form">
+                <div class="div">
+                    <div class="text-wrapper">Formulario de Requisición</div>
+                    <div class="field-date">
+                        <div class="text-wrapper-2">Fecha</div>
+                        <div class="div-2">{{ form.date|add_class:"div-2" }}</div>
+                    </div>
+                    <div class="field-beneficiary">
+                        <div class="text-wrapper-3">Beneficiario de la solicitud</div>
+                        <div class="div-3">{{ form.beneficiaryName|add_class:"div-3" }}</div>
+                    </div>
+                    <div class="field-id">
+                        <div class="text-wrapper-2">No. De identificación</div>
+                        <div class="div-2">{{ form.idNumber|add_class:"div-2" }}</div>
+                    </div>
+                    <div class="overlap-group">
+                        <div class="field-charge">
+                            <div class="text-wrapper-2">Cargo</div>
+                            <div class="div-2">{{ form.charge|add_class:"div-2" }}</div>
+                        </div>
+                        <div class="field-dependency">
+                            <div class="text-wrapper-2">Dependencia</div>
+                            <div class="div-2">{{ form.dependency|add_class:"div-2" }}</div>
+                        </div>
+                    </div>
+                    <div class="field-cenco">
+                        <div class="text-wrapper-2">Cenco</div>
+                        <div class="div-2">{{ form.cenco|add_class:"div-2" }}</div>
+                    </div>
+                    <div class="field-value">
+                        <div class="text-wrapper-2">Valor</div>
+                        <div class="div-2">{{ form.value|add_class:"div-2" }}</div>
+                    </div>
+                    <div class="field-concept">
+                        <div class="text-wrapper-2">Concepto</div>
+                        <div class="div-2">{{ form.concept|add_class:"div-2" }}</div>
+                    </div>
+                    <div class="field-description">
+                        <div class="text-wrapper-2">Descripción</div>
+                        <div class="box-descripcion">{{ form.description|add_class:"box-descripcion" }}</div>
+                    </div>
+                    <div class="field-radicate">
+                        <div class="text-wrapper-2">No. de radicado</div>
+                        <div class="div-2">{{ form.radicate|add_class:"div-2" }}</div>
+                    </div>
+                    <div class="field-payment-code">
+                        <p class="text-wrapper-2">Código de orden de pago</p>
+                        <div class="div-2">{{ form.payment_order_code|add_class:"div-2" }}</div>
+                    </div>
+                    <div class="field-payment-method">
+                        <div class="text-wrapper-2">Metodo de pago</div>
+                        <div class="div-2">{{ form.paymentMethod|add_class:"div-2" }}</div>
+                    </div>
+                    <div class="field-account-type">
+                        <div class="text-wrapper-2">Tipo de cuenta bancaria</div>
+                        <div class="div-2">{{ form.typeAccount|add_class:"div-2" }}</div>
+                    </div>
+                    <div class="field-account">
+                        <div class="text-wrapper-2">No. De cuenta</div>
+                        <div class="div-2">{{ form.account_number|add_class:"div-2" }}</div>
+                    </div>
+                    <div class="field-author-name">
+                        <p class="text-wrapper-3">Nombre de quien labora la solicitud</p>
+                        <div class="div-3">{{ form.authorName|add_class:"div-3" }}</div>
+                    </div>
+                    <button type="submit" class="button-enviar">Enviar</button>
+                </div>
+            </div>
+        </form>       
+    </body>
+</html>
+{% endblock %}

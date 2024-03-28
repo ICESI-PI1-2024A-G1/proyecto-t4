@@ -5,25 +5,39 @@ from django.db import models
 class Requisition(models.Model):
 
     BANK_ACCOUNT_TYPE =[
-        ('saving','De ahorros'),
-        ('current','Corriente')
+        ('De ahorros','De ahorros'),
+        ('Corriente','Corriente')
     ]
-
-
-    radicate = models.CharField(max_length = 20)
-    payment_order_code = models.CharField(max_length = 20)
+    
+    CONCEPT_OPTIONS = [
+        ('Reintegro colaboradores','Reintegro colaboradores'),
+        ('Patrocinio estudiantes','Patrocinio estudiantes'),
+        ('Beca pasantia','Beca pasantia'),
+        ('Evento de estudiantes','Evento de estudiantes'),
+        ('Pago alimentación estudiante extranjero','Pago alimentación estudiante extranjero'),
+        ('En la descripción','En la descripción')
+    ]
+    
+    PAYMENT_METHOD = [
+        ('Nomina','Nomina'),
+        ('Consignación','Consignación')
+    ]
+    
     date = models.DateField()
-    name = models.CharField(max_length = 40,default = "")
+    beneficiaryName = models.CharField(max_length = 40,default = "")
     idNumber = models.CharField(max_length = 10,default = "")
     charge = models.CharField(max_length = 40,default = "")
     dependency = models.CharField(max_length = 40,default = "")
     cenco = models.CharField(max_length = 20)
-    value = models.DecimalField(decimal_places = 10,max_digits = 20)
-    concept = models.TextField()
+    value = models.DecimalField(decimal_places = 10,max_digits = 30)
+    concept = models.CharField(max_length = 40,choices = CONCEPT_OPTIONS)
     description = models.TextField()
-    bank = models.CharField(max_length = 20)
-    type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
+    radicate = models.CharField(max_length = 20)
+    payment_order_code = models.CharField(max_length = 20)
+    paymentMethod = models.CharField(max_length = 15,choices = PAYMENT_METHOD)
+    typeAccount = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
     account_number = models.CharField(max_length = 20)
+    authorName = models.CharField(max_length = 40,default = "")
 
     def __str__(self):
         return self.radicate
