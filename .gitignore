@@ -1,7 +1,7 @@
-*/.localz
-*/.local
-*/.git
-*/.DS_Store
-**/pycache
+**/*.localz
+**/*.local
+**/*.git
+**/*.DS_Store
+**/__pycache
 **/migrations
 **/venv/
