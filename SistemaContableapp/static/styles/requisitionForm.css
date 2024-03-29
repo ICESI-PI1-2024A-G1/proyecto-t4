@@ -13,7 +13,7 @@
     position: relative;
 }
 
-.requisition-form .text-wrapper {
+.requisition-form .title {
     position: absolute;
     width: 1280px;
     height: 57px;
@@ -38,7 +38,7 @@
     position: absolute;
 }
 
-.requisition-form .text-wrapper-2 {
+.requisition-form .text-fields {
     position: relative;
     width: fit-content;
     margin-top: -1px;
@@ -50,7 +50,7 @@
     line-height: normal;
 }
 
-.requisition-form .div-2 {
+.requisition-form .boxes {
     position: relative;
     width: 300px;
     height: 30px;
@@ -67,26 +67,6 @@
     left: 287px;
 }
 
-.requisition-form .text-wrapper-3 {
-    align-self: stretch;
-    height: 25.5px;
-    font-family: "Poppins-Bold", Helvetica;
-    font-weight: 700;
-    color: #000000;
-    position: relative;
-    margin-top: -1px;
-    font-size: 14px;
-    letter-spacing: 0;
-    line-height: normal;
-}
-
-.requisition-form .div-3 {
-    height: 25px;
-    position: relative;
-    width: 300px;
-    background-color: #e2edfa;
-}
-
 .requisition-form .field-id {
     top: 290px;
     left: 287px;
@@ -97,17 +77,9 @@
     position: absolute;
 }
 
-.requisition-form .overlap-group {
-    position: absolute;
-    width: 308px;
-    height: 137px;
+.requisition-form .field-charge {
     top: 359px;
     left: 287px;
-}
-
-.requisition-form .field-charge {
-    top: 0;
-    left: 0;
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
@@ -116,8 +88,8 @@
 }
 
 .requisition-form .field-dependency {
-    top: 68px;
-    left: 0;
+    top: 427px;
+    left: 287px;
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
@@ -231,7 +203,6 @@
     top: 635px;
     left: 692px;
 }
-
 
 .requisition-form .button-enviar {
     display: flex;

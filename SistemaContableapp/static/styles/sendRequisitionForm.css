@@ -22,7 +22,7 @@
     background-color: transparent;
 }
 
-.requisition-format .overlap {
+.requisition-format .box-version {
     position: absolute;
     width: 128px;
     height: 40px;
@@ -46,7 +46,7 @@
     white-space: nowrap;
 }
 
-.requisition-format .overlap-group {
+.requisition-format .box-format {
     position: absolute;
     width: 241px;
     height: 40px;
@@ -71,7 +71,7 @@
     line-height: normal;
 }
 
-.requisition-format .codigo-wrapper {
+.requisition-format .box-codigo {
     position: absolute;
     width: 128px;
     height: 26px;
@@ -94,7 +94,7 @@
     line-height: normal;
 }
 
-.requisition-format .contabilidad-wrapper {
+.requisition-format .box-contabilidad {
     position: absolute;
     width: 241px;
     height: 26px;
@@ -118,7 +118,7 @@
     white-space: nowrap;
 }
 
-.requisition-format .overlap-2 {
+.requisition-format .box-procesos-institucionales {
     position: absolute;
     width: 163px;
     height: 66px;
@@ -157,22 +157,15 @@
     left: 40px;
 }
 
-.requisition-format .overlap-3 {
+.requisition-format .box-high-area {
     position: absolute;
     width: 244px;
     height: 95px;
     top: 96px;
     left: 203px;
-}
-
-.requisition-format .box-high-area-data {
-    position: absolute;
-    width: 244px;
-    height: 94px;
-    top: 1px;
-    left: 0;
     background-color: #d9d9d9;
 }
+
 
 .requisition-format .line-concepto {
     top: 94px;
@@ -481,7 +474,7 @@
     line-height: normal;
 }
 
-.requisition-format .overlap-4 {
+.requisition-format .field-codigo-orden {
     position: absolute;
     width: 170px;
     height: 19px;
@@ -529,7 +522,7 @@
     white-space: nowrap;
 }
 
-.requisition-format .overlap-5 {
+.requisition-format .field-no-radicado {
     position: absolute;
     width: 110px;
     height: 19px;
@@ -615,7 +608,7 @@
     left: 40px;
 }
 
-.requisition-format .overlap-6 {
+.requisition-format .field-description {
     position: absolute;
     width: 532px;
     height: 111px;
@@ -647,7 +640,7 @@
     line-height: normal;
 }
 
-.requisition-format .text-wrapper {
+.requisition-format .text-description {
     position: absolute;
     height: 10px;
     top: -1px;
@@ -668,7 +661,7 @@
     left: 36px;
 }
 
-.requisition-format .overlap-7 {
+.requisition-format .field-exclusive {
     position: absolute;
     width: 511px;
     height: 25px;
@@ -721,7 +714,7 @@
     line-height: normal;
 }
 
-.requisition-format .overlap-8 {
+.requisition-format .field-cex {
     position: absolute;
     width: 122px;
     height: 10px;
@@ -729,12 +722,12 @@
     left: 327px;
 }
 
-.requisition-format .line-nombre-quien {
+.requisition-format .line-nombre-de-quien {
     position: absolute;
     width: 122px;
     height: 1px;
-    top: -2px;
-    left: 0;
+    top: 127px;
+    left: 327px;
     background-color: #000000;
 }
 
@@ -742,8 +735,8 @@
     position: absolute;
     width: 122px;
     height: 10px;
-    top: 2px;
-    left: 0;
+    top: 131px;
+    left: 329px;
     font-family: "Inter-Regular", Helvetica;
     font-weight: 400;
     color: #000000;
@@ -753,7 +746,7 @@
     line-height: normal;
 }
 
-.requisition-format .input-nombre-de {
+.requisition-format .input-nombre-de-quien {
     position: absolute;
     width: 120px;
     height: 9px;
@@ -768,7 +761,7 @@
     line-height: normal;
 }
 
-.requisition-format .line-nombre {
+.requisition-format .line-nombre-ordenador {
     position: absolute;
     width: 122px;
     height: 1px;
@@ -777,7 +770,7 @@
     background-color: #000000;
 }
 
-.requisition-format .input-nombre {
+.requisition-format .input-nombre-ordenador {
     position: absolute;
     width: 120px;
     height: 9px;
@@ -846,7 +839,7 @@
     line-height: normal;
 }
 
-.requisition-format .input-firma {
+.requisition-format .input-firma-ordenador {
     position: absolute;
     width: 120px;
     height: 9px;

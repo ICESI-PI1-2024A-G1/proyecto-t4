@@ -1,4 +1,4 @@
-.formato-cuenta-de {
+.charge-account-format {
     background-color: #ffffff;
     display: flex;
     flex-direction: row;
@@ -6,14 +6,14 @@
     width: 100%;
 }
 
-.formato-cuenta-de .div {
+.charge-account-format .div {
     background-color: #ffffff;
     width: 635px;
     height: 882px;
     position: relative;
 }
 
-.formato-cuenta-de .header {
+.charge-account-format .header {
     position: absolute;
     width: 532px;
     height: 66px;
@@ -22,7 +22,7 @@
     background-color: transparent;
 }
 
-.formato-cuenta-de .overlap {
+.charge-account-format .box-version {
     position: absolute;
     width: 128px;
     height: 40px;
@@ -32,7 +32,7 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .version {
+.charge-account-format .version {
     position: absolute;
     height: 12px;
     top: 13px;
@@ -46,7 +46,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .overlap-group {
+.charge-account-format .box-format {
     position: absolute;
     width: 241px;
     height: 40px;
@@ -56,7 +56,7 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .formato-text {
+.charge-account-format .formato-text {
     position: absolute;
     width: 230px;
     height: 27px;
@@ -71,7 +71,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .codigo-wrapper {
+.charge-account-format .box-codigo {
     position: absolute;
     width: 128px;
     height: 26px;
@@ -81,7 +81,7 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .codigo {
+.charge-account-format .codigo {
     position: absolute;
     height: 11px;
     top: 8px;
@@ -94,7 +94,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .contabilidad-wrapper {
+.charge-account-format .box-contabilidad {
     position: absolute;
     width: 241px;
     height: 26px;
@@ -104,7 +104,7 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .contabilidad {
+.charge-account-format .contabilidad {
     position: absolute;
     height: 11px;
     top: 8px;
@@ -118,7 +118,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .overlap-2 {
+.charge-account-format .box-procesos {
     position: absolute;
     width: 163px;
     height: 66px;
@@ -128,7 +128,7 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .procesos {
+.charge-account-format .procesos {
     position: absolute;
     height: 11px;
     top: 28px;
@@ -141,7 +141,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .logo {
+.charge-account-format .logo {
     position: absolute;
     width: 75px;
     height: 28px;
@@ -150,7 +150,7 @@
 
 }
 
-.formato-cuenta-de .high-area {
+.charge-account-format .high-area {
     position: absolute;
     width: 476px;
     height: 223px;
@@ -158,7 +158,7 @@
     left: 69px;
 }
 
-.formato-cuenta-de .overlap-3 {
+.charge-account-format .field-concept {
     position: absolute;
     width: 411px;
     height: 35px;
@@ -166,7 +166,7 @@
     left: 65px;
 }
 
-.formato-cuenta-de .line-concepto {
+.charge-account-format .line-concepto {
     top: 26px;
     position: absolute;
     width: 410px;
@@ -181,7 +181,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .text-wrapper {
+.charge-account-format .text-wrapper {
     top: 15px;
     position: absolute;
     width: 410px;
@@ -196,7 +196,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .line-concepto-2 {
+.charge-account-format .line-concepto-2 {
     height: 10px;
     top: 2px;
     font-size: 8.5px;
@@ -210,7 +210,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .input-concepto {
+.charge-account-format .input-concepto {
     width: 410px;
     top: -1px;
     left: 0;
@@ -223,7 +223,7 @@
     line-height: 1.5;
 }
 
-.formato-cuenta-de .concepto {
+.charge-account-format .concepto {
     position: absolute;
     height: 10px;
     top: 184px;
@@ -237,7 +237,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .overlap-4 {
+.charge-account-format .field-value-in-numbers {
     position: absolute;
     width: 114px;
     height: 22px;
@@ -245,7 +245,7 @@
     left: 362px;
 }
 
-.formato-cuenta-de .overlap-5 {
+.charge-account-format .overlap-5 {
     position: absolute;
     width: 114px;
     height: 22px;
@@ -253,7 +253,7 @@
     left: 0;
 }
 
-.formato-cuenta-de .line-valor-numeros {
+.charge-account-format .line-valor-numeros {
     width: 114px;
     top: 9px;
     left: 0px;
@@ -268,7 +268,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .valor-numeros {
+.charge-account-format .valor-numeros {
     top: 19px;
     left: 5px;
     position: absolute;
@@ -282,7 +282,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .money-symbol {
+.charge-account-format .money-symbol {
     height: 11px;
     top: 9px;
     left: 0;
@@ -295,7 +295,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .input-valor-numeros {
+.charge-account-format .input-valor-numeros {
     width: 107px;
     top: 9px;
     left: -10px;
@@ -310,7 +310,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .line-valor-letras {
+.charge-account-format .line-valor-letras {
     width: 283px;
     top: 156px;
     left: 64px;
@@ -325,7 +325,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .input-valor-letras {
+.charge-account-format .input-valor-letras {
     width: 282px;
     top: 156px;
     left: 65px;
@@ -340,7 +340,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .valor-letras {
+.charge-account-format .valor-letras {
     top: 167px;
     left: 181px;
     position: absolute;
@@ -354,7 +354,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .line-la-suma-de {
+.charge-account-format .line-la-suma-de {
     position: absolute;
     height: 10px;
     top: 136px;
@@ -368,7 +368,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .la-suma-de {
+.charge-account-format .la-suma-de {
     position: absolute;
     height: 10px;
     top: 134px;
@@ -382,7 +382,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .overlap-6 {
+.charge-account-format .field-id {
     position: absolute;
     width: 325px;
     height: 14px;
@@ -390,7 +390,7 @@
     left: 81px;
 }
 
-.formato-cuenta-de .line-identificacion {
+.charge-account-format .line-identificacion {
     height: 10px;
     top: 4px;
     font-size: 8.6px;
@@ -404,7 +404,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .input-identificacion {
+.charge-account-format .input-identificacion {
     width: 324px;
     height: 10px;
     top: 3px;
@@ -419,7 +419,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .identificacion {
+.charge-account-format .identificacion {
     position: absolute;
     width: 56px;
     height: 13px;
@@ -433,7 +433,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .overlap-7 {
+.charge-account-format .field-name {
     position: absolute;
     width: 329px;
     height: 12px;
@@ -441,7 +441,7 @@
     left: 78px;
 }
 
-.formato-cuenta-de .line-nombre {
+.charge-account-format .line-nombre {
     width: 329px;
     height: 3px;
     top: 0px;
@@ -456,7 +456,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .input-nombre {
+.charge-account-format .input-nombre {
     width: 327px;
     height: 10px;
     top: 0px;
@@ -471,7 +471,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .nombre {
+.charge-account-format .nombre {
     position: absolute;
     height: 10px;
     top: 70px;
@@ -485,7 +485,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .debe-a {
+.charge-account-format .debe-a {
     position: absolute;
     height: 10px;
     top: 36px;
@@ -499,7 +499,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .nit {
+.charge-account-format .nit {
     position: absolute;
     width: 98px;
     height: 10px;
@@ -513,7 +513,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .icesi {
+.charge-account-format .icesi {
     position: absolute;
     height: 10px;
     top: -1px;
@@ -526,7 +526,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .middle-area {
+.charge-account-format .middle-area {
     position: absolute;
     width: 494px;
     height: 220px;
@@ -534,7 +534,7 @@
     left: 75px;
 }
 
-.formato-cuenta-de .c {
+.charge-account-format .c {
     position: absolute;
     width: 300px;
     height: 14px;
@@ -542,7 +542,7 @@
     left: 5px;
 }
 
-.formato-cuenta-de .box-no-c {
+.charge-account-format .box-no-c {
     top: 1px;
     left: 287px;
     position: absolute;
@@ -552,7 +552,7 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .no-c {
+.charge-account-format .no-c {
     position: absolute;
     height: 10px;
     top: 1px;
@@ -566,7 +566,9 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .div-2 {
+
+
+.charge-account-format .box-si-c {
     width: 13px;
     top: 0;
     left: 249px;
@@ -576,7 +578,8 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .si-c {
+
+.charge-account-format .si-c {
     top: 1px;
     left: 234px;
     position: absolute;
@@ -589,7 +592,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .p {
+.charge-account-format .p {
     position: absolute;
     height: 10px;
     top: 1px;
@@ -603,7 +606,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .b {
+.charge-account-format .b {
     position: absolute;
     width: 300px;
     height: 13px;
@@ -611,7 +614,7 @@
     left: 5px;
 }
 
-.formato-cuenta-de .box-no-b {
+.charge-account-format .box-no-b {
     top: 0;
     left: 287px;
     position: absolute;
@@ -621,7 +624,7 @@
     border-color: #00000000;
 }
 
-.formato-cuenta-de .no-b {
+.charge-account-format .no-b {
     top: 1px;
     left: 268px;
     position: absolute;
@@ -635,7 +638,17 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .si-b {
+.charge-account-format .box-si-b {
+    width: 13px;
+    top: 0;
+    left: 249px;
+    position: absolute;
+    height: 13px;
+    border: 0.3px solid;
+    border-color: #000000;
+}
+
+.charge-account-format .si-b {
     top: 1px;
     left: 233px;
     position: absolute;
@@ -648,7 +661,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .warning {
+.charge-account-format .warning {
     position: absolute;
     height: 10px;
     top: 157px;
@@ -662,7 +675,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .a {
+.charge-account-format .a {
     position: absolute;
     width: 403px;
     height: 63px;
@@ -670,7 +683,7 @@
     left: 18px;
 }
 
-.formato-cuenta-de .box-no-a {
+.charge-account-format .box-no-a {
     top: 50px;
     left: 42px;
     position: absolute;
@@ -680,7 +693,7 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .no-a {
+.charge-account-format .no-a {
     top: 50px;
     left: 22px;
     position: absolute;
@@ -694,7 +707,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .no-a-text {
+.charge-account-format .no-a-text {
     position: absolute;
     height: 10px;
     top: 50px;
@@ -708,7 +721,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .box-si-a {
+.charge-account-format .box-si-a {
     position: absolute;
     width: 13px;
     height: 13px;
@@ -718,7 +731,7 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .si-a {
+.charge-account-format .si-a {
     top: 25px;
     left: 22px;
     position: absolute;
@@ -731,7 +744,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .si-a-text {
+.charge-account-format .si-a-text {
     position: absolute;
     height: 10px;
     top: 25px;
@@ -745,7 +758,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .a-text {
+.charge-account-format .a-text {
     position: absolute;
     height: 11px;
     top: -1px;
@@ -758,7 +771,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .second-text {
+.charge-account-format .second-text {
     position: absolute;
     width: 494px;
     height: 34px;
@@ -772,7 +785,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .first-text {
+.charge-account-format .first-text {
     position: absolute;
     width: 494px;
     height: 22px;
@@ -786,7 +799,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .low-area {
+.charge-account-format .low-area {
     position: absolute;
     width: 368px;
     height: 148px;
@@ -794,7 +807,7 @@
     left: 75px;
 }
 
-.formato-cuenta-de .overlap-8 {
+.charge-account-format .field-cex {
     position: absolute;
     width: 172px;
     height: 14px;
@@ -802,7 +815,7 @@
     left: 158px;
 }
 
-.formato-cuenta-de .box-cex-no {
+.charge-account-format .box-cex-no {
     position: absolute;
     width: 172px;
     height: 13px;
@@ -813,7 +826,7 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .input-cex-no {
+.charge-account-format .input-cex-no {
     position: absolute;
     width: 132px;
     height: 13px;
@@ -828,7 +841,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .cex-no {
+.charge-account-format .cex-no {
     position: absolute;
     height: 10px;
     top: 2px;
@@ -842,7 +855,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .overlap-9 {
+.charge-account-format .field-account-number {
     position: absolute;
     width: 172px;
     height: 27px;
@@ -850,7 +863,7 @@
     left: 275px;
 }
 
-.formato-cuenta-de .box-empty-no {
+.charge-account-format .box-empty-no {
     position: absolute;
     width: 160px;
     height: 13px;
@@ -860,7 +873,7 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .input-no {
+.charge-account-format .input-no {
     width: 160px;
     height: 13px;
     top: 17px;
@@ -875,7 +888,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .box-no {
+.charge-account-format .box-no {
     width: 160px;
     top: 1px;
     left: 0;
@@ -885,7 +898,7 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .no {
+.charge-account-format .no {
     position: absolute;
     height: 10px;
     top: 4px;
@@ -899,7 +912,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .overlap-10 {
+.charge-account-format .field-type-account {
     position: absolute;
     width: 92px;
     height: 26px;
@@ -907,7 +920,7 @@
     left: 183px;
 }
 
-.formato-cuenta-de .box-empty-tipo {
+.charge-account-format .box-empty-tipo {
     position: absolute;
     width: 92px;
     height: 13px;
@@ -917,7 +930,7 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .input-tipo-cuenta {
+.charge-account-format .input-tipo-cuenta {
     position: absolute;
     width: 92px;
     height: 13px;
@@ -932,7 +945,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .box-tipo-cuenta {
+.charge-account-format .box-tipo-cuenta {
     position: absolute;
     width: 92px;
     height: 13px;
@@ -942,7 +955,7 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .tipo-cuenta {
+.charge-account-format .tipo-cuenta {
     position: absolute;
     height: 10px;
     top: 0;
@@ -956,7 +969,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .overlap-11 {
+.charge-account-format .field-bank {
     position: absolute;
     width: 142px;
     height: 26px;
@@ -964,7 +977,7 @@
     left: 41px;
 }
 
-.formato-cuenta-de .box-empty-nombre {
+.charge-account-format .box-empty-nombre-banco {
     position: absolute;
     width: 142px;
     height: 13px;
@@ -974,7 +987,7 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .input-nombre-banco {
+.charge-account-format .input-nombre-banco {
     position: absolute;
     width: 142px;
     height: 13px;
@@ -989,7 +1002,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .box-nombre-banco {
+.charge-account-format .box-nombre-banco {
     position: absolute;
     width: 142px;
     height: 13px;
@@ -999,7 +1012,7 @@
     border-color: #000000;
 }
 
-.formato-cuenta-de .nombre-banco {
+.charge-account-format .nombre-banco {
     position: absolute;
     height: 10px;
     top: 0;
@@ -1013,7 +1026,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .input-telefono {
+.charge-account-format .input-telefono {
     width: 200px;
     height: 10px;
     top: 74px;
@@ -1028,7 +1041,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .telefono {
+.charge-account-format .telefono {
     position: absolute;
     height: 10px;
     top: 74px;
@@ -1042,7 +1055,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .input-direccion {
+.charge-account-format .input-direccion {
     width: 200px;
     height: 10px;
     top: 62px;
@@ -1057,7 +1070,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .direccion {
+.charge-account-format .direccion {
     position: absolute;
     height: 10px;
     top: 62px;
@@ -1071,7 +1084,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .input-cc {
+.charge-account-format .input-cc {
     width: 200px;
     height: 10px;
     top: 50px;
@@ -1086,7 +1099,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .CC {
+.charge-account-format .CC {
     position: absolute;
     height: 10px;
     top: 50px;
@@ -1100,7 +1113,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .input-firma {
+.charge-account-format .input-firma {
     width: 200px;
     height: 10px;
     top: 38px;
@@ -1115,7 +1128,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .firma {
+.charge-account-format .firma {
     position: absolute;
     height: 10px;
     top: 38px;
@@ -1129,7 +1142,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .overlap-12 {
+.charge-account-format .field-ciudad-y-fecha {
     position: absolute;
     width: 164px;
     height: 16px;
@@ -1137,7 +1150,7 @@
     left: 65px;
 }
 
-.formato-cuenta-de .line-c-y-f {
+.charge-account-format .line-c-y-f {
     position: absolute;
     width: 164px;
     height: 9px;
@@ -1152,7 +1165,7 @@
     white-space: nowrap;
 }
 
-.formato-cuenta-de .input-fecha {
+.charge-account-format .input-fecha {
     width: 66px;
     height: 13px;
     top: 6px;
@@ -1167,7 +1180,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .input-ciudad {
+.charge-account-format .input-ciudad {
     width: 98px;
     height: 14px;
     top: 6px;
@@ -1182,7 +1195,7 @@
     line-height: normal;
 }
 
-.formato-cuenta-de .c-y-f {
+.charge-account-format .c-y-f {
     position: absolute;
     height: 10px;
     top: -1px;

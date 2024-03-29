@@ -12,103 +12,95 @@
     <body>
         <form method="POST" autocomplete="off">
             {% csrf_token %}
-            <div class="main-content">
-                <div class="charge-account-form">
-                    <div class="container-relative">
-                        <div class="div">
-                            <p class="text-wrapper">Formulario de Cuenta de cobro</p>
-                            <div class="field-name">
-                                <p class="text-wrapper-2">Nombre Completo</p>
-                                <div class="div-2">{{ form.name|add_class:"div-2" }}</div>
-                            </div>
-                            <div class="field-id">
-                                <div class="text-wrapper-2">No. De identificación</div>
-                                <div class="div-2">{{ form.identification|add_class:"div-2" }}</div>
-                            </div>
-                            <div class="overlap">
-                                <div class="div-3">
-                                    <div class="text-wrapper-2">No. De telefono</div>
-                                    <div class="div-2">{{ form.phone|add_class:"div-2" }}</div>
-                                </div>
-                                <div class="div-4">
-                                    <div class="text-wrapper-2">Ciudad</div>
-                                    <div class="div-2">{{ form.city|add_class:"div-2" }}</div>
-                                </div>
-                            </div>
-                            <div class="field-addres">
-                                <div class="text-wrapper-2">Dirección</div>
-                                <div class="div-2">{{form.addres|add_class:"div-2"}}</div>
-                            </div>
-                            <div class="field-date">
-                                <div class="text-wrapper-2">Fecha</div>
-                                <div class="div-2">{{ form.date|add_class:"div-2" }}</div>
-                            </div>
-                            <div class="field-value-letters">
-                                <div class="text-wrapper-2">Valor en letras</div>
-                                <div class="div-2">{{ form.value_letters|add_class:"div-2" }}</div>
-                            </div>
-                            <div class="field-value-numbers">
-                                <div class="text-wrapper-2">Valor en numeros</div>
-                                <div class="div-2">{{ form.value_numbers|add_class:"div-2" }}</div>
-                            </div>
-                            <div class="field-concept">
-                                <div class="text-wrapper-2">concepto</div>
-                                <div class="box-concepto">{{ form.concept|add_class:"box-concepto" }}</div>
-                            </div>
-                            <div class="field-bank">
-                                <div class="text-wrapper-2">Entidad bancaria</div>
-                                <div class="div-2">{{ form.bank|add_class:"div-2" }}</div>
-                            </div>
-                            <div class="field-account-type">
-                                <p class="text-wrapper-2">Tipo de cuenta bancaria (ahorros o corriente)</p>
-                                <div class="div-2">{{ form.type|add_class:"div-2" }}</div>
-                            </div>
-                            <div class="overlap-group">
-                                <div class="div-3">
-                                    <div class="text-wrapper-2">No. De cuenta</div>
-                                    <div class="div-2">{{ form.account_number|add_class:"div-2" }}</div>
-                                </div>
-                                <div class="div-4">
-                                    <div class="text-wrapper-2">No. Cex</div>
-                                    <div class="div-2">{{ form.cex|add_class:"div-2" }}</div>
-                                </div>
-                            </div>
-                            <div class="overlap-group-2">
-                                <p class="text-one">
-                                    Con el fin de atender lo establecido en la Ley 2277 del año 2022, reglamentada con el Decreto 2231 de
-                                    diciembre de 2023 <br />Declaro, bajo la gravedad de juramento, que:<br /><br />Los ingresos recibidos como
-                                    persona natural por concepto de renta de trabajo no proveniente de una relación laboral, legal <br />o
-                                    reglamentaria correspondiente a los servicios prestados a LA UNIVERSIDAD ICESI durante el año 2024, se les
-                                    dará el <br />siguiente tratamiento:
-                                </p>
-                                <p class="text-two">
-                                    a Se tomarán costos y deducciones asociados a las rentas de trabajo por los servicios prestados:<br />Retención
-                                    en la fuente artículos 392 y 401 del Estatuto Tributario<br />Retención en la fuente artículo 383 del
-                                    Estatuto Tributario
-                                </p>
-                                <div class="field-a">
-                                    <p class="text-a">(marque la casilla si es su respuesta es afirmativa)</p>
-                                    <div class="div-5">{{ form.retentions|add_class:"div-5" }}</div>
-                                </div>
-                            </div>
-                            <p class="warning">Si no marca ninguna opción, se aplicará la retención de los artículos 392 y 401 del ET.</p>
-                            <div class="field-b">
-                                <p class="text-b">
-                                    <span class="span">Soy declarante del Impuesto de Renta?<br /></span>
-                                    <span class="text-wrapper-3">(marque la casilla si es su respuesta es afirmativa)</span>
-                                </p>
-                                <div class="box-b">{{ form.declarant|add_class:"box-b" }}</div>
-                            </div>
-                            <div class="field-c">
-                                <p class="text-c">
-                                    <span class="span">Soy residente fiscal en Colombia?<br /></span>
-                                    <span class="text-wrapper-3">(marque la casilla si es su respuesta es afirmativa)</span>
-                                </p>
-                                <div class="div-5">{{ form.colombian_resident|add_class:"div-5" }}</div>
-                            </div>
-                            <button type="submit" class="button-enviar">Enviar</button>
+            <div class="charge-account-form">
+                <div class="div">
+                    <p class="title">Formulario de Cuenta de cobro</p>
+                    <div class="field-name">
+                        <p class="text-field">Nombre Completo</p>
+                        <div class="boxes">{{ form.name|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-id">
+                        <div class="text-field">No. De identificación</div>
+                        <div class="boxes">{{ form.identification|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-phone">
+                        <div class="text-field">No. De telefono</div>
+                        <div class="boxes">{{ form.phone|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-city">
+                        <div class="text-field">Ciudad</div>
+                        <div class="boxes">{{ form.city|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-addres">
+                        <div class="text-field">Dirección</div>
+                        <div class="boxes">{{form.addres|add_class:"boxes"}}</div>
+                    </div>
+                    <div class="field-date">
+                        <div class="text-field">Fecha</div>
+                        <div class="boxes">{{ form.date|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-value-letters">
+                        <div class="text-field">Valor en letras</div>
+                        <div class="boxes">{{ form.value_letters|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-value-numbers">
+                        <div class="text-field">Valor en numeros</div>
+                        <div class="boxes">{{ form.value_numbers|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-concept">
+                        <div class="text-field">concepto</div>
+                        <div class="box-concepto">{{ form.concept|add_class:"box-concepto" }}</div>
+                    </div>
+                    <div class="field-bank">
+                        <div class="text-field">Entidad bancaria</div>
+                        <div class="boxes">{{ form.bank|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-account-type">
+                        <p class="text-field">Tipo de cuenta bancaria (ahorros o corriente)</p>
+                        <div class="boxes">{{ form.type|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-account-number">
+                        <div class="text-field">No. De cuenta</div>
+                        <div class="boxes">{{ form.account_number|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-cex">
+                        <div class="text-field">No. Cex</div>
+                        <div class="boxes">{{ form.cex|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="text-group">
+                        <p class="text-one">
+                            Con el fin de atender lo establecido en la Ley 2277 del año 2022, reglamentada con el Decreto 2231 de
+                            diciembre de 2023 <br />Declaro, bajo la gravedad de juramento, que:<br /><br />Los ingresos recibidos como
+                            persona natural por concepto de renta de trabajo no proveniente de una relación laboral, legal <br />o
+                            reglamentaria correspondiente a los servicios prestados a LA UNIVERSIDAD ICESI durante el año 2024, se les
+                            dará el <br />siguiente tratamiento:
+                        </p>
+                        <p class="text-two">
+                            a Se tomarán costos y deducciones asociados a las rentas de trabajo por los servicios prestados:<br />Retención
+                            en la fuente artículos 392 y 401 del Estatuto Tributario<br />Retención en la fuente artículo 383 del
+                            Estatuto Tributario
+                        </p>
+                        <div class="field-a">
+                            <p class="text-a">(marque la casilla si es su respuesta es afirmativa)</p>
+                            <div class="box-a">{{ form.retentions|add_class:"box-a" }}</div>
                         </div>
                     </div>
+                    <p class="warning">Si no marca ninguna opción, se aplicará la retención de los artículos 392 y 401 del ET.</p>
+                    <div class="field-b">
+                        <p class="text-b">
+                            <span class="span">Soy declarante del Impuesto de Renta?<br /></span>
+                            <span class="text-b">(marque la casilla si es su respuesta es afirmativa)</span>
+                        </p>
+                        <div class="box-b">{{ form.declarant|add_class:"box-b" }}</div>
+                    </div>
+                    <div class="field-c">
+                        <p class="text-c">
+                            <span class="span">Soy residente fiscal en Colombia?<br /></span>
+                            <span class="text-c">(marque la casilla si es su respuesta es afirmativa)</span>
+                        </p>
+                        <div class="box-c">{{ form.colombian_resident|add_class:"box-c" }}</div>
+                    </div>
+                    <button type="submit" class="button-enviar">Enviar</button>
                 </div>
             </div>
         </form>

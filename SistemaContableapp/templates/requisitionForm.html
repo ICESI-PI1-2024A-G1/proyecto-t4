@@ -12,71 +12,68 @@
     <body>
         <form method="POST" autocomplete="off">
             {% csrf_token %}
-
             <div class="requisition-form">
                 <div class="div">
-                    <div class="text-wrapper">Formulario de Requisición</div>
+                    <div class="title">Formulario de Requisición</div>
                     <div class="field-date">
-                        <div class="text-wrapper-2">Fecha</div>
-                        <div class="div-2">{{ form.date|add_class:"div-2" }}</div>
+                        <div class="text-fields">Fecha</div>
+                        <div class="boxes">{{ form.date|add_class:"boxes" }}</div>
                     </div>
                     <div class="field-beneficiary">
-                        <div class="text-wrapper-3">Beneficiario de la solicitud</div>
-                        <div class="div-3">{{ form.beneficiaryName|add_class:"div-3" }}</div>
+                        <div class="text-fields">Beneficiario de la solicitud</div>
+                        <div class="boxes">{{ form.beneficiaryName|add_class:"boxes" }}</div>
                     </div>
                     <div class="field-id">
-                        <div class="text-wrapper-2">No. De identificación</div>
-                        <div class="div-2">{{ form.idNumber|add_class:"div-2" }}</div>
+                        <div class="text-fields">No. De identificación</div>
+                        <div class="boxes">{{ form.idNumber|add_class:"boxes" }}</div>
                     </div>
-                    <div class="overlap-group">
-                        <div class="field-charge">
-                            <div class="text-wrapper-2">Cargo</div>
-                            <div class="div-2">{{ form.charge|add_class:"div-2" }}</div>
-                        </div>
-                        <div class="field-dependency">
-                            <div class="text-wrapper-2">Dependencia</div>
-                            <div class="div-2">{{ form.dependency|add_class:"div-2" }}</div>
-                        </div>
+                    <div class="field-charge">
+                        <div class="text-fields">Cargo</div>
+                        <div class="boxes">{{ form.charge|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-dependency">
+                        <div class="text-fields">Dependencia</div>
+                        <div class="boxes">{{ form.dependency|add_class:"boxes" }}</div>
                     </div>
                     <div class="field-cenco">
-                        <div class="text-wrapper-2">Cenco</div>
-                        <div class="div-2">{{ form.cenco|add_class:"div-2" }}</div>
+                        <div class="text-fields">Cenco</div>
+                        <div class="boxes">{{ form.cenco|add_class:"boxes" }}</div>
                     </div>
                     <div class="field-value">
-                        <div class="text-wrapper-2">Valor</div>
-                        <div class="div-2">{{ form.value|add_class:"div-2" }}</div>
+                        <div class="text-fields">Valor</div>
+                        <div class="boxes">{{ form.value|add_class:"boxes" }}</div>
                     </div>
                     <div class="field-concept">
-                        <div class="text-wrapper-2">Concepto</div>
-                        <div class="div-2">{{ form.concept|add_class:"div-2" }}</div>
+                        <div class="text-fields">Concepto</div>
+                        <div class="boxes">{{ form.concept|add_class:"boxes" }}</div>
                     </div>
                     <div class="field-description">
-                        <div class="text-wrapper-2">Descripción</div>
+                        <div class="text-fields">Descripción</div>
                         <div class="box-descripcion">{{ form.description|add_class:"box-descripcion" }}</div>
                     </div>
                     <div class="field-radicate">
-                        <div class="text-wrapper-2">No. de radicado</div>
-                        <div class="div-2">{{ form.radicate|add_class:"div-2" }}</div>
+                        <div class="text-fields">No. de radicado</div>
+                        <div class="boxes">{{ form.radicate|add_class:"boxes" }}</div>
                     </div>
                     <div class="field-payment-code">
-                        <p class="text-wrapper-2">Código de orden de pago</p>
-                        <div class="div-2">{{ form.payment_order_code|add_class:"div-2" }}</div>
+                        <p class="text-fields">Código de orden de pago</p>
+                        <div class="boxes">{{ form.payment_order_code|add_class:"boxes" }}</div>
                     </div>
                     <div class="field-payment-method">
-                        <div class="text-wrapper-2">Metodo de pago</div>
-                        <div class="div-2">{{ form.paymentMethod|add_class:"div-2" }}</div>
+                        <div class="text-fields">Metodo de pago</div>
+                        <div class="boxes">{{ form.paymentMethod|add_class:"boxes" }}</div>
                     </div>
                     <div class="field-account-type">
-                        <div class="text-wrapper-2">Tipo de cuenta bancaria</div>
-                        <div class="div-2">{{ form.typeAccount|add_class:"div-2" }}</div>
+                        <div class="text-fields">Tipo de cuenta bancaria</div>
+                        <div class="boxes">{{ form.typeAccount|add_class:"boxes" }}</div>
                     </div>
                     <div class="field-account">
-                        <div class="text-wrapper-2">No. De cuenta</div>
-                        <div class="div-2">{{ form.account_number|add_class:"div-2" }}</div>
+                        <div class="text-fields">No. De cuenta</div>
+                        <div class="boxes">{{ form.account_number|add_class:"boxes" }}</div>
                     </div>
                     <div class="field-author-name">
-                        <p class="text-wrapper-3">Nombre de quien labora la solicitud</p>
-                        <div class="div-3">{{ form.authorName|add_class:"div-3" }}</div>
+                        <p class="text-fields">Nombre de quien labora la solicitud</p>
+                        <div class="boxes">{{ form.authorName|add_class:"boxes" }}</div>
                     </div>
                     <button type="submit" class="button-enviar">Enviar</button>
                 </div>

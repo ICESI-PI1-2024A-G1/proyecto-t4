@@ -9,17 +9,24 @@
     <div class="requisition-format">
       <div class="div">
         <header class="header">
-          <div class="overlap"><div class="version">Versión: 1.0</div></div>
-          <div class="overlap-group"><div class="formato-text">FORMATO DE REQUISICIÓN</div></div>
-          <div class="codigo-wrapper"><div class="codigo">Código: CTA-FR-005</div></div>
-          <div class="contabilidad-wrapper"><div class="contabilidad">CONTABILIDAD</div></div>
-          <div class="overlap-2">
+          <div class="box-version">
+            <div class="version">Versión: 1.0</div>
+          </div>
+          <div class="box-format">
+            <div class="formato-text">FORMATO DE REQUISICIÓN</div>
+          </div>
+          <div class="box-codigo">
+            <div class="codigo">Código: CTA-FR-005</div>
+          </div>
+          <div class="box-contabilidad">
+            <div class="contabilidad">CONTABILIDAD</div>
+          </div>
+          <div class="box-procesos-institucionales">
             <div class="procesos">Procesos Institucionales</div>
           </div>
         </header>
         <div class="high-area">
-          <div class="overlap-3">
-            <div class="box-high-area-data"></div>
+          <div class="box-high-area">
             <div class="line-concepto"></div>
             <div class="input-concepto">{{concept}}</div>
             <div class="line-valor"></div>
@@ -46,12 +53,12 @@
           <div class="numero-cedula">Numero de cedula</div>
           <div class="a-favor-de">A favor de</div>
           <div class="fecha">Fecha:</div>
-          <div class="overlap-4">
+          <div class="field-codigo-orden">
             <div class="box-codigo-orden"></div>
             <div class="input-codigo-orden">{{payment_order_code}}</div>
           </div>
           <p class="codigo-orden-pago">Código de Orden de pago</p>
-          <div class="overlap-5">
+          <div class="field-no-radicado">
             <div class="box-no-radicado"></div>
             <div class="input-no-radicado">{{radicate}}</div>
           </div>
@@ -60,31 +67,29 @@
           <div class="icesi">UNIVERSIDAD ICESI</div>
         </div>
         <div class="mid-area">
-          <div class="overlap-6">
+          <div class="field-description">
             <div class="rectangle"></div>
             <div class="input-descripcion">{{description}}</div>
           </div>
-          <div class="text-wrapper">DESCRIPCIÓN</div>
+          <div class="text-description">DESCRIPCIÓN</div>
         </div>
         <div class="low-area">
-          <div class="overlap-7">
+          <div class="field-exclusive">
             <div class="box-exclusivo"></div>
             <div class="line-exclusivo"></div>
             <div class="motivo-devolucion">Motivo de Devolución :</div>
             <p class="p">Campo de uso exclusivo de la Oficina de Contabilidad</p>
           </div>
-          <div class="overlap-8">
-            <div class="line-nombre-quien"></div>
-            <div class="nombre-de-quien">Nombre de quien elabora</div>
-          </div>
-          <div class="input-nombre-de">{{authorName}}</div>
-          <div class="line-nombre"></div>
-          <div class="input-nombre">{{beneficiaryName}}</div>
+          <div class="line-nombre-de-quien"></div>
+          <div class="nombre-de-quien">Nombre de quien elabora</div>
+          <div class="input-nombre-de-quien">{{authorName}}</div>
+          <div class="line-nombre-ordenador"></div>
+          <div class="input-nombre-ordenador">{{beneficiaryName}}</div>
           <div class="nombre-ordenador">Nombre Ordenador de Gasto</div>
           <div class="line-firma-quien"></div>
           <div class="input-firma-de-quien">{{authorName}}</div>
           <div class="firma-de-quien">Firma de quien labora</div>
-          <div class="input-firma">{{beneficiaryName}}</div>
+          <div class="input-firma-ordenador">{{beneficiaryName}}</div>
           <div class="line-firma-ordenador"></div>
           <div class="firma-ordenador">Firma Ordenador de Gasto</div>
           <div class="line-cuenta-bancaria"></div>
