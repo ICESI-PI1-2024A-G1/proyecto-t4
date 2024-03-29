@@ -1,89 +1,114 @@
-from django.shortcuts import render
-from .models import  Charge_account
+from django.shortcuts import render, redirect
 
+from .forms import CustomUserCreationForm, LoginForm
 
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404
-from django.shortcuts import render, redirect   
-from .forms import CreateNewTask
 from django.contrib.auth import authenticate, login
-from django.contrib import messages
-from .forms import CreateNewTask, ChargeAccountForm
-from django.conf import settings 
-from django.template.loader import get_template  
-from django.core.mail import get_connection, EmailMessage
-from django.template.loader import get_template
-from django.conf import settings
-from django.core.mail import EmailMessage
-import weasyprint
 
-# Create your views here.
+from django.http import HttpResponse
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib import messages
+
 
 def index(request):
-    title = "Hola Gabriela, ¡Bienvenida al Sistema Contable"
+    """
+    View for the home page.
+
+    Displays the home page of the accounting system.
+
+    Args:
+        request (HttpRequest): The received HTTP request.
+
+    Returns:
+        HttpResponse: The HTTP response rendering the home page.
+  
+    """
+    
+    title = "¡Bienvenidos al Sistema Contable"
     return render(request,'index.html', {
         'title' : title 
     })
 
 
-def login(request):
-     return render(request, 'registration/login.html')
+def olvidar_contraseña(request):
+    """
+    View for the forgot password page.
 
-#def login(request):
-    #if request.method == 'POST':
-       # email = request.POST.get('email')
-       # password = request.POST.get('password')
+    Displays the forgot password page.
 
-        #user = authenticate(request, email=email, password=password)
-       # if user is not None:
-            #login(request, user)
-            #return redirect('') # ruta del tablero 
-       # else:
-           # messages.error(request, 'Correo inválido. Inténtalo de nuevo.')
+    Args:
+        request (HttpRequest): The received HTTP request.
 
-    #return render(request, 'registration/login.html')
+    Returns:
+        HttpResponse: The HTTP response rendering the forgot password page.
+    """
+    return render(request,'registration/olvidar.html' )
 
-def sendmailChargeAccountToPdf(data):
-    messageBody = get_template("sendChargeAccountForm.html").render(data)
 
-    # Generar PDF a partir del HTML
-    pdf = weasyprint.HTML(string=messageBody).write_pdf()
+def user_login(request):
+    """
+    View for user login.
 
-    email = EmailMessage(
-        "CollectionAccount Form",
-        "Please find the CollectionAccount Form attached.",
-        settings.DEFAULT_FROM_EMAIL,
-        to=["pinedapablo6718@gmail.com"]
-    )
+    Processes the login form and authenticates the user.
 
-    # Adjuntar el PDF generado
-    email.attach('collection_account.pdf', pdf, 'application/pdf')
+    Args:
+        request (HttpRequest): The received HTTP request.
 
-    return email.send()
-
-def createChargeAccountForm(request):
+    Returns:
+        HttpResponse: Redirects to the home page if login is successful, 
+                      otherwise redirects to the login page.
+    """
+   
     if request.method == 'POST':
-        form = ChargeAccountForm(request.POST, request.FILES)
-        if form.is_valid():
-            form = form.save(commit=False)
-            form.save()
-            data = { "name" : request.POST.get('name'),
-                "identification" : request.POST.get('identification'),
-                "concept" : request.POST.get('concept'),
-                "value"  : request.POST.get('value'),
-                "retention_392_401"  : request.POST.get('retention_392_401'),
-                "retention_383" : request.POST.get('retention_383'),
-                "declarant"  : request.POST.get('declarant'),
-                "colombian_resident"  : request.POST.get('colombian_resident'),
-                "city"  : request.POST.get('city'),
-                "date"  : request.POST.get('date'),
-                "cex"  : request.POST.get('cex'),
-                "bank"  : request.POST.get('bank'),
-                "type"  : request.POST.get('type'),
-                "account_number"  : request.POST.get('account_number')
-            }
-            sendmailChargeAccountToPdf(data)
-            return redirect("viewChargeAccountForm")
+        email = request.POST.get('email')  
+        password = request.POST.get('password')
+        user = authenticate(request,
+                            username=request.POST['email'],
+                            password=request.POST['password'])
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return redirect(index)  
+            else:
+                messages.error(request, 'El usuario no está activo')
+                return redirect('index') 
+        else:
+            messages.error(request, 'No tienes una cuenta, por favor registrate')
+            return redirect('index') 
     else:
-        form = ChargeAccountForm()
-    return render(request, "chargeAccountForm.html", {"form": form})
+        form = LoginForm()
+        return render(request, 'registration/login.html', {'form': form})          
+           
+@login_required
+def dashboard(request):
+    return render(request,'index.html')
+    
+
+def registration(request):
+    """
+    View for user registration.
+
+    Processes the user registration form and creates a new user account.
+
+    Args:
+        request (HttpRequest): The received HTTP request.
+
+    Returns:
+        HttpResponse: Redirects to the home page if registration is successful,
+                      otherwise redirects to the registration page.
+    """
+    
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request, 'Tu cuenta ha sido creada exitosamente.')
+            login(request, user)
+            messages.success(request, 'Registro exitoso.')
+            return redirect('index')
+        else:
+            messages.error(request, 'Error en el registro. Por favor, revise los datos introducidos.')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'registration/registro.html', {'form': form})

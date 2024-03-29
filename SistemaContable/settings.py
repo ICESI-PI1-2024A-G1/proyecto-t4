@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'SistemaContableApp.apps.SistemacontableappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_renderpdf',
-    'SistemaContableApp'
+    
     
 ]
 
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'SistemaContable.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ os.path.join(BASE_DIR, 'SistemaContableApp', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
