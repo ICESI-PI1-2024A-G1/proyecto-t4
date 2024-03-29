@@ -1,0 +1,246 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title >Ventanilla unica</title>
+        <link rel="stylesheet" href= "{% static '/styles/ventanillaUnica.css' %}" >
+    </head>
+</html>
+
+<body>
+    <div class="heading">
+        <h1><span style="font-size: 40px;">Ventanilla unica </span></h1>
+    </div>
+    <div>
+            <div class = "outer-wrapper">
+                <div class="table-wrapper">
+                    <table >
+                        <tr>
+                            <th>
+                               Fecha de creación
+                            </th>
+                            <th>
+                                Creador
+                            </th>
+                            <th>
+                                Tipo de solicitud
+                            </th>
+                            <th>
+                                Proveedor
+                            </th>
+                            <th>
+                                Identificacion
+                            </th>
+                            <th>
+                                Numero de documento
+                            </th>
+                            <th>
+                                Datos adjuntos
+                            </th>
+                            <th>
+                                Gestor
+                            </th>
+                            <th>
+                                Estado
+                            </th>
+                            <th>
+                                aprobado por
+                            </th>
+                            <th>
+                                Revisado por
+                            </th>
+                            <th>
+                                Estado de aceptacion
+                            </th>
+                            <th>
+                                Fecha de aceptacion
+                            </th>
+                            <th>
+                                Estado de revision
+                            </th>
+                            <th>
+                                Revision
+                            </th>
+                            <th>
+                                Concepto
+                            </th>
+                            <th>
+                                Email del proveedor
+                            </th>
+                            <th>
+                                Moneda
+                            </th>
+                            <th>
+                                Valor del documento
+                            </th>
+                            <th>
+                                CENCO
+                            </th>
+                            <th>
+                                Numero de contrato CEX
+                            </th>
+                            <th>
+                                Observaciones
+                            </th>
+                            <th>
+                                Fecha de Revision
+                            </th>
+                            <th>
+                                Estado de aprovacion
+                            </th>
+                            <th>
+                                Aprobacion
+                            </th>
+                            <th>
+                                Fecha de aprovacion
+                            </th>
+                            <th>
+                                Comentarios de aprovacion
+                            </th>
+                            <th>
+                                Recibido area contable
+                            </th>
+                            <th>
+                                Comentarios area contable
+                            </th>
+                            <th>
+                                Fecha del tramite
+                            </th>
+                            <th>
+                                Recibido por(Area contable)
+                            </th>
+                            <th>
+                                Modificado
+                            </th>
+                            <th>
+                                Modificado por
+                            </th>
+                            <th>
+                                Fecha de cierre
+                            </th>
+                        </tr>
+                        {% for v in ventanilla %}
+                        <tr>
+                            <td>
+                                {{v.creation_date}}
+                            </td>
+                            <td>
+                                {{v.creator}}
+                            </td>
+                            <td>
+                                {{v.type}}
+                            </td>
+                            <td>
+                                {{v.supplier}}
+                            </td>
+                            <td>
+                                {{v.supplierId}}
+                            </td>
+                            <td>
+                                {{v.documentNumber}}
+                            </td>
+                            <td>
+                                <ul>
+                                    {% for document in files %}
+                                    {% if document.associatedFollowing == v %}
+                                    <a href="{{document.file.url}}">{{document}}</a>
+                                    <br>
+                                    {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                {{v.manager}}
+                            </td>
+                            <td bgcolor = {{v.currentState.color}}>
+                                {{v.currentState.state}}
+                            </td>
+                            <td>
+                                {{v.acceptor}}
+                            </td>
+                            <td>
+                                {{v.revisor}}
+                            </td>
+                            <td>
+                                {{v.acceptanceState}}
+                            </td>
+                            <td>
+                                {{v.acceptanceDate}}
+                            </td>
+                            <td>
+                                {{v.revisionState}}
+                            </td>
+                            <td>
+                                {{v.revision}}
+                            </td>
+                            <td>
+                                {{v.concept}}
+                            </td>
+                            <td>
+                                {{v.supplierEmail}}
+                            </td>
+                            <td>
+                                {{v.money_type}}
+                            </td>
+                            <td>
+                                {{v.amount}}
+                            </td>
+                            <td>
+                                {{v.cenco}}
+                            </td>
+                            <td>
+                                {{v.cex_number}}
+                            </td>
+                            <td>
+                                {{v.observations}}
+                            </td>
+                            <td>
+                                {{v.revisionDate}}
+                            </td>
+                            <td>
+                                {{v.approvalState}}
+                            </td>
+                            <td>
+                                {{v.approval}}
+                            </td>
+                            <td>
+                                {{v.approvalDate}}
+                            </td>
+                            <td>
+                                {{v.approvalComments}}
+                            </td>
+                            <td>
+                                {{v.accountingReception}}
+                            </td>
+                            <td>
+                                {{v.accountingComments}}
+                            </td>
+                            <td>
+                                {{v.accountingDate}}
+                            </td>
+                            <td>
+                                {{v.receptor}}
+                            </td>
+                            <td>
+                                {{v.modificationDate}}
+                            </td>
+                            <td>
+                                {{v.modifier}}
+                            </td>
+                            <td>
+                                {{v.close_date}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+    </div>
+</body>
+{% endblock %}
+

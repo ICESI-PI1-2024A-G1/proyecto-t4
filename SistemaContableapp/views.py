@@ -92,3 +92,9 @@ def ventanillaUnicaResumida(request):
      datos_del_seguimiento = Following.objects.all()
       
      return render(request, 'ventanilla_unica_resumida.html',{ 'ventanilla' : datos_del_seguimiento})
+
+def ventanillaUnica(request):
+    datosSeguimiento = Following.objects.all()
+    attachedDocuments = AttachedDocument.objects.all()
+
+    return render(request, 'ventanillaUnica.html', {'ventanilla': datosSeguimiento, 'files': attachedDocuments})

@@ -11,6 +11,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')), 
     path('chargeAccountForm/', views.createChargeAccountForm, name = "viewChargeAccountForm"),
     path('Ventanilla unica resumida/', views.ventanillaUnicaResumida),
+     path('Ventanilla unica/', views.ventanillaUnica),
 ]
 
 urlpatterns += [ 
