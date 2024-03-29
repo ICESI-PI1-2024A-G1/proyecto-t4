@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import  Charge_account,Following
+from .models import  *
 
 
 from django.http import HttpResponse, JsonResponse
@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from .forms import CreateNewTask
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .forms import CreateNewTask, ChargeAccountForm
+from .forms import *
 from django.conf import settings 
 from django.template.loader import get_template  
 from django.core.mail import get_connection, EmailMessage
@@ -88,7 +88,7 @@ def createChargeAccountForm(request):
         form = ChargeAccountForm()
     return render(request, "chargeAccountForm.html", {"form": form})
 
-def ventanilla_unica(request):
+def ventanillaUnicaResumida(request):
      datos_del_seguimiento = Following.objects.all()
       
      return render(request, 'ventanilla_unica_resumida.html',{ 'ventanilla' : datos_del_seguimiento})

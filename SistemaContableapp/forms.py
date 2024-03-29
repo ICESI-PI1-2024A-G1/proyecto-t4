@@ -1,6 +1,6 @@
 from django import forms
 from ftplib import MAXLINE
-from .models import Charge_account
+from .models import *
 
 class CreateNewTask(forms.Form):
     title = forms.CharField(label="Titulo de tarea", max_length=200)
@@ -38,9 +38,7 @@ class ChargeAccountForm(forms.ModelForm):
         for field_name, field in self.fields.items():   
             field.widget.attrs['class'] = 'form-control'
         
-        
-    
-    
-  
-    
+
+
+
 

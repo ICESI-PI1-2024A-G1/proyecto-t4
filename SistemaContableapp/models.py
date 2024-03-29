@@ -1,4 +1,5 @@
 from django.db import models
+from multiupload.fields import MultiFileField
 
  #Create your models here.
 
@@ -37,36 +38,41 @@ class Legalization(models.Model):
     ]
 
     legalization_date = models.DateField()
-    cost_center = models.CharField(max_length = 30)
+    cost_center = models.CharField(max_length = 30, null = True)
     name = models.CharField(max_length = 40,default = "")
     identificationNumber = models.CharField(max_length = 10,default = "")
-    dependency = models.CharField(max_length = 30)
-    destiny = models.CharField(max_length = 20)
-    travel_date = models.DateField()
-    return_date = models.DateField()
-    motive = models.TextField()
-    value = models.IntegerField()
-    employee_balance = models.IntegerField()
-    icesi_balance = models.IntegerField()
-    descount_in_one_quote = models.BooleanField()
-    elaborator_name = models.CharField(max_length = 20)
-    orderer_name = models.CharField(max_length = 20)
-    bank = models.CharField(max_length = 20)
-    type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
-    account_number = models.CharField(max_length = 20)
+    dependency = models.CharField(max_length = 30, null = True)
+    destiny = models.CharField(max_length = 20, null = True)
+    travel_date = models.DateField(null = True)
+    return_date = models.DateField(null = True)
+    motive = models.TextField(null = True)
+    value = models.IntegerField(null = True)
+    employee_balance = models.IntegerField(null = True)
+    icesi_balance = models.IntegerField(null = True)
+    descount_in_one_quote = models.BooleanField(null = True)
+    elaborator_name = models.CharField(max_length = 20,null = True)
+    orderer_name = models.CharField(max_length = 20,null = True)
+    bank = models.CharField(max_length = 20,null = True)
+    type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE,null = True)
+    account_number = models.CharField(max_length = 20,null = True)
 
-    def __str__(self):
-        return self.legalization_date + ' - ' + self.user
 
 
 
 class Expense(models.Model):
+
+    MONEY_TYPE = [
+        ('USD','Dolar'),
+        ('COP', 'Pesos colombianos'),
+        ('EUR','Euro')
+    ]
+
     category = models.CharField(max_length = 20)
-    support_no = models.IntegerField()
-    third_person_name = models.CharField(max_length = 30)
-    third_person_nit = models.CharField(max_length = 20)
-    concept = models.TextField()
-    money = models.CharField(max_length = 10)
+    support_no = models.IntegerField(null = True)
+    third_person_name = models.CharField(max_length = 30,null = True)
+    third_person_nit = models.CharField(max_length = 20,null = True)
+    concept = models.TextField(null = True)
+    money = models.CharField(max_length = 10, choices = MONEY_TYPE)
     value = models.DecimalField(decimal_places = 10,max_digits = 20)
     legalization_facture = models.ForeignKey(Legalization, on_delete = models.CASCADE)
 
@@ -150,7 +156,7 @@ class Exterior_payment(models.Model):
     bank_address = models.TextField()
 
 
-class Following(models.Model):
+class State(models.Model):
 
     COLORES = [
         ('gray','Gris'),
@@ -170,32 +176,61 @@ class Following(models.Model):
         ('aceptado', 'Aceptado'),
         ('Rechazado por contabilidad','Rechazado por contabilidad')
     ]
-
-
+    
     state = models.CharField(max_length = 30,choices = ESTADOS)
     color = models.CharField(max_length = 10,choices = COLORES)
+
+    def __str__(self):
+        return self.state
+
+class Following(models.Model):
+
     creation_date = models.DateField()
+    creator = models.CharField(max_length = 40, null = True)
     type = models.CharField(max_length = 20)
+    supplier = models.CharField(max_length = 40, null = True)
+    supplierId = models.CharField(max_length = 10, null = True)
+    documentNumber = models.CharField(max_length = 10, null = True)
+    manager = models.CharField(max_length = 40, null = True)
+    acceptor = models.CharField(max_length = 40, null = True)
+    revisor = models.CharField(max_length = 40, null = True)
+    acceptanceState = models.CharField(max_length = 10, null = True)
+    acceptanceDate = models.DateField(null = True)
+    revisionState = models.CharField(max_length = 10, null = True)
+    revision = models.CharField(max_length = 40, null = True)
     concept = models.TextField()
+    supplierEmail = models.EmailField(null = True)
     money_type = models.CharField(max_length = 10)
     amount = models.IntegerField()
     cenco = models.CharField(max_length = 20)
     cex_number = models.CharField(max_length = 20)
     observations = models.TextField()
+    revisionDate = models.DateField(null = True)
+    approvalState = models.CharField(max_length = 10, null = True)
+    approval = models.TextField(null = True)
+    approvalDate = models.DateField(null = True)
+    approvalComments = models.TextField(null = True)
+    accountingReception = models.CharField(max_length = 10, null = True)
+    accountingComments = models.TextField(null = True)
+    accountingDate = models.DateField(null = True)
+    receptor = models.CharField(max_length = 40, null = True)
+    modificationDate = models.DateField(null = True)
+    modifier = models.CharField(max_length = 40, null = True)
+    currentState = models.ForeignKey(State, on_delete = models.PROTECT)
     close_date = models.DateField()
-    
-    #revisor = models.ForeignKey(User, on_delete = models.PROTECT)
-    #aprover = models.ForeignKey(User, on_delete = models.PROTECT) 
 
     def __str__(self):
         return self.type + ' - ' + self.cenco
 
+class AttachedDocument(models.Model):
+    file = models.FileField()
+    associatedFollowing = models.ForeignKey(Following, on_delete = models.CASCADE)
+    
+    def __str__(self):
+        return self.file.name
 
-class Audit(models.Model):
 
-    date = models.DateField()
-    comments = models.TextField()
-    assigned_request = models.ForeignKey(Following, on_delete = models.CASCADE)
+
 
 
 
