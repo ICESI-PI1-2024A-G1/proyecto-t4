@@ -185,7 +185,7 @@ class State(models.Model):
 
 class Following(models.Model):
 
-    creation_date = models.DateField()
+    creationDate = models.DateField()
     creator = models.CharField(max_length = 40, null = True)
     type = models.CharField(max_length = 20)
     supplier = models.CharField(max_length = 40, null = True)
@@ -200,10 +200,10 @@ class Following(models.Model):
     revision = models.CharField(max_length = 40, null = True)
     concept = models.TextField()
     supplierEmail = models.EmailField(null = True)
-    money_type = models.CharField(max_length = 10)
+    moneyType = models.CharField(max_length = 10)
     amount = models.IntegerField()
     cenco = models.CharField(max_length = 20)
-    cex_number = models.CharField(max_length = 20)
+    cexNumber = models.CharField(max_length = 20)
     observations = models.TextField()
     revisionDate = models.DateField(null = True)
     approvalState = models.CharField(max_length = 10, null = True)
@@ -217,7 +217,7 @@ class Following(models.Model):
     modificationDate = models.DateField(null = True)
     modifier = models.CharField(max_length = 40, null = True)
     currentState = models.ForeignKey(State, on_delete = models.PROTECT)
-    close_date = models.DateField()
+    closeDate = models.DateField()
 
     def __str__(self):
         return self.type + ' - ' + self.cenco

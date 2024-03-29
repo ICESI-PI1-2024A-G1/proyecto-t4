@@ -89,9 +89,9 @@ def createChargeAccountForm(request):
     return render(request, "chargeAccountForm.html", {"form": form})
 
 def ventanillaUnicaResumida(request):
-     datos_del_seguimiento = Following.objects.all()
+     datosSeguimiento = Following.objects.all()
       
-     return render(request, 'ventanilla_unica_resumida.html',{ 'ventanilla' : datos_del_seguimiento})
+     return render(request, 'ventanillaUnicaResumida.html',{ 'ventanilla' : datosSeguimiento})
 
 def ventanillaUnica(request):
     datosSeguimiento = Following.objects.all()
