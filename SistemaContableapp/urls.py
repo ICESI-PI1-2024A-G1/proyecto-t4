@@ -10,9 +10,9 @@ urlpatterns = [
     path('', views.login, name='login_redirect'),
     path('accounts/', include('django.contrib.auth.urls')), 
     path('chargeAccountForm/', views.createChargeAccountForm, name = "viewChargeAccountForm"),
-    path('Ventanilla unica resumida/', views.summaryOneStopShop),
-    path('Ventanilla unica/', views.fullOneStopShop),
-    path('Agregar a ventanilla unica/', views.oneStopShopFormView),
+    path('Ventanilla unica resumida/', views.summaryOneStopShopView,name = "summaryOneStopShop"),
+    path('Ventanilla unica/', views.fullOneStopShopView,name = "fullOneStopShop"),
+    path('Agregar a ventanilla unica/', views.oneStopShopFormView,name = "OneStopShopForm"),
     path('confirmation/',views.oneStopShopConfirmationView, name = "confirmation"),
 ]
 

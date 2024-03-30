@@ -88,19 +88,19 @@ def createChargeAccountForm(request):
         form = ChargeAccountForm()
     return render(request, "chargeAccountForm.html", {"form": form})
 
-def summaryOneStopShop(request):
+def summaryOneStopShopView(request):
      folllowingData = Following.objects.all()
       
      return render(request, 'summaryOneStopShop.html',{ 'followingData' : folllowingData})
 
-def fullOneStopShop(request):
+def fullOneStopShopView(request):
     followingData = Following.objects.all()
     attachedDocuments = AttachedDocument.objects.all()
 
     return render(request, 'fullOneStopShop.html', {'followingData': followingData, 'files': attachedDocuments})
 
 def oneStopShopConfirmationView(request):
-    return render(request, 'oneStopShopconfirmation.html')
+    return render(request, 'oneStopShopConfirmation.html')
 
 def oneStopShopFormView(request):
     if request.method == 'POST':
