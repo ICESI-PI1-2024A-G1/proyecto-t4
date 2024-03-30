@@ -1,0 +1,295 @@
+  .pago-exterior-form {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .pago-exterior-form .div {
+    background-color: #ffffff;
+    width: 1280px;
+    height: 1024px;
+    position: relative;
+  }
+  
+  .pago-exterior-form .text-wrapper {
+    position: absolute;
+    width: 1280px;
+    height: 57px;
+    top: 51px;
+    left: 0;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 25px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .pago-exterior-form .field-nombre {
+    display: inline-flex;
+    top: 236px;
+    left: 283px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+  }
+  
+  .pago-exterior-form .text-wrapper-2 {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .pago-exterior-form .div-2 {
+    position: relative;
+    width: 300px;
+    height: 30px;
+    background-color: #e2edfa;
+  }
+  
+  .pago-exterior-form .overlap {
+    height: 138px;
+    top: 305px;
+    left: 283px;
+    position: absolute;
+    width: 308px;
+  }
+  
+  .pago-exterior-form .div-3 {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .pago-exterior-form .text-wrapper-3 {
+    position: relative;
+    align-self: stretch;
+    height: 25.5px;
+    margin-top: -1px;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .pago-exterior-form .field-tipo-de {
+    top: 69px;
+    left: 0;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+  }
+  
+  .pago-exterior-form .field-nombre-del {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 236px;
+    left: 692px;
+  }
+  
+  .pago-exterior-form .overlap-group {
+    height: 137px;
+    top: 443px;
+    left: 283px;
+    position: absolute;
+    width: 308px;
+  }
+  
+  .pago-exterior-form .div-4 {
+    display: inline-flex;
+    top: 68px;
+    left: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+  }
+  
+  .pago-exterior-form .field-ciudad {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 581px;
+    left: 283px;
+  }
+  
+  .pago-exterior-form .field-domicilio {
+    display: flex;
+    width: 308px;
+    height: 138px;
+    top: 650px;
+    left: 283px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+  }
+  
+  .pago-exterior-form .box-domicilio {
+    position: relative;
+    width: 300px;
+    height: 90px;
+    background-color: #e2edfa;
+  }
+  
+  .pago-exterior-form .field-tipo-de-cuenta {
+    top: 305px;
+    left: 692px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+  }
+  
+  .pago-exterior-form .field-codigo-swift {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 374px;
+    left: 692px;
+  }
+  
+  .pago-exterior-form .overlap-2 {
+    height: 137px;
+    top: 443px;
+    left: 692px;
+    position: absolute;
+    width: 308px;
+  }
+  
+  .pago-exterior-form .overlap-group-2 {
+    height: 189px;
+    top: 581px;
+    left: 692px;
+    position: absolute;
+    width: 308px;
+  }
+  
+  .pago-exterior-form .field-numero-de-la {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 67px;
+    left: 0;
+  }
+  
+  .pago-exterior-form .box-nmero-de-la {
+    position: relative;
+    width: 300px;
+    height: 25px;
+    background-color: #e2edfa;
+  }
+  
+  .pago-exterior-form .field-direccin-de-la {
+    display: inline-flex;
+    flex-direction: column;
+    height: 62px;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 127px;
+    left: 0;
+  }
+  
+  .pago-exterior-form .box-direccin-de-la {
+    position: relative;
+    width: 300px;
+    height: 25px;
+    margin-bottom: -6.5px;
+    background-color: #e2edfa;
+  }
+  
+  .pago-exterior-form .button-enviar {
+    display: flex;
+    width: 250px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 8px 16px;
+    position: relative;
+    top: 820px;
+    left: 515px;
+    background-color: #0059a1;
+    font-weight: bold;
+  }
+  
+  .pago-exterior-form .text-enviar {
+    position: relative;
+    flex: 1;
+    align-self: stretch;
+    margin-top: -1px;
+    font-family: var(--buttons-text-font-family);
+    font-weight: var(--buttons-text-font-weight);
+    color: var(--structurebackground);
+    font-size: var(--buttons-text-font-size);
+    text-align: center;
+    letter-spacing: var(--buttons-text-letter-spacing);
+    line-height: var(--buttons-text-line-height);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-style: var(--buttons-text-font-style);
+  }
+  
+  .pago-exterior-form .text-wrapper-4 {
+    position: absolute;
+    width: 228px;
+    height: 45px;
+    top: 174px;
+    left: 307px;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .pago-exterior-form .p {
+    position: absolute;
+    width: 303px;
+    height: 45px;
+    top: 174px;
+    left: 694px;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  

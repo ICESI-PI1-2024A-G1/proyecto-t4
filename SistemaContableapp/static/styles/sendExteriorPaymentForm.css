@@ -1,0 +1,443 @@
+.page {
+    width: 612px;
+    height: 792px;
+    background-color: #ffffff;
+  }
+  
+  .page .overlap-group {
+    position: relative;
+    height: 792px;
+    background-size: 100% 100%;
+  }
+  
+  .page .overlap {
+    position: absolute;
+    width: 118px;
+    height: 25px;
+    top: 578px;
+    left: 53px;
+  }
+  
+  .page .inputdirecci-n {
+    height: 14px;
+    top: 11px;
+    left: 0;
+    color: #222222;
+    font-size: 10px;
+    position: absolute;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .text-wrapper-1 {
+    position: absolute;
+    height: 12px;
+    top: 0px;
+    left: 0;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 10.3px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+
+  .page .text-wrapper {
+    position: absolute;
+    height: 12px;
+    top: -12px;
+    left: 0;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 10.3px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .page .input-numero-cuenta {
+    position: absolute;
+    height: 12px;
+    top: 563px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #222222;
+    font-size: 10px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .page .div {
+    position: absolute;
+    height: 13px;
+    top: 538px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 10.5px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .input-nombre-cuenta {
+    position: absolute;
+    height: 12px;
+    top: 532px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 10px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .p {
+    position: absolute;
+    height: 12px;
+    top: 508px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 10.3px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .page .text-wrapper-2 {
+    top: 486px;
+    font-size: 10.3px;
+    position: absolute;
+    height: 12px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .page .text-wrapper-3 {
+    position: absolute;
+    height: 12px;
+    top: 456px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 10.1px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .page .input-swift {
+    height: 13px;
+    top: 440px;
+    left: 53px;
+    color: #222222;
+    font-size: 10px;
+    position: absolute;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .inputtipoiban-ABA {
+    height: 13px;
+    top: 470px;
+    color: #222222;
+    font-size: 10px;
+    position: absolute;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .text-wrapper-4 {
+    top: 425px;
+    font-size: 10.1px;
+    position: absolute;
+    height: 12px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .page .input-tipo-cuenta {
+    height: 13px;
+    top: 411px;
+    color: #000000;
+    font-size: 10px;
+    position: absolute;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .inputcodigoiban-ABA {
+    position: absolute;
+    height: 13px;
+    top: 500px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 10px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .text-wrapper-5 {
+    position: absolute;
+    height: 12px;
+    top: 389px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 10.3px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .page .overlap-2 {
+    position: absolute;
+    width: 156px;
+    height: 25px;
+    top: 365px;
+    left: 53px;
+  }
+  
+  .page .input-banco {
+    height: 14px;
+    top: 20px;
+    left: 0;
+    color: #222222;
+    font-size: 10px;
+    position: absolute;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .text-wrapper-6 {
+    position: absolute;
+    height: 12px;
+    top: 350px;
+    left: 175px;
+    font-family: "Inter-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 9.9px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .input-domicilio {
+    height: 12px;
+    top: 289px;
+    left: 53px;
+    color: #000000;
+    font-size: 10px;
+    position: absolute;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .text-wrapper-7 {
+    position: absolute;
+    height: 12px;
+    top: 274px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 10.3px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .page .text-wrapper-8 {
+    position: absolute;
+    height: 12px;
+    top: 232px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 10.1px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .page .input-pasaporte {
+    height: 13px;
+    top: 227px;
+    left: 53px;
+    color: #000000;
+    font-size: 10px;
+    position: absolute;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .input-ciudad {
+    position: absolute;
+    height: 13px;
+    top: 257px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 10px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .text-wrapper-9 {
+    position: absolute;
+    height: 12px;
+    top: 213px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 10.3px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .page .input-identificacion {
+    height: 12px;
+    top: 198px;
+    left: 53px;
+    color: #000000;
+    font-size: 10px;
+    position: absolute;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .text-wrapper-10 {
+    position: absolute;
+    height: 13px;
+    top: 181px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 10.5px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .text-wrapper-11 {
+    position: absolute;
+    height: 12px;
+    top: 152px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 10.3px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .page .input-nombre {
+    height: 12px;
+    top: 137px;
+    left: 53px;
+    color: #000000;
+    font-size: 10px;
+    position: absolute;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .text-wrapper-12 {
+    height: 12px;
+    top: 166px;
+    color: #000000;
+    font-size: 9.8px;
+    position: absolute;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .text-wrapper-13 {
+    position: absolute;
+    height: 13px;
+    top: 120px;
+    left: 53px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 10.5px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .text-wrapper-14 {
+    position: absolute;
+    height: 12px;
+    top: 106px;
+    left: 243px;
+    font-family: "Inter-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 9.9px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .page .text-wrapper-15 {
+    position: absolute;
+    height: 16px;
+    top: 66px;
+    left: 124px;
+    font-family: "Inter-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 13.3px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  

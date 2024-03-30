@@ -3,3 +3,4 @@ from .models import *
 # Register your models here.
 admin.site.register(Requisition)
 admin.site.register(Charge_account)
+admin.site.register(Exterior_payment)

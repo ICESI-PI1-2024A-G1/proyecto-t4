@@ -1,6 +1,40 @@
 from django.db import models
 
  #Create your models here.
+    
+
+class Exterior_payment(models.Model):
+    """
+    Model representing a exterior payment request.
+    """
+    
+    BANK_ACCOUNT_TYPE =[
+        ('Ahorros','Ahorros'),
+        ('Corriente','Corriente')
+    ]
+    
+    IBAN_ABA_CODE_TYPE =[
+        ('IBAN','IBAN'),
+        ('ABA','ABA')
+    ]
+
+    beneficiary_name = models.CharField(max_length = 20)
+    beneficiary_last_name = models.CharField(max_length = 20)
+    beneficiary_document_type = models.CharField(max_length = 10)
+    beneficiary_document_no = models.CharField(max_length = 20)
+    passport_number = models.CharField(max_length = 20)
+    passport_expedition_city = models.CharField(max_length = 20)
+    address = models.TextField()
+    bank_name = models.CharField(max_length = 20)
+    account_type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
+    swift_code = models.CharField(max_length = 10)
+    iban_aba_code_type = models.CharField(max_length = 10, choices= IBAN_ABA_CODE_TYPE)
+    iban_aba_code = models.CharField(max_length = 10)
+    account_name = models.CharField(max_length = 30)
+    account_number = models.CharField(max_length = 20)
+    bank_address = models.TextField()
+
+
 
 class Requisition(models.Model):
     """
