@@ -37,6 +37,7 @@ th {
     border-bottom: solid 5px #000;
     color : white;
     padding: 10px;
+    z-index: 0;
 }
 
 .table-wrapper{
