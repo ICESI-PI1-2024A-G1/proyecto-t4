@@ -28,6 +28,10 @@ class Solicitud(models.Model):
     
 
 class Exterior_payment(models.Model):
+    """
+    Model representing a exterior payment request.
+    """
+    
     BANK_ACCOUNT_TYPE =[
         ('Ahorros','Ahorros'),
         ('Corriente','Corriente')

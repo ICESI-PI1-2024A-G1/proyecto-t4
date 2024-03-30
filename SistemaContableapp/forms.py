@@ -16,6 +16,19 @@ class CreateNewTask(forms.Form):
         
         
 class ExteriorPaymentForm(forms.ModelForm):
+    """
+    Form for creating an exterior payment request.
+
+    Inherits from the Django ModelForm class and defines the fields to be displayed in the form.
+
+    Attributes:
+        Meta (class): Metadata class for the form.
+        model (Exterior_payment): Django model associated with the form.
+        fields (list): List of fields to be included in the form.
+
+    Methods:
+        __init__(self, *args, **kwargs): Initialize the form and add CSS classes to the form fields.
+    """
     class Meta:
         model= Exterior_payment
         fields= ["beneficiary_name",
@@ -33,8 +46,17 @@ class ExteriorPaymentForm(forms.ModelForm):
                  "account_name",
                  "account_number",
                  "bank_address"]
-        
-    def __init__(self, *args, **kwargs): # Adiciona 
+    
+    """
+    Constructor for the ExteriorPaymentForm class.
+
+    Initializes the form and adds the 'form-control' class to all fields.
+
+    Args:
+        *args: Positional arguments.
+        **kwargs: Named arguments.
+    """    
+    def __init__(self, *args, **kwargs):  
         super().__init__(*args, **kwargs)  
         for field_name, field in self.fields.items():   
             field.widget.attrs['class'] = 'form-control'  

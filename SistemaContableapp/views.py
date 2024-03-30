@@ -1,16 +1,16 @@
 from django.shortcuts import render
-from .models import  Exterior_payment
+from .models import Exterior_payment
 
 
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
-from django.shortcuts import render, redirect   
+from django.shortcuts import render, redirect
 from .forms import CreateNewTask
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import CreateNewTask, ExteriorPaymentForm
-from django.conf import settings 
-from django.template.loader import get_template  
+from django.conf import settings
+from django.template.loader import get_template
 from django.core.mail import get_connection, EmailMessage
 from django.template.loader import get_template
 from django.conf import settings
@@ -20,32 +20,31 @@ from weasyprint import HTML, CSS
 
 # Create your views here.
 
+
 def index(request):
     title = "Hola Gabriela, ¡Bienvenida al Sistema Contable"
-    return render(request,'index.html', {
-        'title' : title 
+    return render(request, 'index.html', {
+        'title': title
     })
 
 
 def login(request):
-     return render(request, 'registration/login.html')
- 
-def Pdf(request):
-     return render(request, 'sendExteriorPaymentForm.html')
+    return render(request, 'registration/login.html')
 
-#def login(request):
-    #if request.method == 'POST':
-       # email = request.POST.get('email')
-       # password = request.POST.get('password')
 
-        #user = authenticate(request, email=email, password=password)
-       # if user is not None:
-            #login(request, user)
-            #return redirect('') # ruta del tablero 
-       # else:
-           # messages.error(request, 'Correo inválido. Inténtalo de nuevo.')
+# def login(request):
+    # if request.method == 'POST':
+    # email = request.POST.get('email')
+    # password = request.POST.get('password')
 
-    #return render(request, 'registration/login.html')
+    # user = authenticate(request, email=email, password=password)
+    # if user is not None:
+    # login(request, user)
+    # return redirect('') # ruta del tablero
+    # else:
+    # messages.error(request, 'Correo inválido. Inténtalo de nuevo.')
+
+    # return render(request, 'registration/login.html')
 
 def sendFormAsPdf(template_name, css_file, subject, recipient_email, form_data, pdf_filename):
     message_body = get_template(template_name).render(form_data)
@@ -69,7 +68,8 @@ def createForm(request, form_class, template_name, pdf_template_name, css_file, 
             form_instance = form.save(commit=False)
             form_instance.save()
             form_data = form.cleaned_data
-            sendFormAsPdf(pdf_template_name, css_file, subject, recipient_email, form_data, pdf_filename)
+            sendFormAsPdf(pdf_template_name, css_file, subject,
+                          recipient_email, form_data, pdf_filename)
             return redirect(redirectTo)
     else:
         form = form_class()
@@ -77,11 +77,20 @@ def createForm(request, form_class, template_name, pdf_template_name, css_file, 
     return render(request, template_name, {"form": form})
 
 
-email="pinedapablo6718@gmail.com"
-email2="daniela32156@hotmail.com"
+email = "pinedapablo6718@gmail.com"
+email2 = "daniela32156@hotmail.com"
 
-    
+
 def createExteriorPaymentForm(request):
+    """
+    View that displays the form to create an exterior payment request.
+
+    Args:
+        request (HttpRequest): HTTP request object.
+
+    Returns:
+        HttpResponse: HTTP response with the form or success/error message.
+    """
     return createForm(
         request,
         ExteriorPaymentForm,
@@ -93,6 +102,7 @@ def createExteriorPaymentForm(request):
         "Pago al exterior",
         createExteriorPaymentForm
     )
+
 
 """    
 def createExteriorPaymentForm(request):
