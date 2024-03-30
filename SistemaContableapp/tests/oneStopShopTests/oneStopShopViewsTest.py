@@ -52,7 +52,7 @@ class ViewTestCase(TestCase):
             'currentState': self.state.pk,
             'closeDate': '2023-04-30',
         }
-        form_data = {
+        formData = {
             'creationDate': data['creationDate'],
             'creator': data['creator'],
             'type': data['type'],
@@ -70,12 +70,12 @@ class ViewTestCase(TestCase):
             'closeDate': data['closeDate'],
         }
 
-        file_data = {'file': SimpleUploadedFile('media/testFile.pdf',b'file_content')}
+        fileData = {'file': SimpleUploadedFile('media/testFile.pdf',b'file_content')}
 
-        data = {**form_data, **file_data}
+        data = {**formData, **fileData}
 
         response = self.client.post(reverse('OneStopShopForm'), data) 
-        following = Following.objects.get(creator = form_data['creator'])   
+        following = Following.objects.get(creator = formData['creator'])   
         self.assertRedirects(response,reverse('confirmation'))
-        self.assertTrue(Following.objects.filter(creator = form_data['creator']).exists())
+        self.assertTrue(Following.objects.filter(creator = formData['creator']).exists())
         self.assertTrue(AttachedDocument.objects.filter(associatedFollowing = following).exists())

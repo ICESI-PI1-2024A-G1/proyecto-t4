@@ -3,7 +3,8 @@ from django.test import TestCase
 from SistemaContableApp.models import Following, AttachedDocument, State
 
 class ModelTestCase(TestCase):
-    def test_Following_model(self):
+
+    def testFollowingModel(self):
         state = State.objects.create(state="Pendiente de aceptación", color="gray")
         following = Following.objects.create(
             creationDate='2023-04-01',
@@ -24,7 +25,7 @@ class ModelTestCase(TestCase):
         )
         self.assertEqual(str(following), 'Solicitud - CENCO1')
 
-    def test_AttachedDocument_model(self):
+    def testAttachedDocumentModel(self):
         following = Following.objects.create(
             creationDate='2023-04-01',
             creator='John Doe',
@@ -42,10 +43,10 @@ class ModelTestCase(TestCase):
             currentState=State.objects.create(state="Pendiente de aceptación", color="gray"),
             closeDate='2023-04-30',
         )
-        attached_document = AttachedDocument.objects.create(
+        attachedDocument = AttachedDocument.objects.create(
             file='test_file.pdf',
             associatedFollowing=following
         )
-        self.assertEqual(str(attached_document), 'test_file.pdf')
-        self.assertEqual(attached_document.associatedFollowing,following)
+        self.assertEqual(str(attachedDocument), 'test_file.pdf')
+        self.assertEqual(attachedDocument.associatedFollowing,following)
 

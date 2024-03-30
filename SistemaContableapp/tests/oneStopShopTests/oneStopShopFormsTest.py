@@ -9,7 +9,6 @@ class FormTestCase(TestCase):
 
         self.state = State.objects.create(state = "Pendiente de aceptación", color = "gray")
 
-
     def testOneStopShopValidForm(self):
 
         formData =  {
