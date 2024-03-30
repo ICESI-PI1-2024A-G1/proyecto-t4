@@ -98,3 +98,21 @@ def fullOneStopShop(request):
     attachedDocuments = AttachedDocument.objects.all()
 
     return render(request, 'fullOneStopShop.html', {'followingData': followingData, 'files': attachedDocuments})
+
+def oneStopShopConfirmationView(request):
+    return render(request, 'oneStopShopconfirmation.html')
+
+def oneStopShopFormView(request):
+    if request.method == 'POST':
+        oneStopShopForm = OneStopShopForm(request.POST)
+        attachedDocumentForm = AttachedDocumentForm(request.POST, request.FILES)
+        if oneStopShopForm.is_valid() and attachedDocumentForm.is_valid():
+            following = oneStopShopForm.save()  
+            attachedDocument = attachedDocumentForm.save(commit=False)
+            attachedDocument.associatedFollowing = following 
+            attachedDocument.save()  
+            return redirect('confirmation')  
+    else:
+        oneStopShopForm = OneStopShopForm()
+        attachedDocumentForm = AttachedDocumentForm()
+    return render(request, 'oneStopShopForm.html', {'oneStopShopForm': oneStopShopForm, 'attachedDocumentForm': attachedDocumentForm})

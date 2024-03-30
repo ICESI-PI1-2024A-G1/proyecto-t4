@@ -1,0 +1,48 @@
+/* En tu archivo CSS */
+
+.following-form {
+    max-width: 500px; /* Ancho máximo del formulario */
+    margin: 0 auto; /* Centrar el formulario horizontalmente */
+    padding: 20px; /* Añadir un poco de espacio interno al formulario */
+    background-color: #f9f9f9; /* Color de fondo del formulario */
+    border: 1px solid #ddd; /* Borde del formulario */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Espacio entre grupos de campos */
+}
+
+.following-form input[type="text"],
+.following-form input[type="email"],
+.following-form textarea {
+    width: 100%; /* Ancho completo del input y textarea */
+    padding: 10px; /* Espacio interno del input y textarea */
+    font-size: 16px; /* Tamaño de la fuente */
+    border: 1px solid #ddd; /* Borde */
+    border-radius: 5px; /* Bordes redondeados */
+    box-sizing: border-box; /* Incluir padding y borde en el ancho total */
+}
+
+.following-form select {
+    width: 100%; /* Ancho completo del select */
+    padding: 10px; /* Espacio interno del select */
+    font-size: 16px; /* Tamaño de la fuente */
+    border: 1px solid #ddd; /* Borde */
+    border-radius: 5px; /* Bordes redondeados */
+    box-sizing: border-box; /* Incluir padding y borde en el ancho total */
+}
+
+.btn {
+    padding: 10px 20px; /* Espacio interno del botón */
+    font-size: 16px; /* Tamaño de la fuente del botón */
+    background-color: #007bff; /* Color de fondo del botón */
+    color: #fff; /* Color del texto del botón */
+    border: none; /* Eliminar borde del botón */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar por encima del botón */
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Cambiar color de fondo al pasar por encima del botón */
+}

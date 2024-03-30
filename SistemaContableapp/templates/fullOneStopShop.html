@@ -147,7 +147,7 @@
                             <td>
                                 <ul>
                                     {% for document in files %}
-                                    {% if document.associatedFollowing == v %}
+                                    {% if document.associatedFollowing == following %}
                                     <a href="{{document.file.url}}">{{document}}</a>
                                     <br>
                                     {% endif %}
