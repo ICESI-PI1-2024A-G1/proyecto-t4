@@ -1,13 +1,14 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 {% load my_filters %}
-
 {% block content %}
+{% include 'partials/messages.html' %}
 <!DOCTYPE html>
 <html>
 
 <head>
   <link rel='stylesheet' type='text/css' href="{% static '/styles/exteriorPaymentForm.css' %}">
+  <link rel="stylesheet" type='text/css' href="{% static '/styles/messages.css' %}">
 </head>
 
 <body>

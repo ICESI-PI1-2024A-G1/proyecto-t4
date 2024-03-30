@@ -9,4 +9,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')), 
     path('home/', views.index, name='home'),
     path('exteriorPaymentForm/', views.createExteriorPaymentForm, name = "viewExteriorPaymentForm"),
+    path('chargeAccountForm/', views.createChargeAccountForm, name = "viewChargeAccountForm"),
+    path('requisitionForm/', views.createRequisitionForm, name = "viewRequisitionForm"),
 ]
