@@ -131,7 +131,7 @@ def createChargeAccountForm(request):
     return createForm(
         request,
         ChargeAccountForm,
-        "sendChargeAccountForm.html",
+        "chargeAccountForm.html",
         "sendChargeAccountForm.html",
         "SistemaContableApp/static/styles/sendChargeAccountForm.css",
         "Solicitud de cuenta de cobro",
