@@ -88,13 +88,13 @@ def createChargeAccountForm(request):
         form = ChargeAccountForm()
     return render(request, "chargeAccountForm.html", {"form": form})
 
-def ventanillaUnicaResumida(request):
-     datosSeguimiento = Following.objects.all()
+def summaryOneStopShop(request):
+     folllowingData = Following.objects.all()
       
-     return render(request, 'ventanillaUnicaResumida.html',{ 'ventanilla' : datosSeguimiento})
+     return render(request, 'summaryOneStopShop.html',{ 'followingData' : folllowingData})
 
-def ventanillaUnica(request):
-    datosSeguimiento = Following.objects.all()
+def fullOneStopShop(request):
+    followingData = Following.objects.all()
     attachedDocuments = AttachedDocument.objects.all()
 
-    return render(request, 'ventanillaUnica.html', {'ventanilla': datosSeguimiento, 'files': attachedDocuments})
+    return render(request, 'fullOneStopShop.html', {'followingData': followingData, 'files': attachedDocuments})

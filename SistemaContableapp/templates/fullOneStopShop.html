@@ -8,7 +8,7 @@
     <head>
         <meta charset="UTF-8">
         <title >Ventanilla unica</title>
-        <link rel="stylesheet" href= "{% static '/styles/ventanillaUnica.css' %}" >
+        <link rel="stylesheet" href= "{% static '/styles/oneStopShopStyle.css' %}" >
     </head>
 </html>
 
@@ -124,25 +124,25 @@
                                 Fecha de cierre
                             </th>
                         </tr>
-                        {% for v in ventanilla %}
+                        {% for following in followingData %}
                         <tr>
                             <td>
-                                {{v.creationDate}}
+                                {{following.creationDate}}
                             </td>
                             <td>
-                                {{v.creator}}
+                                {{following.creator}}
                             </td>
                             <td>
-                                {{v.type}}
+                                {{following.type}}
                             </td>
                             <td>
-                                {{v.supplier}}
+                                {{following.supplier}}
                             </td>
                             <td>
-                                {{v.supplierId}}
+                                {{following.supplierId}}
                             </td>
                             <td>
-                                {{v.documentNumber}}
+                                {{following.documentNumber}}
                             </td>
                             <td>
                                 <ul>
@@ -155,85 +155,85 @@
                                 </ul>
                             </td>
                             <td>
-                                {{v.manager}}
+                                {{following.manager}}
                             </td>
-                            <td bgcolor = {{v.currentState.color}}>
-                                {{v.currentState.state}}
-                            </td>
-                            <td>
-                                {{v.acceptor}}
+                            <td bgcolor = {{following.currentState.color}}>
+                                {{following.currentState.state}}
                             </td>
                             <td>
-                                {{v.revisor}}
+                                {{following.acceptor}}
                             </td>
                             <td>
-                                {{v.acceptanceState}}
+                                {{following.revisor}}
                             </td>
                             <td>
-                                {{v.acceptanceDate}}
+                                {{following.acceptanceState}}
                             </td>
                             <td>
-                                {{v.revisionState}}
+                                {{following.acceptanceDate}}
                             </td>
                             <td>
-                                {{v.revision}}
+                                {{following.revisionState}}
                             </td>
                             <td>
-                                {{v.concept}}
+                                {{following.revision}}
                             </td>
                             <td>
-                                {{v.supplierEmail}}
+                                {{following.concept}}
                             </td>
                             <td>
-                                {{v.moneyType}}
+                                {{following.supplierEmail}}
                             </td>
                             <td>
-                                {{v.amount}}
+                                {{following.moneyType}}
                             </td>
                             <td>
-                                {{v.cenco}}
+                                {{following.amount}}
                             </td>
                             <td>
-                                {{v.cexNumber}}
+                                {{following.cenco}}
                             </td>
                             <td>
-                                {{v.observations}}
+                                {{following.cexNumber}}
                             </td>
                             <td>
-                                {{v.revisionDate}}
+                                {{following.observations}}
                             </td>
                             <td>
-                                {{v.approvalState}}
+                                {{following.revisionDate}}
                             </td>
                             <td>
-                                {{v.approval}}
+                                {{following.approvalState}}
                             </td>
                             <td>
-                                {{v.approvalDate}}
+                                {{following.approval}}
                             </td>
                             <td>
-                                {{v.approvalComments}}
+                                {{following.approvalDate}}
                             </td>
                             <td>
-                                {{v.accountingReception}}
+                                {{following.approvalComments}}
                             </td>
                             <td>
-                                {{v.accountingComments}}
+                                {{following.accountingReception}}
                             </td>
                             <td>
-                                {{v.accountingDate}}
+                                {{following.accountingComments}}
                             </td>
                             <td>
-                                {{v.receptor}}
+                                {{following.accountingDate}}
                             </td>
                             <td>
-                                {{v.modificationDate}}
+                                {{following.receptor}}
                             </td>
                             <td>
-                                {{v.modifier}}
+                                {{following.modificationDate}}
                             </td>
                             <td>
-                                {{v.closeDate}}
+                                {{following.modifier}}
+                            </td>
+                            <td>
+                                {{following.closeDate}}
                             </td>
                         </tr>
                         {% endfor %}

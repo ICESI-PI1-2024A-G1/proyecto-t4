@@ -37,22 +37,22 @@
                                 Fecha de cierre
                             </th>
                         </tr>
-                        {% for v in ventanilla %}
+                        {% for following in followingData %}
                         <tr>
                             <td>
-                                {{v.creationDate}}
+                                {{following.creationDate}}
                             </td>
                             <td>
-                                {{v.type}}
+                                {{following.type}}
                             </td>
                             <td>
-                                {{v.manager}}
+                                {{following.manager}}
                             </td>
-                            <td bgcolor = {{v.currentState.color}}>
-                                {{v.currentState.state}}
+                            <td bgcolor = {{following.currentState.color}}>
+                                {{following.currentState.state}}
                             </td>
                             <td>
-                                {{v.closeDate}}
+                                {{following.closeDate}}
                             </td>
                         </tr>
                         {% endfor %}
