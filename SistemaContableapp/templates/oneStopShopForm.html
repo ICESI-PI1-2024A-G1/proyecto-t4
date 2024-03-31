@@ -1,0 +1,26 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}  
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title >Agregar a ventanilla unica</title>
+        <link rel="stylesheet" href= "{% static '/styles/oneStopShopFormStyle.css' %}" >
+    </head>
+</html>
+
+
+<form method="post" enctype="multipart/form-data" class="following-form">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ oneStopShopForm.as_p }}
+    </div>
+    <div class="form-group">
+        {{ attachedDocumentForm.as_p }}
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+
+{% endblock %}

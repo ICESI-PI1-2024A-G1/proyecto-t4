@@ -1,7 +1,6 @@
 from django.db import models
 
- #Create your models here.
-    
+#Create your models here.
 
 class Exterior_payment(models.Model):
     """
@@ -76,7 +75,7 @@ class Requisition(models.Model):
     account_number = models.CharField(max_length = 20)
     authorName = models.CharField(max_length = 40,default = "")
 
-    def __str__(self):
+    def _str_(self):
         return self.radicate
 
 
@@ -107,9 +106,74 @@ class Charge_account(models.Model):
     retentions = models.BooleanField(default=False)
     declarant = models.BooleanField(default=False)
     colombian_resident = models.BooleanField(default=False)
+
+class State(models.Model):
+
+    COLORES = [
+        ('gray','Gris'),
+        ('orange','Naranja'),
+        ('yellow','Amarillo'),
+        ('green','Verde'),
+        ('blue','Azul'),
+        ('red','Rojo')
+
+    ]
+
+    ESTADOS = [
+        ('pendiente de aceptación', 'Pendiente de aceptación'),
+        ('en revisión', 'En revisión'),
+        ('revisado', 'Revisado'),
+        ('aprobado', 'Aprobado'),
+        ('aceptado', 'Aceptado'),
+        ('Rechazado por contabilidad','Rechazado por contabilidad')
+    ]
     
+    state = models.CharField(max_length = 30,choices = ESTADOS, primary_key = True)
+    color = models.CharField(max_length = 10,choices = COLORES)
+
+    def __str__(self):
+        return self.state
+
+class Following(models.Model):
+
+    creationDate = models.DateField()
+    creator = models.CharField(max_length = 40, null = True)
+    type = models.CharField(max_length = 20)
+    supplier = models.CharField(max_length = 40, null = True)
+    supplierId = models.CharField(max_length = 10, null = True)
+    documentNumber = models.CharField(max_length = 10, null = True)
+    manager = models.CharField(max_length = 40, null = True)
+    acceptor = models.CharField(max_length = 40, null = True)
+    revisor = models.CharField(max_length = 40, null = True)
+    acceptanceState = models.CharField(max_length = 10, null = True)
+    acceptanceDate = models.DateField(null = True)
+    revisionState = models.CharField(max_length = 10, null = True)
+    revision = models.CharField(max_length = 40, null = True)
+    concept = models.TextField()
+    supplierEmail = models.EmailField(null = True)
+    moneyType = models.CharField(max_length = 10)
+    amount = models.IntegerField()
+    cenco = models.CharField(max_length = 20)
+    cexNumber = models.CharField(max_length = 20)
+    observations = models.TextField()
+    revisionDate = models.DateField(null = True)
+    approvalState = models.CharField(max_length = 10, null = True)
+    approval = models.TextField(null = True)
+    approvalDate = models.DateField(null = True)
+    approvalComments = models.TextField(null = True)
+    accountingReception = models.CharField(max_length = 10, null = True)
+    accountingComments = models.TextField(null = True)
+    accountingDate = models.DateField(null = True)
+    receptor = models.CharField(max_length = 40, null = True)
+    modificationDate = models.DateField(null = True)
+    modifier = models.CharField(max_length = 40, null = True)
+    currentState = models.ForeignKey(State, on_delete = models.PROTECT)
+    closeDate = models.DateField()
 
 
-
-
-
+class AttachedDocument(models.Model):
+    file = models.FileField()
+    associatedFollowing = models.ForeignKey(Following, on_delete = models.CASCADE)
+    
+    def __str__(self):
+        return self.file.name

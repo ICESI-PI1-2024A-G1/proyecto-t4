@@ -1,6 +1,6 @@
 from django import forms
 from ftplib import MAXLINE
-from .models import Charge_account, Requisition, Exterior_payment
+from .models import *
         
 
 class DateInput(forms.DateInput):
@@ -111,8 +111,8 @@ class ChargeAccountForm(forms.ModelForm):
         super().__init__(*args, **kwargs)  
         for field_name, field in self.fields.items():   
             field.widget.attrs['class'] = 'form-control'
-            
-            
+        
+
 class RequisitionForm(forms.ModelForm):
     """
     Form to create a requisition request.
@@ -158,7 +158,29 @@ class RequisitionForm(forms.ModelForm):
         
         super().__init__(*args, **kwargs)  
         for field_name, field in self.fields.items():   
-            field.widget.attrs['class'] = 'form-control'  
-  
-    
+            field.widget.attrs['class'] = 'form-control' 
 
+        
+class OneStopShopForm(forms.ModelForm):
+    class Meta:
+        model = Following
+        fields = [ "creationDate",
+                  "creator",
+                  "type",
+                  "supplier",
+                  "supplierId",
+                  "documentNumber",
+                  "concept",
+                  "supplierEmail",
+                  "moneyType",
+                  "amount",
+                  "cenco",
+                  "cexNumber",
+                  "observations",
+                  "currentState",
+                  "closeDate"]
+
+class AttachedDocumentForm(forms.ModelForm):
+    class Meta:
+        model = AttachedDocument
+        fields = ['file']
