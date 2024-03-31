@@ -1,143 +1,21 @@
 from django.db import models
 
-
 #Create your models here.
 
-class Requisition(models.Model):
-
-    BANK_ACCOUNT_TYPE =[
-        ('saving','De ahorros'),
-        ('current','Corriente')
-    ]
-
-
-    radicate = models.CharField(max_length = 20)
-    payment_order_code = models.CharField(max_length = 20)
-    date = models.DateField()
-    name = models.CharField(max_length = 40,default = "")
-    idNumber = models.CharField(max_length = 10,default = "")
-    charge = models.CharField(max_length = 40,default = "")
-    dependency = models.CharField(max_length = 40,default = "")
-    cenco = models.CharField(max_length = 20)
-    value = models.DecimalField(decimal_places = 10,max_digits = 20)
-    concept = models.TextField()
-    description = models.TextField()
-    bank = models.CharField(max_length = 20)
-    type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
-    account_number = models.CharField(max_length = 20)
-
-    def __str__(self):
-        return self.radicate
-
-
-class Legalization(models.Model):
-
-    BANK_ACCOUNT_TYPE =[
-        ('saving','De ahorros'),
-        ('current','Corriente')
-    ]
-
-    legalization_date = models.DateField()
-    cost_center = models.CharField(max_length = 30, null = True)
-    name = models.CharField(max_length = 40,default = "")
-    identificationNumber = models.CharField(max_length = 10,default = "")
-    dependency = models.CharField(max_length = 30, null = True)
-    destiny = models.CharField(max_length = 20, null = True)
-    travel_date = models.DateField(null = True)
-    return_date = models.DateField(null = True)
-    motive = models.TextField(null = True)
-    value = models.IntegerField(null = True)
-    employee_balance = models.IntegerField(null = True)
-    icesi_balance = models.IntegerField(null = True)
-    descount_in_one_quote = models.BooleanField(null = True)
-    elaborator_name = models.CharField(max_length = 20,null = True)
-    orderer_name = models.CharField(max_length = 20,null = True)
-    bank = models.CharField(max_length = 20,null = True)
-    type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE,null = True)
-    account_number = models.CharField(max_length = 20,null = True)
-
-
-
-
-class Expense(models.Model):
-
-    MONEY_TYPE = [
-        ('USD','Dolar'),
-        ('COP', 'Pesos colombianos'),
-        ('EUR','Euro')
-    ]
-
-    category = models.CharField(max_length = 20)
-    support_no = models.IntegerField(null = True)
-    third_person_name = models.CharField(max_length = 30,null = True)
-    third_person_nit = models.CharField(max_length = 20,null = True)
-    concept = models.TextField(null = True)
-    money = models.CharField(max_length = 10, choices = MONEY_TYPE)
-    value = models.DecimalField(decimal_places = 10,max_digits = 20)
-    legalization_facture = models.ForeignKey(Legalization, on_delete = models.CASCADE)
-
-
-class Advance(models.Model):
-
-    BANK_ACCOUNT_TYPE =[
-        ('saving','De ahorros'),
-        ('current','Corriente')
-    ]
-
-    radicate = models.CharField(max_length = 20)
-    payment_order_code = models.CharField(max_length = 20)
-    date = models.DateField()
-    cost_center = models.CharField(max_length = 20)
-    name = models.CharField(max_length = 40,default = "")
-    identificationNumber = models.CharField(max_length = 10,default = "")
-    dependency = models.CharField(max_length = 30)
-    destiny_city = models.CharField(max_length = 30)
-    travel_date = models.DateField()
-    return_date = models.DateField()
-    motive = models.TextField()
-    foreign_money = models.BooleanField()
-    money = models.CharField(max_length = 10)
-    last_day_at_icesi = models.DateField()
-    elaborator_name = models.CharField(max_length = 20)
-    orderer_name = models.CharField(max_length = 20)
-    value = models.DecimalField
-    bank = models.CharField(max_length = 20)
-    type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
-    account_number = models.CharField(max_length = 20)
-
-
-class Expense_balance(models.Model):
-
-    name = models.CharField(max_length = 20)
-    value = models.DecimalField(decimal_places = 10,max_digits = 20)
-    advance = models.ForeignKey(Advance, on_delete = models.CASCADE)
-
-
-class Charge_account(models.Model):
-
-    BANK_ACCOUNT_TYPE =[
-        ('saving','De ahorros'),
-        ('current','Corriente')
-    ]
-
-    name = models.CharField(max_length = 40,default = "")
-    identification = models.CharField(max_length = 10,default = "")
-    concept = models.TextField()
-    value = models.CharField(max_length = 20)
-    retention_392_401 = models.BooleanField()
-    retention_383 = models.BooleanField()
-    declarant = models.BooleanField()
-    colombian_resident = models.BooleanField()
-    city = models.CharField(max_length = 20)
-    date = models.DateField()
-    cex = models.CharField(max_length = 20)
-    bank = models.CharField(max_length = 20)
-    type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
-    account_number = models.CharField(max_length = 20)
-    
-
-
 class Exterior_payment(models.Model):
+    """
+    Model representing a exterior payment request.
+    """
+    
+    BANK_ACCOUNT_TYPE =[
+        ('Ahorros','Ahorros'),
+        ('Corriente','Corriente')
+    ]
+    
+    IBAN_ABA_CODE_TYPE =[
+        ('IBAN','IBAN'),
+        ('ABA','ABA')
+    ]
 
     beneficiary_name = models.CharField(max_length = 20)
     beneficiary_last_name = models.CharField(max_length = 20)
@@ -147,14 +25,87 @@ class Exterior_payment(models.Model):
     passport_expedition_city = models.CharField(max_length = 20)
     address = models.TextField()
     bank_name = models.CharField(max_length = 20)
-    account_type = models.CharField(max_length = 10)
+    account_type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
     swift_code = models.CharField(max_length = 10)
-    iban_aba_code_type = models.CharField(max_length = 10)
+    iban_aba_code_type = models.CharField(max_length = 10, choices= IBAN_ABA_CODE_TYPE)
     iban_aba_code = models.CharField(max_length = 10)
     account_name = models.CharField(max_length = 30)
     account_number = models.CharField(max_length = 20)
     bank_address = models.TextField()
 
+
+
+class Requisition(models.Model):
+    """
+    Model representing a requisition request.
+    """
+
+    BANK_ACCOUNT_TYPE =[
+        ('De ahorros','De ahorros'),
+        ('Corriente','Corriente')
+    ]
+    
+    CONCEPT_OPTIONS = [
+        ('Reintegro colaboradores','Reintegro colaboradores'),
+        ('Patrocinio estudiantes','Patrocinio estudiantes'),
+        ('Beca pasantia','Beca pasantia'),
+        ('Evento de estudiantes','Evento de estudiantes'),
+        ('Pago alimentación estudiante extranjero','Pago alimentación estudiante extranjero'),
+        ('En la descripción','En la descripción')
+    ]
+    
+    PAYMENT_METHOD = [
+        ('Nomina','Nomina'),
+        ('Consignación','Consignación')
+    ]
+    
+    date = models.DateField()
+    beneficiaryName = models.CharField(max_length = 40,default = "")
+    idNumber = models.CharField(max_length = 10,default = "")
+    charge = models.CharField(max_length = 40,default = "")
+    dependency = models.CharField(max_length = 40,default = "")
+    cenco = models.CharField(max_length = 20)
+    value = models.DecimalField(decimal_places = 10,max_digits = 30)
+    concept = models.CharField(max_length = 40,choices = CONCEPT_OPTIONS)
+    description = models.TextField()
+    radicate = models.CharField(max_length = 20)
+    payment_order_code = models.CharField(max_length = 20)
+    paymentMethod = models.CharField(max_length = 15,choices = PAYMENT_METHOD)
+    typeAccount = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
+    account_number = models.CharField(max_length = 20)
+    authorName = models.CharField(max_length = 40,default = "")
+
+    def _str_(self):
+        return self.radicate
+
+
+
+class Charge_account(models.Model):
+    """
+    Model representing a charge account request.
+    """
+
+    BANK_ACCOUNT_TYPE =[
+        ('De ahorros','De ahorros'),
+        ('Corriente','Corriente')
+    ]
+
+    name = models.CharField(max_length = 40,default = "")
+    identification = models.CharField(max_length = 10,default = "")
+    phone = models.CharField(max_length = 13,default = "")
+    city = models.CharField(max_length = 20)
+    addres = models.CharField(max_length = 50)
+    date = models.DateField()
+    value_letters = models.CharField(max_length = 60)
+    value_numbers = models.CharField(max_length = 15)
+    concept = models.TextField()
+    bank = models.CharField(max_length = 20)
+    type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
+    account_number = models.CharField(max_length = 20)
+    cex = models.CharField(max_length = 20)
+    retentions = models.BooleanField(default=False)
+    declarant = models.BooleanField(default=False)
+    colombian_resident = models.BooleanField(default=False)
 
 class State(models.Model):
 
@@ -219,8 +170,6 @@ class Following(models.Model):
     currentState = models.ForeignKey(State, on_delete = models.PROTECT)
     closeDate = models.DateField()
 
-    def __str__(self):
-        return self.type + ' - ' + self.cenco
 
 class AttachedDocument(models.Model):
     file = models.FileField()
@@ -228,21 +177,3 @@ class AttachedDocument(models.Model):
     
     def __str__(self):
         return self.file.name
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
