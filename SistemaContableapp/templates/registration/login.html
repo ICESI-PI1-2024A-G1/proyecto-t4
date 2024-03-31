@@ -4,7 +4,7 @@
 
 
 <head> 
-    <title>Inicio de sesin</title>
+    <title>Inicio de sesion</title>
     <link rel='stylesheet' type='text/css' href='{% static "css/inicio.css" %}'>
 </head> 
 
@@ -18,31 +18,32 @@
             <div class="logo"></div>
             
             <div class="input-box">
-                <input type="text" name="email" placeholder="user@u.outlook.com" required>
+                <input type="text" name="email" placeholder="Correo Electrónico" required>
                 <i class='bx bxs-user'></i>
-                <!--<input type="text" placeholder="user@u.icesi.edu.co" 
-                required>
-                <i class='bx bxs-user'></i>-->
+                
             </div>
 
             <div class="input-box">
                 <input type="password" name="password" placeholder="Contraseña" required>
                 <i class='bx bxs-lock-alt'></i>
-                <!--<input type="password"
-                placeholder="Contraseña" required>
-                <i class='bx bxs-lock-alt'></i>-->
             </div>
 
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
             <div class="remember-forgot">
+             <a href="/password_reset/">Olvidaste tu contraseña?</a>
+
                 
-             <a href="#">¿Olvidó su nombre de usuario o contraseña?</a>
-            </div>
+             <a href="/registro/">Registrarse</a>
+            </div>  
 
             <button type ="submit" class="btn">Acceder</button>
             
-
-        </form>
-
+            
     </div>
 
 </body>
