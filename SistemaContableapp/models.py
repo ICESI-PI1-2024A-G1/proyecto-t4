@@ -1,7 +1,7 @@
 from django.db import models
-from multiupload.fields import MultiFileField
 
- #Create your models here.
+
+#Create your models here.
 
 class Requisition(models.Model):
 
@@ -172,7 +172,7 @@ class State(models.Model):
         ('pendiente de aceptación', 'Pendiente de aceptación'),
         ('en revisión', 'En revisión'),
         ('revisado', 'Revisado'),
-        ('aprovado', 'Aprobado'),
+        ('aprobado', 'Aprobado'),
         ('aceptado', 'Aceptado'),
         ('Rechazado por contabilidad','Rechazado por contabilidad')
     ]

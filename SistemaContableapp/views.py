@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from .models import  *
-
-
+from django.db.models import Q  
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect   
@@ -16,6 +15,7 @@ from django.template.loader import get_template
 from django.conf import settings
 from django.core.mail import EmailMessage
 import weasyprint
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 # Create your views here.
 
@@ -27,7 +27,7 @@ def index(request):
 
 
 def login(request):
-     return render(request, 'registration/login.html')
+    return render(request, 'registration/login.html')
 
 #def login(request):
     #if request.method == 'POST':
@@ -88,10 +88,78 @@ def createChargeAccountForm(request):
         form = ChargeAccountForm()
     return render(request, "chargeAccountForm.html", {"form": form})
 
+
 def summaryOneStopShopView(request):
-     folllowingData = Following.objects.all()
-      
-     return render(request, 'summaryOneStopShop.html',{ 'followingData' : folllowingData})
+    # Obtener todos los objetos de Following
+    queryset = Following.objects.all()
+    
+    # Obtener parámetros de búsqueda y filtrado
+    query = request.GET.get('q')
+    estado = request.GET.get('estado')
+    tipo = request.GET.get('tipo')
+    ordenar_por = request.GET.get("ordenar_por", None)
+    fecha_creacion_inicio = request.GET.get('fecha_creacion_inicio')
+    fecha_creacion_fin = request.GET.get('fecha_creacion_fin')
+    fecha_cierre_inicio = request.GET.get('fecha_cierre_inicio')
+    fecha_cierre_fin = request.GET.get('fecha_cierre_fin')
+    
+    # Aplicar filtros según los parámetros recibidos
+    if query:
+        queryset = queryset.filter(
+            Q(type__icontains=query) | Q(currentState__state__icontains=query) 
+        )
+    if estado:
+        queryset = queryset.filter(CurrentState__state__icontains=estado)
+        
+    if tipo:
+        queryset = queryset.filter(type__contains=tipo)
+    
+    if ordenar_por:
+        queryset = queryset.order_by(ordenar_por)
+
+    if fecha_creacion_inicio and fecha_creacion_fin:
+        queryset = queryset.filter(
+            creation_date__range=[fecha_creacion_inicio, fecha_creacion_fin]
+        )
+    if fecha_cierre_inicio and fecha_cierre_fin:
+        queryset = queryset.filter(
+            close_date__range=[fecha_cierre_inicio, fecha_cierre_fin]
+        )
+        
+
+    
+    # Configurar la paginación
+    paginator = Paginator(queryset, 10)
+    page_number = request.GET.get('page')
+    try:
+        ventanilla = paginator.page(page_number)
+    except PageNotAnInteger:
+        ventanilla = paginator.page(1)
+    except EmptyPage:
+        ventanilla = paginator.page(paginator.num_pages)
+    
+    # Obtener tipos únicos de los objetos de Following
+    tipos = Following.objects.values_list('type', flat=True).distinct()
+    estados = State.objects.values_list('state', flat=True).distinct()
+    fechas_creacion = Following.objects.values_list('creationDate', flat=True).distinct()
+    fechas_cierre = Following.objects.values_list('closeDate', flat=True).distinct()
+    
+    
+    # Pasar objetos al contexto
+    context = {
+        'ventanilla': ventanilla,
+        'estados': estados, 
+        'tipos': tipos,  # Obtener los tipos únicos
+        'fechas_creacion': fechas_creacion,
+        'fechas_cierre': fechas_cierre,
+    }
+    
+    return render(request, 'summaryOneStopShop.html', context)
+
+
+def oneStopShopConfirmationView(request):
+    return render(request, 'oneStopShopConfirmation.html')
+
 
 def fullOneStopShopView(request):
     followingData = Following.objects.all()
@@ -116,3 +184,4 @@ def oneStopShopFormView(request):
         oneStopShopForm = OneStopShopForm()
         attachedDocumentForm = AttachedDocumentForm()
     return render(request, 'oneStopShopForm.html', {'oneStopShopForm': oneStopShopForm, 'attachedDocumentForm': attachedDocumentForm})
+

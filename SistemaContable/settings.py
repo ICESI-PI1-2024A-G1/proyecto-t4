@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'SistemaContable.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+# https://docs.djangop  roject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
