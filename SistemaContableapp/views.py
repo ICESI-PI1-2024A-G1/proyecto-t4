@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from .models import  Charge_account,Following
-
+from .models import  *
 from django.db.models import Q  
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
@@ -8,7 +7,7 @@ from django.shortcuts import render, redirect
 from .forms import CreateNewTask
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .forms import CreateNewTask, ChargeAccountForm
+from .forms import *
 from django.conf import settings 
 from django.template.loader import get_template  
 from django.core.mail import get_connection, EmailMessage
@@ -90,7 +89,7 @@ def createChargeAccountForm(request):
     return render(request, "chargeAccountForm.html", {"form": form})
 
 
-def ventanilla_unica(request):
+def summaryOneStopShopView(request):
     # Obtener todos los objetos de Following
     queryset = Following.objects.all()
     
@@ -107,12 +106,13 @@ def ventanilla_unica(request):
     # Aplicar filtros según los parámetros recibidos
     if query:
         queryset = queryset.filter(
-            Q(state__icontains=query) | Q(type__icontains=query)
+            Q(type__icontains=query) | Q(currentState__state__icontains=query) 
         )
     if estado:
-        queryset = queryset.filter(state=estado)
+        queryset = queryset.filter(CurrentState__state__icontains=estado)
+        
     if tipo:
-        queryset = queryset.filter(type__contains= tipo)
+        queryset = queryset.filter(type__contains=tipo)
     
     if ordenar_por:
         queryset = queryset.order_by(ordenar_por)
@@ -140,9 +140,9 @@ def ventanilla_unica(request):
     
     # Obtener tipos únicos de los objetos de Following
     tipos = Following.objects.values_list('type', flat=True).distinct()
-    estados = Following.ESTADOS
-    fechas_creacion = Following.objects.values_list('creation_date', flat=True).distinct()
-    fechas_cierre = Following.objects.values_list('close_date', flat=True).distinct()
+    estados = State.objects.values_list('state', flat=True).distinct()
+    fechas_creacion = Following.objects.values_list('creationDate', flat=True).distinct()
+    fechas_cierre = Following.objects.values_list('closeDate', flat=True).distinct()
     
     
     # Pasar objetos al contexto
@@ -154,15 +154,34 @@ def ventanilla_unica(request):
         'fechas_cierre': fechas_cierre,
     }
     
-    return render(request, 'ventanilla_unica_resumida.html', context)
+    return render(request, 'summaryOneStopShop.html', context)
 
 
-#con esta verga no funciona, con la de arriba sí
+def oneStopShopConfirmationView(request):
+    return render(request, 'oneStopShopConfirmation.html')
 
 
-#def args_principal(seleccionado):
-    #return {
-        #"Programas posgrado": {"url": "/academico/programas", "seleccionado": seleccionado=="programas"},
-        #"Materias posgrado": {"url": "/academico/materias", "seleccionado": seleccionado=="materias"},
-        #"Docentes posgrado": {"url": "/docentes", "seleccionado": seleccionado=="docentes"}
-        #}
+def fullOneStopShopView(request):
+    followingData = Following.objects.all()
+    attachedDocuments = AttachedDocument.objects.all()
+
+    return render(request, 'fullOneStopShop.html', {'followingData': followingData, 'files': attachedDocuments})
+
+def oneStopShopConfirmationView(request):
+    return render(request, 'oneStopShopConfirmation.html')
+
+def oneStopShopFormView(request):
+    if request.method == 'POST':
+        oneStopShopForm = OneStopShopForm(request.POST)
+        attachedDocumentForm = AttachedDocumentForm(request.POST, request.FILES)
+        if oneStopShopForm.is_valid() and attachedDocumentForm.is_valid():
+            following = oneStopShopForm.save()  
+            attachedDocument = attachedDocumentForm.save(commit=False)
+            attachedDocument.associatedFollowing = following 
+            attachedDocument.save()  
+            return redirect('confirmation')  
+    else:
+        oneStopShopForm = OneStopShopForm()
+        attachedDocumentForm = AttachedDocumentForm()
+    return render(request, 'oneStopShopForm.html', {'oneStopShopForm': oneStopShopForm, 'attachedDocumentForm': attachedDocumentForm})
+

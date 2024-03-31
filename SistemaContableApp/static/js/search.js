@@ -15,7 +15,7 @@ function toggleFiltrado() {
         tipoDiv.style.display = 'flex';
         fechaCreacionDiv.style.display = 'none';
         fechaCierreDiv.style.display = 'none';
-    } else if (ordenarPor === 'creation_date') {
+    } else if (ordenarPor === 'creationDate') {
         estadoDiv.style.display = 'none';
         tipoDiv.style.display = 'none';
         fechaCreacionDiv.style.display = 'flex';
@@ -31,7 +31,7 @@ function toggleFiltrado() {
                 $("#fecha_creacion_inicio, #fecha_creacion_fin").not(this).datepicker("option", option, date);
             }
         });
-    } else if (ordenarPor === 'close_date') {
+    } else if (ordenarPor === 'closeDate') {
         estadoDiv.style.display = 'none';
         tipoDiv.style.display = 'none';
         fechaCreacionDiv.style.display = 'none';

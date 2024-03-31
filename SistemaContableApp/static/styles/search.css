@@ -1,6 +1,6 @@
-  /* Estilo para agregar margen inferior a la barra de búsqueda */
+  /* Esti40px para agregar margen inferior a la barra de búsqueda */
   .container {
-    margin-bottom: 20px; /* Ajusta el valor según sea necesario */
+    margin-bottom: 40px; /* Ajusta el valor según sea necesario */
 }
 
 /* Estilos para la barra de búsqueda */
@@ -47,6 +47,7 @@
   top: 0.5px;
   right: 110px; /* Ajuste de posición para alinear al lado de la barra */
   border-radius: 5px;
+
 }
 
 .FiltroDateFirst{

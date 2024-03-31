@@ -1,4 +1,3 @@
-{% extends 'index.html' %}
 {% block content %}
 
 <!DOCTYPE html>
@@ -27,7 +26,7 @@
     <div class="mb-3">
 
         <!-- Formulario de búsqueda -->            
-        <form id="search-form" method="GET" action="{% url 'ventanilla' %}" class="form-inline">
+        <form id="search-form" method="GET" action="{% url 'summaryOneStopShop' %}" class="form-inline">
             <div class="form-group flex-grow-1 position-relative">
                 <input type="text" name="q" id="q" class="form-control w-100 pl-4 Barra" placeholder="Buscar" />
                 <button type="submit" class="SearchIcon" form="search-form"></button> <!-- Botón de búsqueda -->
@@ -38,7 +37,7 @@
 
 
         <!-- Formulario para filtrado y ordenamiento -->
-        <form method="GET" action="{% url 'ventanilla' %}" class="form-inline">
+        <form method="GET" action="{% url 'summaryOneStopShop' %}" class="form-inline">
             <div class="form-group mr-2 d-flex align-items-center FiltroInput">
 
                 <label for="ordenar_por" class="mr-2 ">Filtrar por:</label>
@@ -46,8 +45,8 @@
                     <option value="">Sin orden</option>
                     <option value="state">Estado de Solicitud</option>
                     <option value="type">Tipo de Solicitud</option>
-                    <option value="creation_date">Fecha de creación</option>
-                    <option value="close_date">Fecha de cierre</option>
+                    <option value="creationDate">Fecha de creación</option>
+                    <option value="closeDate">Fecha de cierre</option>
                 </select>
 
                 <!-- Contenedor para Filtrado por Tipo de Solicitud y Estado de Solicitud -->
@@ -57,7 +56,7 @@
                         <select name="estado" class="form-control FiltroOption">
                             <option value="">Todos los estados</option>
                             {% for estado in estados %}
-                            <option value="{{ estado.0 }}">{{ estado.1 }}</option>
+                            <option value="{{ estado.state }}">{{ estado.color }}</option>
                             {% endfor %}
                         </select>   
                         <button type="submit" class="FilterIcon"></button>

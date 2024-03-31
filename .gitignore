@@ -2,6 +2,6 @@
 **/*.local
 **/*.git
 **/*.DS_Store
-**/__pycache
+**/__pycache__
 **/migrations
 **/venv/
