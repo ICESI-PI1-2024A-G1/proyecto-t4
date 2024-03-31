@@ -26,12 +26,16 @@ SECRET_KEY = 'django-insecure-u73g&m(@zc3kq(ke+&rw!b@=-_q6yj7x0fuvxs$r@1^c&@_jv!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+if DEBUG:
+    os.environ['wsgi.url_scheme'] = 'http'
+
 ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'SistemaContableApp.apps.SistemacontableappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_renderpdf',
     'multiupload',
-    'SistemaContableApp'
+    
     
 ]
 
@@ -59,7 +63,7 @@ ROOT_URLCONF = 'SistemaContable.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ os.path.join(BASE_DIR, 'SistemaContableApp', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,7 +132,14 @@ STATIC_ROOT = (os.path.join(BASE_DIR, 'SistemaContableApp/static'),)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com' 
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'isahc221004@gmail.com'
+EMAIL_HOST_PASSWORD = 'ombg qdvq ssqm rnaj'
 
+SECURE_SSL_REDIRECT = False
 EMAIL_HOST = 'smtp.office365.com' 
 DEFAULT_FROM_EMAIL = 'UsuarioSolicitante0@outlook.com'
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
