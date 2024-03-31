@@ -45,12 +45,12 @@ The objective of these tests is to verify the correct operation of views related
 
 ### Test Cases
 
-| Clase                    | Método                 | Etapa                      | Valores de Entrada                               | Resultado Esperado                                              |
-| ------------------------ | ---------------------- | -------------------------- | ----------------------------------------------- | --------------------------------------------------------------- |
-| UserRequestViewsTest     | test_index_view        | setUp1                     | -                                               | Devuelve un código de estado 200 y utiliza la plantilla 'registration/login.html' |
-| UserRequestViewsTest     | test_forgot_password_view | setUp2                  | -                                               | Devuelve un código de estado 200 y utiliza la plantilla 'registration/password_reset_form.html' |
-| UserRequestViewsTest     | test_user_login_view   | setUp3                     | -                                               | Devuelve un código de estado 200 y utiliza la plantilla 'registration/login.html' |
-| UserRequestViewsTest     | test_registration_view | setUp4                     | -                                               | Devuelve un código de estado 200 y utiliza la plantilla 'registration/registro.html' |
-| UserRequestViewsTest     | test_password_reset_request_view | setUp5             | -                                               | Devuelve un código de estado 200 y utiliza la plantilla 'registration/password_reset_form.html' |
-| UserRequestViewsTest     | test_successful_user_login | setUp1                   | {'email': 'test@example.com', 'password': 'password'} | Redirecciona al índice luego de un inicio de sesión exitoso |
-| UserRequestViewsTest     | test_successful_password_reset_request |          | {'email': 'test@example.com'}                  | Redirecciona a 'password_reset_done' tras una solicitud de restablecimiento de contraseña exitosa |
+| Class                   | Method                      | Stage      | Input Values                                     | Expected Result                                                     |
+| ----------------------- | --------------------------- | ---------- | ------------------------------------------------- | -------------------------------------------------------------------- |
+| UserRequestViewsTest    | test_index_view             | setUp1     | -                                               | Returns a status code 200 and uses the template 'registration/login.html' |
+| UserRequestViewsTest    | test_forgot_password_view   | setUp2     | -                                               | Returns a status code 200 and uses the template 'registration/password_reset_form.html' |
+| UserRequestViewsTest    | test_user_login_view        | setUp3     | -                                               | Returns a status code 200 and uses the template 'registration/login.html' |
+| UserRequestViewsTest    | test_registration_view      | setUp4     | -                                               | Returns a status code 200 and uses the template 'registration/registro.html' |
+| UserRequestViewsTest    | test_password_reset_request_view | setUp5 | -                                               | Returns a status code 200 and uses the template 'registration/password_reset_form.html' |
+| UserRequestViewsTest    | test_successful_user_login  | setUp1     | {'email': 'test@example.com', 'password': 'password'} | Redirects to the index page after a successful login |
+| UserRequestViewsTest    | test_successful_password_reset_request | - | {'email': 'test@example.com'}                   | Redirects to 'password_reset_done' after a successful password reset request |

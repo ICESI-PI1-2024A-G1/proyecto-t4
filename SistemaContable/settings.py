@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_renderpdf',
+    'multiupload',
     
     
 ]
@@ -79,7 +80,7 @@ WSGI_APPLICATION = 'SistemaContable.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+# https://docs.djangop  roject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -139,3 +140,12 @@ EMAIL_HOST_USER = 'isahc221004@gmail.com'
 EMAIL_HOST_PASSWORD = 'ombg qdvq ssqm rnaj'
 
 SECURE_SSL_REDIRECT = False
+EMAIL_HOST = 'smtp.office365.com' 
+DEFAULT_FROM_EMAIL = 'UsuarioSolicitante0@outlook.com'
+EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
+EMAIL_HOST_PASSWORD = 'Pindy000' 
+EMAIL_PORT = 587 
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR,"media")

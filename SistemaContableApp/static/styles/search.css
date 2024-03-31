@@ -1,0 +1,122 @@
+  /* Esti40px para agregar margen inferior a la barra de búsqueda */
+  .container {
+    margin-bottom: 40px; /* Ajusta el valor según sea necesario */
+}
+
+/* Estilos para la barra de búsqueda */
+.Barra {
+  position: absolute;
+ 
+  width: 40%; /* Ancho del 50% del contenedor menos espacio para los botones */
+  max-height: 100px; /* Altura máxima para evitar que crezca demasiado */
+  height: 15px; /* Altura reducida */
+  top: 100px; /* Distancia desde la parte superior debajo del header */
+  left: 65px; /* Distancia desde el borde izquierdo */
+  border-radius: 5px #000; /* Bordes redondeados para un aspecto más agradable */
+}
+
+/* Estilos para la barra de filtro, es decir, este es el text "filtrar por" que aparece en la mitad*/
+.FiltroInput {
+  position: absolute;
+  width: 40%; /* Ancho del 50% del contenedor menos espacio para los botones */
+  max-height: 100px; /* Altura máxima para evitar que crezca demasiado */
+  height: 10px; /* Altura reducida */
+  top: 99px; /* Distancia desde la parte superior debajo del header */
+  right: 150px; /* Ajuste para alinear con la barra de búsqueda */
+ 
+}
+
+/* Decide el estilo desplegable de la barra "filtrar por"*/
+.FiltroBarra{
+  position: absolute;
+  width: 35%; /* Ancho del 50% del contenedor menos espacio para los botones */
+  max-height: 100px; /* Altura máxima para evitar que crezca demasiado */
+  height: 20px; /* Altura reducida */
+  top: 0.5px; /* Distancia desde la parte superior debajo del header */
+  right: 255px; /* Distancia desde el borde derecho */
+  border-radius: 5px; /* Bordes redondeados para un aspecto más agradable */
+
+}
+
+/* Estilos para las opciones del filtro, es decir el segundo desplegable */
+.FiltroOption {
+  position: absolute;
+  width: 140px ; /* Ancho restante para las opciones */
+  max-height: 100px;
+  height: 20px;
+  top: 0.5px;
+  right: 110px; /* Ajuste de posición para alinear al lado de la barra */
+  border-radius: 5px;
+
+}
+
+.FiltroDateFirst{
+  position: absolute;
+  width: 145px ; /* Ancho restante para las opciones */
+  max-height: 100px;
+  height: 20px;
+  top: 0.5px;
+  right: 105px; /* Ajuste de posición para alinear al lado de la barra */
+  border-width: 1px; /* Grosor del borde */
+  border-radius: 5px;
+}
+
+.FiltroDateSecond{
+  position: absolute;
+  width: 130px ; /* Ancho restante para las opciones */
+  max-height: 100px;
+  height: 20px;
+  top: 0.5px;
+  right: -30px; /* Ajuste de posición para alinear al lado de la barra */
+  border-width: 1px; /* Grosor del borde */
+  border-radius: 5px;
+}
+
+/* Estilos para el botón de búsqueda y botón de filtro */
+.SearchIcon,
+.FilterIcon {
+  position: absolute;
+  width: 20px; /* Ancho reducido */
+  height: 20px; /* Altura reducida */
+  border: none;
+  cursor: pointer;
+}
+
+.SearchIcon {
+  top: 100px; /* Centrar verticalmente lado de las barras */
+  left: 585px; /* Centrar horizontalmente en relación con la barra de búsqueda */
+  background-image: url('/static/images/lupa.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.FilterIcon {
+  top: 0.5px; /* Centrar verticalmente lado de las barras */
+  right: 20px; /* Ajuste para alinear con la barra de filtro */
+  background-image: url('/static/images/lupaFilter.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.FilterIconDate{
+  position: absolute;
+  width: 25px; /* Tamaño de la bolita */
+  height: 25px; /* Tamaño de la bolita */
+  top: -2px; /* Centrar verticalmente lado de las barras */
+  right: -58px; /* Ajuste para alinear con la barra de filtro */
+  background-image: url('/static/images/lupaFilter.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+}
+/*.current {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 10px; /* Ajusta según sea necesario 
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente para mejor legibilidad */
+/*  border-top-left-radius: 10px; /* Bordes redondeados para un aspecto agradable */
+/*  font-size: 14px; /* Tamaño de fuente adecuado */
+/*}
+

@@ -1,22 +1,184 @@
-{% extends 'layouts/base.html' %}
-
-{% block title %}Cuenta de cobro{% endblock %}
-
-{% block content %}
-	<h1>Envio Formulario de cuenta de cobro</h1> 
-	<p>{{concept}}</p>
-	<p>{{value}}</p>
-	<p>{{retention_392_401}}</p>
-	<p>{{retention_383}}</p>
-	<p>{{declarant}}</p>
-	<p>{{colombian_resident}}</p>
-	<p>{{city}}</p>
-	<p>{{date}}</p>
-	<p>{{cex}}</p>
-	<p>{{user}}</p>
-	<p>{{bank}}</p>
-	<p>{{type}}</p>
-	<p>{{account_number}}</p>
-{% endblock %}
-
-
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel='stylesheet' type='text/css' href="{% static '/styles/sendChargeAccountForm.css' %}">
+    </head>
+	{% block content %}
+	<body>
+		<div class="charge-account-format">
+		    <div class="div">
+			    <header class="header">
+			        <div class="box-version">
+                        <div class="version">Versión: 1.0</div>
+                    </div>
+			        <div class="box-format">
+				        <p class="formato-text">FORMATO DE CUENTA DE COBRO PARA CONTRATOS DE GESTION HUMANA</p>
+			        </div>
+			        <div class="box-codigo">
+                        <div class="codigo">Código: CTA-FR-015</div>
+                    </div>
+			        <div class="box-contabilidad">
+                        <div class="contabilidad">CONTABILIDAD</div>
+                    </div>
+			        <div class="box-procesos">
+				        <div class="procesos">Procesos Institucionales</div>
+			        </div>
+			    </header>
+			    <div class="high-area">
+			        <div class="field-concept">
+				        <div class="line-concepto">
+				            ________________________________________________________________________________________
+				        </div>
+				        <div class="text-wrapper">
+				            _________________________________________________________________________________________
+				        </div>
+				        <div class="line-concepto-2">
+				            _________________________________________________________________________________________
+				        </div>
+				        <div class="input-concepto">{{concept}}</div>
+			        </div>
+			        <div class="concepto">Concepto :</div>
+			        <div class="field-value-in-numbers">
+				        <div class="line-valor-numeros">___________________</div>
+				        <div class="valor-numeros">(valor en números)</div>
+				        <div class="money-symbol">$</div>
+				        <div class="input-valor-numeros">{{value_numbers}}</div>
+			        </div>
+			        <div class="line-valor-letras">
+				        ___________________________________________________________
+			        </div>
+			        <div class="input-valor-letras">{{value_letters}}</div>
+			        <div class="valor-letras">(valor en letras)</div>
+			        <div class="line-la-suma-de">
+				        _________________________________________________________________________________________
+			        </div>
+			        <div class="la-suma-de">La suma de:</div>
+			        <div class="field-id">
+				        <div class="line-identificacion">
+				            ____________________________________________________________________
+				        </div>
+			            <div class="input-identificacion">{{identification}}</div>
+			        </div>
+			        <div class="identificacion">Identificación</div>
+			        <div class="field-name">
+				        <div class="line-nombre">
+							____________________________________________________________________
+				        </div>
+				        <div class="input-nombre">{{name}}</div>
+			        </div>
+			        <div class="nombre">Nombre</div>
+			        <div class="debe-a">DEBE A:</div>
+			        <div class="nit">NIT. 890.316.745-5</div>
+			        <div class="icesi">UNIVERSIDAD ICESI</div>
+			    </div>
+			    <div class="middle-area">
+			        <div class="c">
+				        {% if colombian_resident is True%}
+				        <div class="box-si-c" style="background-color: black;"></div>
+				        {% else %}
+				        <div class="box-si-c"></div>
+				        {% endif %}
+				        {% if colombian_resident is False %}
+				        <div class="box-no-c" style="background-color: black;"></div>
+				        {% else %}
+				        <div class="box-no-c"></div>
+				        {% endif %}
+				        <div class="box-no-c"></div>
+				        <div class="no-c">NO</div>
+				        <div class="div-2"></div>
+				        <div class="si-c">SI</div>
+				        <p class="p">c. Soy residente fiscal en Colombia</p>
+			            </div>
+			        <div class="b">
+				        {% if declarant is True%}
+				        <div class="box-si-b" style="background-color: black;"></div>
+				        {% else %}
+				        <div class="box-si-b"></div>
+				        {% endif %}
+				        {% if declarant is False%}
+				        <div class="box-no-b" style="background-color: black;"></div>
+				        {% else %}
+				        <div class="box-no-b"></div>
+				        {% endif %}
+				        <div class="box-no-b"></div>
+				        <div class="no-b">NO</div>
+				        <div class="box-si-b"></div>
+				        <div class="si-b">SI</div>
+				        <p class="p">b. Soy declarante del Impuesto de Renta</p>
+			        </div>
+			        <p class="warning">Si no marca ninguna opción, se aplicará la retención de los artículos 392 y 401 del ET.</p>
+			        <div class="a">
+				        {% if retentions is True %}
+				        <div class="box-si-a" style="background-color: black;"></div>
+				        {% else %}
+				        <div class="box-si-a"></div>
+				        {% endif %}
+				        {% if retentions is False %}
+				        <div class="box-no-a" style="background-color: black;"></div>
+				        {% else %}
+				        <div class="box-no-a"></div>
+				        {% endif %}
+				        <div class="no-a">NO</div>
+				        <p class="no-a-text">Retención en la fuente artículo 383 del Estatuto Tributario</p>
+				        <div class="si-a">SI</div>
+				        <p class="si-a-text">Retención en la fuente artículos 392 y 401 del Estatuto Tributario</p>
+				        <p class="a-text">
+					        a. Se tomarán costos y deducciones asociados a las rentas de trabajo por los servicios prestados:
+				        </p>
+			        </div>
+			
+			        <p class="second-text">
+				        Los ingresos recibidos como persona natural por concepto de renta de trabajo no proveniente de una relación
+				        laboral, legal<br />o reglamentaria correspondiente a los servicios prestados a LA UNIVERSIDAD ICESI durante
+				        el año 2024, se les dará el<br />siguiente tratamiento:
+			        </p>
+			        <p class="first-text">
+				        Con el fin de atender lo establecido en la Ley 2277 del año 2022, reglamentada con el Decreto 2231 de
+				        diciembre de 2023<br />Declaro, bajo la gravedad de juramento, que:
+			        </p>
+			    </div>
+                <div class="low-area">
+                    <div class="field-cex">
+                        <div class="box-cex-no"></div>
+                        <div class="input-cex-no">{{cex}}</div>
+                        <div class="cex-no">CEX No.</div>
+                    </div>
+                    <div class="field-account-number">
+                        <div class="box-empty-no"></div>
+                        <div class="input-no">{{account_number}}</div>
+                        <div class="box-no"></div>
+                        <div class="no">No.</div>
+                    </div>
+                    <div class="field-type-account">
+                        <div class="box-empty-tipo"></div>
+                        <div class="input-tipo-cuenta">{{type}}</div>
+                        <div class="box-tipo-cuenta"></div>
+                        <div class="tipo-cuenta">Tipo de Cuenta</div>
+                    </div>
+                    <div class="field-bank">
+                        <div class="box-empty-nombre-banco"></div>
+                        <div class="input-nombre-banco">{{bank}}</div>
+                        <div class="box-nombre-banco"></div>
+                        <div class="nombre-banco">Nombre del Banco</div>
+                    </div>
+                    <div class="input-telefono">{{phone}}</div>
+                    <div class="telefono">Teléfono</div>
+                    <div class="input-direccion">{{addres}}</div>
+                    <div class="direccion">Dirección</div>
+                    <div class="input-cc">{{identification}}</div>
+                    <div class="CC">C.C.</div>
+                    <div class="input-firma">{{name}}</div>
+                    <div class="firma">Firma</div>
+                    <div class="field-ciudad-y-fecha">
+                        <div class="line-c-y-f">___________________________________________________________</div>
+                        <div class="input-fecha">{{date}}</div>
+                        <div class="input-ciudad">{{city}}</div>
+                    </div>
+                    <div class="c-y-f">Ciudad y Fecha</div>
+                </div>
+		    </div>
+	    </div>
+	</body>
+    {% endblock %}
+</html>
