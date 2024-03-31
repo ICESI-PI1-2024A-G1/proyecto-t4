@@ -88,8 +88,9 @@ def createChargeAccountForm(request):
         form = ChargeAccountForm()
     return render(request, "chargeAccountForm.html", {"form": form})
 
-
 def summaryOneStopShopView(request):
+
+
     # Obtener todos los objetos de Following
     queryset = Following.objects.all()
     
@@ -106,48 +107,52 @@ def summaryOneStopShopView(request):
     # Aplicar filtros según los parámetros recibidos
     if query:
         queryset = queryset.filter(
-            Q(type__icontains=query) | Q(currentState__state__icontains=query) 
+            Q(type = query) | Q(currentState = query) 
         )
     if estado:
-        queryset = queryset.filter(CurrentState__state__icontains=estado)
+        queryset = queryset.filter(currentState = estado)
         
     if tipo:
-        queryset = queryset.filter(type__contains=tipo)
+        queryset = queryset.filter(type = tipo)
     
     if ordenar_por:
         queryset = queryset.order_by(ordenar_por)
 
     if fecha_creacion_inicio and fecha_creacion_fin:
         queryset = queryset.filter(
-            creation_date__range=[fecha_creacion_inicio, fecha_creacion_fin]
+            creationDate__range=[fecha_creacion_inicio, fecha_creacion_fin]
         )
     if fecha_cierre_inicio and fecha_cierre_fin:
         queryset = queryset.filter(
-            close_date__range=[fecha_cierre_inicio, fecha_cierre_fin]
+            closeDate__range=[fecha_cierre_inicio, fecha_cierre_fin]
         )
         
-
-    
-    # Configurar la paginación
     paginator = Paginator(queryset, 10)
     page_number = request.GET.get('page')
+    followingData = Following.objects.all()
     try:
-        ventanilla = paginator.page(page_number)
+        followingData = paginator.page(page_number)
     except PageNotAnInteger:
-        ventanilla = paginator.page(1)
+        followingData = paginator.page(1)
     except EmptyPage:
-        ventanilla = paginator.page(paginator.num_pages)
+        followingData = paginator.page(paginator.num_pages)
+    
+    queryset = Following.objects.none()
     
     # Obtener tipos únicos de los objetos de Following
+
+
+    #followingData = Following.objects.all()
+    #attachedDocuments = AttachedDocument.objects.all()
     tipos = Following.objects.values_list('type', flat=True).distinct()
-    estados = State.objects.values_list('state', flat=True).distinct()
+    estados = State.objects.all()
     fechas_creacion = Following.objects.values_list('creationDate', flat=True).distinct()
     fechas_cierre = Following.objects.values_list('closeDate', flat=True).distinct()
     
     
     # Pasar objetos al contexto
     context = {
-        'ventanilla': ventanilla,
+        'followingData': followingData,
         'estados': estados, 
         'tipos': tipos,  # Obtener los tipos únicos
         'fechas_creacion': fechas_creacion,

@@ -177,7 +177,7 @@ class State(models.Model):
         ('Rechazado por contabilidad','Rechazado por contabilidad')
     ]
     
-    state = models.CharField(max_length = 30,choices = ESTADOS)
+    state = models.CharField(max_length = 30,choices = ESTADOS, primary_key = True)
     color = models.CharField(max_length = 10,choices = COLORES)
 
     def __str__(self):

@@ -5,7 +5,7 @@ function toggleFiltrado() {
     var fechaCreacionDiv = document.getElementById('fechaCreacionDiv');
     var fechaCierreDiv = document.getElementById('fechaCierreDiv');
 
-    if (ordenarPor === 'state') {
+    if (ordenarPor === 'currentState') {
         estadoDiv.style.display = 'flex';
         tipoDiv.style.display = 'none';
         fechaCreacionDiv.style.display = 'none';
