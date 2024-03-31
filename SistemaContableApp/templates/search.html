@@ -15,7 +15,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-        
+
+
     <script src="{% static 'js/search.js' %}"></script>
 </head>
 
@@ -106,26 +107,5 @@
     </div>
 
 
-
-
-    <!-- Paginación -->
-    <div class="pagination">
-        <span class="step-links">
-            {% if ventanilla.has_previous %}
-            <a href="?page=1">Primera</a>
-            <a href="?page={{ ventanilla.previous_page_number }}">Anterior</a>
-            {% endif %}
-
-            <span class="current">
-                Página {{ ventanilla.number }} de {{ ventanilla.paginator.num_pages }}
-            </span>
-            
-            {% if ventanilla.has_next %}
-            <a href="?page={{ ventanilla.next_page_number }}">Siguiente</a>
-            <a href="?page={{ ventanilla.paginator.num_pages }}">Última &raquo;</a>
-            {% endif %}
-        </span>
-
-    </div>
 
     {% endblock %}

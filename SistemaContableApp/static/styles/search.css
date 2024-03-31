@@ -1,6 +1,12 @@
+  /* Estilo para agregar margen inferior a la barra de búsqueda */
+  .container {
+    margin-bottom: 20px; /* Ajusta el valor según sea necesario */
+}
+
 /* Estilos para la barra de búsqueda */
 .Barra {
   position: absolute;
+ 
   width: 40%; /* Ancho del 50% del contenedor menos espacio para los botones */
   max-height: 100px; /* Altura máxima para evitar que crezca demasiado */
   height: 15px; /* Altura reducida */
@@ -86,7 +92,7 @@
 .FilterIcon {
   top: 0.5px; /* Centrar verticalmente lado de las barras */
   right: 20px; /* Ajuste para alinear con la barra de filtro */
-  background-image: url('/static/images/filter.png');
+  background-image: url('/static/images/lupaFilter.png');
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -97,7 +103,7 @@
   height: 25px; /* Tamaño de la bolita */
   top: -2px; /* Centrar verticalmente lado de las barras */
   right: -58px; /* Ajuste para alinear con la barra de filtro */
-  background-image: url('/static/images/filter.png');
+  background-image: url('/static/images/lupaFilter.png');
   background-size: contain;
   background-repeat: no-repeat;
   border: none;
@@ -112,9 +118,4 @@
 /*  border-top-left-radius: 10px; /* Bordes redondeados para un aspecto agradable */
 /*  font-size: 14px; /* Tamaño de fuente adecuado */
 /*}
-
-/* Espacio generado entre la barra de navegación y ventanilla unica */
-.current {
-  color: transparent; /* Hace que el texto sea transparente */
-}
 
