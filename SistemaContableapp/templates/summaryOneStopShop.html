@@ -23,52 +23,54 @@
         <h1><span>Ventanilla unica resumida</span></h1>
     </div>
     <div>
-            <div class = "outer-wrapper">
-                <div class="table-wrapper">
-                    <table >
-                        <tr>
-                            <th>
-                               Fecha de creación
-                            </th>
-                            <th>
-                                Tipo de solicitud
-                            </th>
-                            <th>
+
+        <div class = "outer-wrapper">
+            <div class="table-wrapper">
+                <table >
+                    <tr>
+                        <th>
+                            Fecha de creación
+                        </th>
+                        <th>
+                            Tipo de solicitud
+                        </th>
+                        <th>
                                 Gestor
-                            </th>
+                        </th>
+                        <th>
+                            Estado
+                        </th>
                             <th>
-                                Estado
-                            </th>
-                            <th>
-                                Fecha de cierre
-                            </th>
-                        </tr>
-                        {% for following in followingData %}
-                        <tr>
-                            <td>
-                                {{following.creationDate}}
-                            </td>
-                            <td>
-                                {{following.type}}
-                            </td>
-                            <td>
-                                {{following.manager}}
-                            </td>
-                            <td bgcolor = {{following.currentState.color}}>
-                                {{following.currentState.state}}
-                            </td>
-                            <td>
-                                {{following.closeDate}}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-                
-            </div>
-            <div class="fullViewButton">
-                <a href="/Ventanilla unica">Vista completa</a>
-            </div>
+                            Fecha de cierre
+                        </th>
+                    </tr>
+                    {% for following in followingData %}
+                    <tr>
+                        <td>
+                            {{following.creationDate}}
+                        </td>
+                        <td>
+                            {{following.type}}
+                        </td>
+                        <td>
+                            {{following.manager}}
+                        </td>
+                        <td bgcolor = {{following.currentState.color}}>
+                            {{following.currentState.state}}
+                        </td>
+                        <td>
+                            {{following.closeDate}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>        
+        </div>
+
+        <div class="fullViewButton">
+            <a href="/Ventanilla unica">Vista completa</a>
+        </div> 
+        
     </div>
 </body>
 {% endblock %}
