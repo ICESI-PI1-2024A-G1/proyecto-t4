@@ -1,0 +1,82 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title >Ventanilla unica resumida</title>
+        <link rel="stylesheet" href= "{% static '/styles/oneStopShopStyle.css' %}" >
+    </head>
+</html>
+
+<body>
+    <div class="container">
+        {% include 'search.html' %}
+    </div>
+</body>
+
+<body>
+    <div class="heading">
+        <h1><span>Ventanilla unica resumida</span></h1>
+    </div>
+    <div>
+
+        <div class = "outer-wrapper">
+            <div class="table-wrapper">
+                <table >
+                    <tr>
+                        <th>
+                            Fecha de creación
+                        </th>
+                        <th>
+                            Tipo de solicitud
+                        </th>
+                        <th>
+                                Gestor
+                        </th>
+                        <th>
+                            Estado
+                        </th>
+                            <th>
+                            Fecha de cierre
+                        </th>
+                    </tr>
+                    {% for following in followingData %}
+                    <tr>
+                        <td>
+                            {{following.creationDate}}
+                        </td>
+                        <td>
+                            {{following.type}}
+                        </td>
+                        <td>
+                            {{following.manager}}
+                        </td>
+                        <td bgcolor = {{following.currentState.color}}>
+                            {{following.currentState.state}}
+                        </td>
+                        <td>
+                            {{following.closeDate}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>        
+        </div>
+
+        <div class="fullViewButton">
+            <a href="/Ventanilla unica">Vista completa</a>
+        </div> 
+        
+    </div>
+</body>
+{% endblock %}
+
+
+
+
+
+

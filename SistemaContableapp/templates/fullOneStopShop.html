@@ -1,0 +1,246 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title >Ventanilla unica</title>
+        <link rel="stylesheet" href= "{% static '/styles/oneStopShopStyle.css' %}" >
+    </head>
+</html>
+
+<body>
+    <div class="heading">
+        <h1><span style="font-size: 40px;">Ventanilla unica </span></h1>
+    </div>
+    <div>
+            <div class = "outer-wrapper">
+                <div class="table-wrapper">
+                    <table >
+                        <tr>
+                            <th>
+                               Fecha de creación
+                            </th>
+                            <th>
+                                Creador
+                            </th>
+                            <th>
+                                Tipo de solicitud
+                            </th>
+                            <th>
+                                Proveedor
+                            </th>
+                            <th>
+                                Identificacion
+                            </th>
+                            <th>
+                                Numero de documento
+                            </th>
+                            <th>
+                                Datos adjuntos
+                            </th>
+                            <th>
+                                Gestor
+                            </th>
+                            <th>
+                                Estado
+                            </th>
+                            <th>
+                                aprobado por
+                            </th>
+                            <th>
+                                Revisado por
+                            </th>
+                            <th>
+                                Estado de aceptacion
+                            </th>
+                            <th>
+                                Fecha de aceptacion
+                            </th>
+                            <th>
+                                Estado de revision
+                            </th>
+                            <th>
+                                Revision
+                            </th>
+                            <th>
+                                Concepto
+                            </th>
+                            <th>
+                                Email del proveedor
+                            </th>
+                            <th>
+                                Moneda
+                            </th>
+                            <th>
+                                Valor del documento
+                            </th>
+                            <th>
+                                CENCO
+                            </th>
+                            <th>
+                                Numero de contrato CEX
+                            </th>
+                            <th>
+                                Observaciones
+                            </th>
+                            <th>
+                                Fecha de Revision
+                            </th>
+                            <th>
+                                Estado de aprovacion
+                            </th>
+                            <th>
+                                Aprobacion
+                            </th>
+                            <th>
+                                Fecha de aprovacion
+                            </th>
+                            <th>
+                                Comentarios de aprovacion
+                            </th>
+                            <th>
+                                Recibido area contable
+                            </th>
+                            <th>
+                                Comentarios area contable
+                            </th>
+                            <th>
+                                Fecha del tramite
+                            </th>
+                            <th>
+                                Recibido por(Area contable)
+                            </th>
+                            <th>
+                                Modificado
+                            </th>
+                            <th>
+                                Modificado por
+                            </th>
+                            <th>
+                                Fecha de cierre
+                            </th>
+                        </tr>
+                        {% for following in followingData %}
+                        <tr>
+                            <td>
+                                {{following.creationDate}}
+                            </td>
+                            <td>
+                                {{following.creator}}
+                            </td>
+                            <td>
+                                {{following.type}}
+                            </td>
+                            <td>
+                                {{following.supplier}}
+                            </td>
+                            <td>
+                                {{following.supplierId}}
+                            </td>
+                            <td>
+                                {{following.documentNumber}}
+                            </td>
+                            <td>
+                                <ul>
+                                    {% for document in files %}
+                                    {% if document.associatedFollowing == following %}
+                                    <a href="{{document.file.url}}">{{document}}</a>
+                                    <br>
+                                    {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                {{following.manager}}
+                            </td>
+                            <td bgcolor = {{following.currentState.color}}>
+                                {{following.currentState.state}}
+                            </td>
+                            <td>
+                                {{following.acceptor}}
+                            </td>
+                            <td>
+                                {{following.revisor}}
+                            </td>
+                            <td>
+                                {{following.acceptanceState}}
+                            </td>
+                            <td>
+                                {{following.acceptanceDate}}
+                            </td>
+                            <td>
+                                {{following.revisionState}}
+                            </td>
+                            <td>
+                                {{following.revision}}
+                            </td>
+                            <td>
+                                {{following.concept}}
+                            </td>
+                            <td>
+                                {{following.supplierEmail}}
+                            </td>
+                            <td>
+                                {{following.moneyType}}
+                            </td>
+                            <td>
+                                {{following.amount}}
+                            </td>
+                            <td>
+                                {{following.cenco}}
+                            </td>
+                            <td>
+                                {{following.cexNumber}}
+                            </td>
+                            <td>
+                                {{following.observations}}
+                            </td>
+                            <td>
+                                {{following.revisionDate}}
+                            </td>
+                            <td>
+                                {{following.approvalState}}
+                            </td>
+                            <td>
+                                {{following.approval}}
+                            </td>
+                            <td>
+                                {{following.approvalDate}}
+                            </td>
+                            <td>
+                                {{following.approvalComments}}
+                            </td>
+                            <td>
+                                {{following.accountingReception}}
+                            </td>
+                            <td>
+                                {{following.accountingComments}}
+                            </td>
+                            <td>
+                                {{following.accountingDate}}
+                            </td>
+                            <td>
+                                {{following.receptor}}
+                            </td>
+                            <td>
+                                {{following.modificationDate}}
+                            </td>
+                            <td>
+                                {{following.modifier}}
+                            </td>
+                            <td>
+                                {{following.closeDate}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+    </div>
+</body>
+{% endblock %}
+

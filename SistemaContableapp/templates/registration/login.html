@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head> 
+    <title>Inicio de sesion</title>
+    <link rel='stylesheet' type='text/css' href='{% static "/styles/login.css" %}'>
+</head> 
+
+<body>
+
+    <div class ="wrapper">
+
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <div class="logo"></div>
+            
+            <div class="input-box">
+                <input type="text" name="email" placeholder="Correo Electrónico" required>
+                <i class='bx bxs-user'></i>
+                
+            </div>
+
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Contraseña" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="remember-forgot">
+             <a href="/password_reset/">Olvidaste tu contraseña?</a>
+
+                
+             <a href="/registro/">Registrarse</a>
+            </div>  
+
+            <button type ="submit" class="btn">Acceder</button>
+            
+            
+    </div>
+
+</body>
+
+</html>
