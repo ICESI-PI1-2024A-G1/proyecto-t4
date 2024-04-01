@@ -170,6 +170,9 @@ class Following(models.Model):
     currentState = models.ForeignKey(State, on_delete = models.PROTECT)
     closeDate = models.DateField()
 
+    def __str__(self):
+        return self.type + ' - ' + self.cenco
+
 
 class AttachedDocument(models.Model):
     file = models.FileField()

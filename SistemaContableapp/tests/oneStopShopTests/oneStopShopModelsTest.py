@@ -5,6 +5,14 @@ from SistemaContableApp.models import Following, AttachedDocument, State
 class ModelTestCase(TestCase):
 
     def testFollowingModel(self):
+        """
+        Test the Following model.
+
+        It verifies that the Following model creates instances correctly and returns the expected string representation.
+
+        Expected behavior:
+            - The string representation of a Following instance should be '<type> - <cenco>'.
+        """
         state = State.objects.create(state="Pendiente de aceptación", color="gray")
         following = Following.objects.create(
             creationDate='2023-04-01',
@@ -26,6 +34,15 @@ class ModelTestCase(TestCase):
         self.assertEqual(str(following), 'Solicitud - CENCO1')
 
     def testAttachedDocumentModel(self):
+        """
+        Test the AttachedDocument model.
+
+        It verifies that the AttachedDocument model creates instances correctly and returns the expected string representation.
+
+        Expected behavior:
+            - The string representation of an AttachedDocument instance should be the name of the file.
+            - The associatedFollowing field should be associated with a Following instance.
+        """
         following = Following.objects.create(
             creationDate='2023-04-01',
             creator='John Doe',
@@ -48,5 +65,6 @@ class ModelTestCase(TestCase):
             associatedFollowing=following
         )
         self.assertEqual(str(attachedDocument), 'test_file.pdf')
-        self.assertEqual(attachedDocument.associatedFollowing,following)
+        self.assertEqual(attachedDocument.associatedFollowing, following)
+
 
