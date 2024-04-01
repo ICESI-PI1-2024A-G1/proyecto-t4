@@ -1,122 +1,94 @@
-  /* Esti40px para agregar margen inferior a la barra de búsqueda */
-  .container {
-    margin-bottom: 40px; /* Ajusta el valor según sea necesario */
+/* Estilos para el contenedor principal */
+.container {
+  margin-bottom: 10px;
+  margin-top: 1px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 15px;
+  position: relative;
 }
 
-/* Estilos para la barra de búsqueda */
-.Barra {
-  position: absolute;
- 
-  width: 40%; /* Ancho del 50% del contenedor menos espacio para los botones */
-  max-height: 100px; /* Altura máxima para evitar que crezca demasiado */
-  height: 15px; /* Altura reducida */
-  top: 100px; /* Distancia desde la parte superior debajo del header */
-  left: 65px; /* Distancia desde el borde izquierdo */
-  border-radius: 5px #000; /* Bordes redondeados para un aspecto más agradable */
+/* Estilos para la barra de búsqueda y filtro */
+.Barra,
+.FiltroBarra,
+.FiltroOption,
+.FiltroDateFirst,
+.FiltroDateSecond {
+  width: 80%; /* Ancho completo en dispositivos pequeños */
+  max-width: 100%; /* Ancho máximo en dispositivos pequeños */
+  margin-bottom: 1px; /* Espacio inferior entre elementos */
+  margin-top: 1px; /* Espacio superior entre elementos */
+  font-size: 14px; /* Tamaño de fuente base */
+  line-height: 20px; /* Altura de línea */
+  padding: 1px 10px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
 }
 
-/* Estilos para la barra de filtro, es decir, este es el text "filtrar por" que aparece en la mitad*/
-.FiltroInput {
-  position: absolute;
-  width: 40%; /* Ancho del 50% del contenedor menos espacio para los botones */
-  max-height: 100px; /* Altura máxima para evitar que crezca demasiado */
-  height: 10px; /* Altura reducida */
-  top: 99px; /* Distancia desde la parte superior debajo del header */
-  right: 150px; /* Ajuste para alinear con la barra de búsqueda */
- 
-}
-
-/* Decide el estilo desplegable de la barra "filtrar por"*/
-.FiltroBarra{
-  position: absolute;
-  width: 35%; /* Ancho del 50% del contenedor menos espacio para los botones */
-  max-height: 100px; /* Altura máxima para evitar que crezca demasiado */
-  height: 20px; /* Altura reducida */
-  top: 0.5px; /* Distancia desde la parte superior debajo del header */
-  right: 255px; /* Distancia desde el borde derecho */
-  border-radius: 5px; /* Bordes redondeados para un aspecto más agradable */
-
-}
-
-/* Estilos para las opciones del filtro, es decir el segundo desplegable */
-.FiltroOption {
-  position: absolute;
-  width: 140px ; /* Ancho restante para las opciones */
-  max-height: 100px;
+/* Estilos para el icono de búsqueda */
+.SearchIcon{
+  width: 20px;
   height: 20px;
-  top: 0.5px;
-  right: 110px; /* Ajuste de posición para alinear al lado de la barra */
-  border-radius: 5px;
-
-}
-
-.FiltroDateFirst{
-  position: absolute;
-  width: 145px ; /* Ancho restante para las opciones */
-  max-height: 100px;
-  height: 20px;
-  top: 0.5px;
-  right: 105px; /* Ajuste de posición para alinear al lado de la barra */
-  border-width: 1px; /* Grosor del borde */
-  border-radius: 5px;
-}
-
-.FiltroDateSecond{
-  position: absolute;
-  width: 130px ; /* Ancho restante para las opciones */
-  max-height: 100px;
-  height: 20px;
-  top: 0.5px;
-  right: -30px; /* Ajuste de posición para alinear al lado de la barra */
-  border-width: 1px; /* Grosor del borde */
-  border-radius: 5px;
-}
-
-/* Estilos para el botón de búsqueda y botón de filtro */
-.SearchIcon,
-.FilterIcon {
-  position: absolute;
-  width: 20px; /* Ancho reducido */
-  height: 20px; /* Altura reducida */
-  border: none;
   cursor: pointer;
-}
-
-.SearchIcon {
-  top: 100px; /* Centrar verticalmente lado de las barras */
-  left: 585px; /* Centrar horizontalmente en relación con la barra de búsqueda */
+  position: absolute;
+  top: 50%;
+  left: 975px;
+  transform: translateY(-50%);
   background-image: url('/static/images/lupa.png');
   background-size: contain;
   background-repeat: no-repeat;
-}
-
-.FilterIcon {
-  top: 0.5px; /* Centrar verticalmente lado de las barras */
-  right: 20px; /* Ajuste para alinear con la barra de filtro */
-  background-image: url('/static/images/lupaFilter.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.FilterIconDate{
-  position: absolute;
-  width: 25px; /* Tamaño de la bolita */
-  height: 25px; /* Tamaño de la bolita */
-  top: -2px; /* Centrar verticalmente lado de las barras */
-  right: -58px; /* Ajuste para alinear con la barra de filtro */
-  background-image: url('/static/images/lupaFilter.png');
-  background-size: contain;
-  background-repeat: no-repeat;
+  outline: none;
   border: none;
-  cursor: pointer;
+  background-color: transparent;
+  border-radius: 5px;
 }
-/*.current {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  padding: 10px; /* Ajusta según sea necesario 
-  background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente para mejor legibilidad */
-/*  border-top-left-radius: 10px; /* Bordes redondeados para un aspecto agradable */
-/*  font-size: 14px; /* Tamaño de fuente adecuado */
-/*}
 
+.FilterIcon,
+.FilterIconDate {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  position: absolute;
+  top: 35%;
+  left: 975px;
+  transform: translateY(-50%);
+  background-image: url('/static/images/lupaFilter.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border-radius: 5px;
+}
+
+/* Estilos para el formulario */
+.form-group {
+  position: relative;
+}
+
+/* Media query para ajustes en dispositivos más pequeños */
+@media (max-width: 768px) {
+  .Barra,
+  .FiltroBarra,
+  .FiltroOption,
+  .FiltroDateFirst,
+  .FiltroDateSecond {
+    font-size: 12px; /* Reducir tamaño de fuente */
+    line-height: 18px; /* Ajustar altura de línea */
+    padding: 4px 8px; /* Reducir espaciado interno */
+  }
+
+
+  @media (max-width: 768px) {
+    .SearchIcon,
+    .FilterIcon,
+    .FilterIconDate {
+      width: 16px;
+      height: 16px;
+      left: 85%; /* Ajustar la posición izquierda para dispositivos más pequeños */
+      border-radius: 6px;
+    }
+  }
+}

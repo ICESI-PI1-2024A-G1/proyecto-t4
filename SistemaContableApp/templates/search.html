@@ -23,22 +23,22 @@
 
 <div class="container">
     <h1 class="display-3 align-center"></h1>
-    <div class="mb-3">
+    <div class="row justify-content-center">
 
         <!-- Formulario de búsqueda -->            
-        <form id="search-form" method="GET" action="{% url 'summaryOneStopShop' %}" class="form-inline">
+        <form id="search-form" method="GET" action="{% url 'summaryOneStopShop' %}" class="form-inline justify-content-center">
             <div class="form-group flex-grow-1 position-relative">
-                <input type="text" name="q" id="q" class="form-control w-100 pl-4 Barra" placeholder="Buscar" />
-                <button type="submit" class="SearchIcon" form="search-form"></button> <!-- Botón de búsqueda -->
-                <!-- <button type="submit" class="FilterIcon" form="filter-form"></button> <-- Botón de filtro -->
-                
+                <input type="text" name="q" id="q" class="form-control mr-2 Barra" placeholder="Buscar">
+                <button type="submit" class="btn btn-primary SearchIcon"></button> <!-- Botón de búsqueda -->
             </div>
         </form>
+        
+        
 
 
-        <!-- Formulario para filtrado y ordenamiento -->
-        <form method="GET" action="{% url 'summaryOneStopShop' %}" class="form-inline">
-            <div class="form-group mr-2 d-flex align-items-center FiltroInput">
+        <!-- Formulario para filtrado y ordenamiento -->       
+        <form method="GET" action="{% url 'summaryOneStopShop' %}" class="form-inline justify-content-center">
+            <div class="form-group mr-2">
 
                 <label for="ordenar_por" class="mr-2 ">Filtrar por:</label>
                 <select name="ordenar_por" id="ordenar_por" class="form-control mr-2 FiltroBarra" onchange="toggleFiltrado()">
