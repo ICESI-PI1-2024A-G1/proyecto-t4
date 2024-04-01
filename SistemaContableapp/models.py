@@ -109,6 +109,10 @@ class Charge_account(models.Model):
 
 class State(models.Model):
 
+    """
+    Model representing the state of a following in one stop shop
+    """
+
     COLORES = [
         ('gray','Gris'),
         ('orange','Naranja'),
@@ -135,6 +139,10 @@ class State(models.Model):
         return self.state
 
 class Following(models.Model):
+
+    """
+    Model representing the following made to a request in one stop shop
+    """
 
     creationDate = models.DateField()
     creator = models.CharField(max_length = 40, null = True)
@@ -175,6 +183,11 @@ class Following(models.Model):
 
 
 class AttachedDocument(models.Model):
+
+    """
+    Model representing the doccuments attached to a following
+    """
+
     file = models.FileField()
     associatedFollowing = models.ForeignKey(Following, on_delete = models.CASCADE)
     

@@ -332,11 +332,18 @@ def createLegalizationForm(request):
 
 def summaryOneStopShopView(request):
 
+    """
+    View function to display a summary of following objects based on various filters and search parameters.
 
-    # Obtener todos los objetos de Following
+    Parameters:
+    - request: HTTP request object
+
+    Returns:
+    - Rendered template with following objects summary based on applied filters and search parameters.
+    """
+
     queryset = Following.objects.all()
     
-    # Obtener parámetros de búsqueda y filtrado
     query = request.GET.get('q')
     estado = request.GET.get('estado')
     tipo = request.GET.get('tipo')
@@ -346,7 +353,6 @@ def summaryOneStopShopView(request):
     fecha_cierre_inicio = request.GET.get('fecha_cierre_inicio')
     fecha_cierre_fin = request.GET.get('fecha_cierre_fin')
     
-    # Aplicar filtros según los parámetros recibidos
     if query:
         queryset = queryset.filter(
             Q(type = query) | Q(currentState = query) 
@@ -381,18 +387,11 @@ def summaryOneStopShopView(request):
     
     queryset = Following.objects.none()
     
-    # Obtener tipos únicos de los objetos de Following
-
-
-    #followingData = Following.objects.all()
-    #attachedDocuments = AttachedDocument.objects.all()
     tipos = Following.objects.values_list('type', flat=True).distinct()
     estados = State.objects.all()
     fechas_creacion = Following.objects.values_list('creationDate', flat=True).distinct()
     fechas_cierre = Following.objects.values_list('closeDate', flat=True).distinct()
     
-    
-    # Pasar objetos al contexto
     context = {
         'followingData': followingData,
         'estados': estados, 
@@ -404,11 +403,18 @@ def summaryOneStopShopView(request):
     return render(request, 'summaryOneStopShop.html', context)
 
 
-def oneStopShopConfirmationView(request):
-    return render(request, 'oneStopShopConfirmation.html')
-
-
 def fullOneStopShopView(request):
+
+    """
+    View function to display a full view of all following objects and attached documents.
+
+    Parameters:
+    - request: HTTP request object
+
+    Returns:
+    - Rendered template displaying all following objects and attached documents.
+    """
+
     followingData = Following.objects.all()
     attachedDocuments = AttachedDocument.objects.all()
 
@@ -416,6 +422,20 @@ def fullOneStopShopView(request):
 
 
 def oneStopShopFormView(request):
+
+    """
+    View function to handle the submission and display of the one-stop shop form and attached documents.
+
+    Parameters:
+    - request: HTTP request object
+
+    Returns:
+    - If request method is POST and form data is valid:
+        - Redirects to the one-stop shop form view.
+    - If request method is GET or form data is invalid:
+        - Renders the one-stop shop form with attached document form.
+    """
+
     if request.method == 'POST':
         oneStopShopForm = OneStopShopForm(request.POST)
         attachedDocumentForm = AttachedDocumentForm(request.POST, request.FILES)

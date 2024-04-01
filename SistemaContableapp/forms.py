@@ -188,6 +188,19 @@ class RequisitionForm(forms.ModelForm):
 
         
 class OneStopShopForm(forms.ModelForm):
+
+    """
+    Form class for the one-stop shop data entry.
+
+    Extends the forms.ModelForm class from Django.
+
+    Attributes:
+    - Meta: Specifies the model and fields to be used in the form.
+
+    Model:
+    - Following: Model for storing data related to following objects.
+    """
+
     class Meta:
         model = Following
         fields = [ "creationDate",
@@ -206,7 +219,23 @@ class OneStopShopForm(forms.ModelForm):
                   "currentState",
                   "closeDate"]
 
-class AttachedDocumentForm(forms.ModelForm):
+class AttachedDocumentForm(forms.ModelForm):    
+    
+    """
+    Form class for attaching documents to the one-stop shop.
+
+    Extends the forms.ModelForm class from Django.
+    
+    Attributes:
+    - Meta: Specifies the model and fields to be used in the form.
+
+    Model:
+    - AttachedDocument: Model for storing data related to attached documents.
+
+    Fields:
+    - file: File field for uploading documents.
+    """
+
     class Meta:
         model = AttachedDocument
         fields = ['file']
