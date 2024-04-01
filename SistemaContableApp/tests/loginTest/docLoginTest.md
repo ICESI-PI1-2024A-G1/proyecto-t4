@@ -1,7 +1,7 @@
 ## Configuration of Scenarios
 ## LoginFormTest
 
-| Nombre  | Clase           | Etapa                                                                                                                                                                                                                       |
+| Name  | Class           | Stage                                                                                                                                                                                                                       |
 | ------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | setUp1  | LoginFormTest   | Test the login form with valid data. Verifies that the login form is valid when provided with valid data.                                                                                                                  |
 | setUp2  | LoginFormTest   | Test the login form with invalid data. Verifies that the login form is invalid when provided with empty data.                                                                                                               |
@@ -10,7 +10,7 @@
 
 ## CustomUserCreationFormTest
 
-| Nombre  | Clase                    | Etapa                                                                                                                                                                                                                                     |
+| Name  | Class                    | Stage                                                                                                                                                                                                                                     |
 | ------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | setUp1  | CustomUserCreationForm   | Test the custom user creation form with valid data. Verifies that the custom user creation form is valid when provided with valid data.                                                                                               |
 | setUp2  | CustomUserCreationForm   | Test the custom user creation form with invalid data. Verifies that the custom user creation form is invalid when provided with mismatched passwords or empty data.                                                             |
@@ -18,19 +18,19 @@
 The purpose of these tests is to verify the correct operation of the login and custom user creation forms. It ensures that the forms are valid when valid data is entered and invalid when incorrect or incomplete data is provided.
 ### Test Cases
 
-| Clase                    | Método                 | Etapa  | Valores de Entrada                           | Resultado Esperado                                              |
+| Class                    | Method                 | Stage  | input values                           | Expected results                                              |
 | ------------------------ | ---------------------- | ------ | -------------------------------------------- | --------------------------------------------------------------- |
 | LoginFormTest            | test_login_form_valid  | setUp1 | {'username': 'testuser', 'password': 'testpassword'} | El formulario debe ser válido                                   |
 | LoginFormTest            | test_login_form_invalid| setUp2 | {'username': '', 'password': ''}             | El formulario debe ser inválido                                 |
 | CustomUserCreationFormTest | test_custom_user_creation_form_valid | setUp1 | {'first_name': 'John', 'last_name': 'Doe', 'email': 'johndoe@example.com', 'password1': 'testpassword', 'password2': 'testpassword'} | El formulario debe ser válido                          |
 | CustomUserCreationFormTest | test_custom_user_creation_form_invalid | setUp2 | {'first_name': 'John', 'last_name': 'Doe', 'email': 'johndoe@example.com', 'password1': 'testpassword', 'password2': 'differentpassword'} | El formulario debe ser inválido debido a contraseñas diferentes |
-| CustomUserCreationFormTest | test_custom_user_creation_form_invalid | setUp2 | {}                                           | El formulario debe ser inválido debido a datos vacíos           |
+| CustomUserCreationFormTest | test_custom_user_creation_form_invalid | setUp2 | {}                                           | The form must be invalid due to empty data           |
 
 ## Configuration of Scenarios
 
 ## UserRequestViewsTest
 
-| Nombre  | Clase                | Etapa                                          |
+| Name  | Class                | Stage                                          |
 | ------- | -------------------- | ---------------------------------------------- |
 | setUp1  | UserRequestViewsTest | Set up the test environment for index view     |
 | setUp2  | UserRequestViewsTest | Set up the test environment for forgot password view |
