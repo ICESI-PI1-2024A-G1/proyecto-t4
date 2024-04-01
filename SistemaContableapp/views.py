@@ -23,7 +23,6 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import PasswordResetView
 
-
 def index(request):
     """
     View for the home page.
@@ -415,8 +414,6 @@ def fullOneStopShopView(request):
 
     return render(request, 'fullOneStopShop.html', {'followingData': followingData, 'files': attachedDocuments})
 
-def oneStopShopConfirmationView(request):
-    return render(request, 'oneStopShopConfirmation.html')
 
 def oneStopShopFormView(request):
     if request.method == 'POST':
@@ -426,10 +423,14 @@ def oneStopShopFormView(request):
             following = oneStopShopForm.save()  
             attachedDocument = attachedDocumentForm.save(commit=False)
             attachedDocument.associatedFollowing = following 
-            attachedDocument.save()  
-            return redirect('confirmation')  
+            attachedDocument.save()
+            return redirect('OneStopShopForm')  
+        else:
+            oneStopShopForm = OneStopShopForm()
+            attachedDocumentForm = AttachedDocumentForm()
+            return render(request, 'oneStopShopForm.html', {'oneStopShopForm': oneStopShopForm, 'attachedDocumentForm': attachedDocumentForm})
     else:
         oneStopShopForm = OneStopShopForm()
         attachedDocumentForm = AttachedDocumentForm()
-    return render(request, 'oneStopShopForm.html', {'oneStopShopForm': oneStopShopForm, 'attachedDocumentForm': attachedDocumentForm})
+        return render(request, 'oneStopShopForm.html', {'oneStopShopForm': oneStopShopForm, 'attachedDocumentForm': attachedDocumentForm})
 
