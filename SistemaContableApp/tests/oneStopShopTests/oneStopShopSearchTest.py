@@ -1,7 +1,7 @@
 from django.http import HttpRequest
-from SistemaContableApp.models import Following
-from SistemaContableApp.views import ventanilla_unica
 from django.test import TestCase
+from SistemaContableApp.models import Following, State
+from SistemaContableApp.views import summaryOneStopShopView
 
 class SearchTestCase(TestCase):
    
@@ -18,9 +18,47 @@ class SearchTestCase(TestCase):
         Returns:
             None
         """
-        Following.objects.create(state='Aprobado', color='azul', creation_date='2024-5-12', type='requesicion', concept='pago', money_type='USD', amount=30, cenco=30, cex_number=15, observations='ninguna', close_date='2025-5-12')
-        Following.objects.create(state='Pendiente', color='verde', creation_date='2024-6-12', type='adelanto', concept='dinero', money_type='COP', amount=30, cenco=30, cex_number=15, observations='ninguna', close_date='2025-6-12')
-        Following.objects.create(state='Rechazado', color='rojo', creation_date='2024-7-12', type='anticipo', concept='billetes', money_type='COP', amount=30, cenco=30, cex_number=15, observations='ninguna', close_date='2025-7-12')  
+        state1 = State.objects.create(state='Aprobado', color='azul')
+        Following.objects.create(
+            creationDate='2024-05-12',
+            type='requesicion',
+            concept='pago',
+            moneyType='USD',
+            amount=30,
+            cenco=30,
+            cexNumber=15,
+            observations='ninguna',
+            currentState=state1,
+            closeDate='2025-05-12'
+        )
+
+        state2 = State.objects.create(state='Pendiente', color='verde')
+        Following.objects.create(
+            creationDate='2024-06-12',
+            type='adelanto',
+            concept='dinero',
+            moneyType='COP',
+            amount=30,
+            cenco=30,
+            cexNumber=15,
+            observations='ninguna',
+            currentState=state2,
+            closeDate='2025-06-12'
+        )
+
+        state3 = State.objects.create(state='Rechazado', color='rojo')
+        Following.objects.create(
+            creationDate='2024-07-12',
+            type='anticipo',
+            concept='billetes',
+            moneyType='COP',
+            amount=30,
+            cenco=30,
+            cexNumber=15,
+            observations='ninguna',
+            currentState=state3,
+            closeDate='2025-07-12'
+        )
 
     def testFiltrarSolicitudPorEstado(self):
         """
@@ -42,12 +80,12 @@ class SearchTestCase(TestCase):
         request.method = 'GET'
         request.GET['estado'] = 'Aprobado' 
 
-        response = ventanilla_unica(request)
+        response = summaryOneStopShopView(request)
         
         
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, b'Aprobado')  # Verifica que el estado "Aprobado" esté presente
-
+     
         
     def test_busqueda_solicitud(self):
         """
@@ -70,12 +108,8 @@ class SearchTestCase(TestCase):
         request.GET['q'] = 'requesicion'
         
 
-        response = ventanilla_unica(request)
+        response = summaryOneStopShopView(request)
 
         assert response.status_code == 200
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, b'requesicion')  # Verifica que el tipo "requesicion" esté presente en la respuesta
-        
-        
-      
-
