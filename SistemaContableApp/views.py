@@ -1,27 +1,23 @@
 from django.contrib.auth import authenticate, login
 from .models import  *
 from django.db.models import Q  
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect   
 from django.contrib import messages
 from .forms import *
 from django.conf import settings 
 from django.template.loader import get_template  
-from django.core.mail import get_connection, EmailMessage
+from django.core.mail import  EmailMessage
 from django.template.loader import get_template
 from django.conf import settings
 from django.core.mail import EmailMessage
 import weasyprint
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from weasyprint import HTML, CSS
-from django.http import HttpResponse
+from weasyprint import  CSS
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordResetForm
-from django.contrib.auth import views as auth_views
-from django.contrib.auth.views import PasswordResetView
+
+
 
 def index(request):
     """
