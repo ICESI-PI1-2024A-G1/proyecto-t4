@@ -22,7 +22,8 @@ from django.contrib import messages
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import PasswordResetView
-
+from datetime import datetime
+from datetime import date, timezone
 def index(request):
     """
     View for the home page.
@@ -218,6 +219,11 @@ def createForm(request, form_class, template_name, pdf_template_name, css_file, 
             form_data = form.cleaned_data
             sendFormAsPdf(request, pdf_template_name, css_file, subject, recipient_email, form_data, pdf_filename)
             messages.success(request, 'El formulario se ha creado correctamente y se ha enviado en pdf.')
+            request_date = datetime.now()
+            
+            if isLateRequest(request_date):
+                messages.success(request, 'Su solicitud se ha programado para el siguiente mes, ya que se recibió después del día 20 del mes.')
+            
             return redirect(redirectTo)
         else:
             form = form_class()
@@ -231,6 +237,13 @@ def createForm(request, form_class, template_name, pdf_template_name, css_file, 
 email = "pinedapablo6718@gmail.com"
 email2 = "daniela32156@hotmail.com"
 
+
+
+def isLateRequest(request_date):
+    today = date.today()
+    if request_date.day > 20 and request_date.month == today.month:
+        return True
+    return False
 
 def createExteriorPaymentForm(request):
     """

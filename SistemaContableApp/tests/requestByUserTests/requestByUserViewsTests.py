@@ -1,5 +1,12 @@
-from django.test import TestCase, Client
+from datetime import datetime
+from django.template import RequestContext
+from django.test import RequestFactory, TestCase, Client
 from django.urls import reverse
+from django.contrib import messages
+from SistemaContableApp.forms import ExteriorPaymentForm
+from SistemaContableApp.views import createForm, isLateRequest
+from django.contrib.messages import get_messages
+from django.contrib.messages.storage.fallback import FallbackStorage
 
 class ChargeAccountFormViewTests(TestCase):
     def setUp(self):
@@ -113,7 +120,17 @@ class ExteriorPaymentFormViewTests(TestCase):
         self.assertEqual(response.status_code, 302)  # Redirect after successful form submission
 
 
+class IsLateRequestTestCase(TestCase):
+    def test_late_request(self):
+        late_date = datetime(2023, 4, 25)  # Fecha después del día 20
+        self.assertTrue(isLateRequest(late_date))
 
+    def test_early_request(self):
+        early_date = datetime(2023, 4, 15)  # Fecha antes del día 20
+        self.assertFalse(isLateRequest(early_date))
 
-
+    def test_different_month(self):
+        different_month = datetime(2023, 5, 25)  # Fecha en un mes diferente
+        self.assertFalse(isLateRequest(different_month))
+        
 
