@@ -20,6 +20,7 @@ urlpatterns = [
     path('Ventanilla unica resumida/', views.summaryOneStopShopView,name = "summaryOneStopShop"),
     path('Ventanilla unica/', views.fullOneStopShopView,name = "fullOneStopShop"),
     path('Agregar a ventanilla unica/', views.oneStopShopFormView,name = "OneStopShopForm"),
+    path('legalizationForm/', views.createLegalizationForm, name='viewLegalizationForm'),
 ]
 
 urlpatterns += [ 

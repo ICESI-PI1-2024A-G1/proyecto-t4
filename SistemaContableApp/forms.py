@@ -3,6 +3,7 @@ from ftplib import MAXLINE
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import *
+from django.forms import inlineformset_factory
         
 
 class DateInput(forms.DateInput):
@@ -15,10 +16,171 @@ class DateInput(forms.DateInput):
     
     input_type = 'date'    
 
-              
-          
-          
+
+class TravelExpensesSolicitationForm(forms.ModelForm):
+    class Meta:
+        model = Legalization
+        fields = ["legalization_date",
+                  "traveler_name",
+                  "identification",
+                  "cost_center",
+                  "dependency",
+                  "destiny_city",
+                  "travel_date",
+                  "return_date",
+                  "motive",
+                  "bank",
+                  "type_account",
+                  "account_number",
+                  "orderer_name",
+                  "elaborator_name",
+                  "descount_in_one_quote"]
+        widgets = {
+            'legalization_date': DateInput(),
+            'travel_date': DateInput(),
+            'return_date': DateInput(),
+            
+        }
+
+class TravelExpenseForm(forms.ModelForm):
+    class Meta:
+        model = LegalizationExpense
+        fields = ['category',
+                  'support',
+                  'support_no',
+                  'third_person_name',
+                  'third_person_nit',
+                  'concept',
+                  'money_type',
+                  'money_value']
+
+class TravelExpensesSolicitationFormSet(forms.BaseInlineFormSet):
+   
+    def __init__(self, *args, **kwargs):  
+        super().__init__(*args, **kwargs)  
+        for field in self.fields.items():   
+              field.widget.attrs['class'] = 'form-control'
+            
+TravelExpenseFormSet = inlineformset_factory(
+    Legalization, LegalizationExpense,
+    fields=['category',
+            'support',
+            'support_no',
+            'third_person_name',
+            'third_person_nit',
+            'concept',
+            'money_type',
+            'money_value'],
+    extra=0,
+)     
+
+from django.forms import BaseInlineFormSet
+
+
+from django.forms import BaseInlineFormSet
+
+class LegalizationExpenseInlineFormSet(BaseInlineFormSet):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fk = LegalizationExpense._meta.get_field('solicitation')
         
+class ChargeAccountForm(forms.ModelForm):
+    """
+    Form to create a charge account request.
+
+    Extends the forms.ModelForm class from Django.
+
+    Attributes:
+        Meta (class): Meta class that defines the fields and associated model.
+    """
+    
+    class Meta:
+        model = Charge_account
+        fields = ["name",
+                  "identification",
+                  "phone",
+                  "city",
+                  "addres",
+                  "date",
+                  "value_letters",
+                  "value_numbers",
+                  "concept",
+                  "bank",
+                  "type",
+                  "account_number",
+                  "cex",
+                  "retentions",
+                  "declarant",
+                  "colombian_resident",
+                  "supports"
+                  ]
+        widgets = {
+            'date': DateInput()
+        }
+    
+    def __init__(self, *args, **kwargs):
+        """
+        Constructor for the ChargeAccountForm class.
+
+        Initializes the form and adds the 'form-control' class to all fields.
+
+        Args:
+            *args: Positional arguments.
+            **kwargs: Named arguments.
+        """
+        
+        super().__init__(*args, **kwargs)  
+        for field_name, field in self.fields.items():   
+            field.widget.attrs['class'] = 'form-control'
+        
+
+class RequisitionForm(forms.ModelForm):
+    """
+    Form to create a requisition request.
+
+    Extends the forms.ModelForm class from Django.
+
+    Attributes:
+        Meta (class): Meta class that defines the fields and associated model.
+    """
+    
+    class Meta:
+        model = Requisition
+        fields = ["date",
+                  "beneficiaryName",
+                  "idNumber",
+                  "charge",
+                  "dependency",
+                  "cenco",
+                  "value",
+                  "concept",
+                  "description",
+                  "radicate",
+                  "payment_order_code",
+                  "paymentMethod",
+                  "typeAccount",
+                  "account_number",
+                  "authorName"
+                  ]
+        widgets = {
+            'date': DateInput()
+        }
+    
+    def __init__(self, *args, **kwargs):
+        """
+        Constructor for the RequisitionForm class.
+
+        Initializes the form and adds the 'form-control' class to all fields.
+
+        Args:
+            *args: Positional arguments.
+            **kwargs: Named arguments.
+        """
+        
+        super().__init__(*args, **kwargs)  
+        for field_name, field in self.fields.items():   
+            field.widget.attrs['class'] = 'form-control'
+                         
         
 class ExteriorPaymentForm(forms.ModelForm):
     """
@@ -89,102 +251,6 @@ class CustomUserCreationForm(UserCreationForm):
         return user
 
 
-  
-class ChargeAccountForm(forms.ModelForm):
-    """
-    Form to create a charge account request.
-
-    Extends the forms.ModelForm class from Django.
-
-    Attributes:
-        Meta (class): Meta class that defines the fields and associated model.
-    """
-    
-    class Meta:
-        model = Charge_account
-        fields = ["name",
-                  "identification",
-                  "phone",
-                  "city",
-                  "addres",
-                  "date",
-                  "value_letters",
-                  "value_numbers",
-                  "concept",
-                  "bank",
-                  "type",
-                  "account_number",
-                  "cex",
-                  "retentions",
-                  "declarant",
-                  "colombian_resident"
-                  ]
-        widgets = {
-            'date': DateInput()
-        }
-    
-    def __init__(self, *args, **kwargs):
-        """
-        Constructor for the ChargeAccountForm class.
-
-        Initializes the form and adds the 'form-control' class to all fields.
-
-        Args:
-            *args: Positional arguments.
-            **kwargs: Named arguments.
-        """
-        
-        super().__init__(*args, **kwargs)  
-        for field_name, field in self.fields.items():   
-            field.widget.attrs['class'] = 'form-control'
-        
-
-class RequisitionForm(forms.ModelForm):
-    """
-    Form to create a requisition request.
-
-    Extends the forms.ModelForm class from Django.
-
-    Attributes:
-        Meta (class): Meta class that defines the fields and associated model.
-    """
-    
-    class Meta:
-        model = Requisition
-        fields = ["date",
-                  "beneficiaryName",
-                  "idNumber",
-                  "charge",
-                  "dependency",
-                  "cenco",
-                  "value",
-                  "concept",
-                  "description",
-                  "radicate",
-                  "payment_order_code",
-                  "paymentMethod",
-                  "typeAccount",
-                  "account_number",
-                  "authorName"
-                  ]
-        widgets = {
-            'date': DateInput()
-        }
-    
-    def __init__(self, *args, **kwargs):
-        """
-        Constructor for the RequisitionForm class.
-
-        Initializes the form and adds the 'form-control' class to all fields.
-
-        Args:
-            *args: Positional arguments.
-            **kwargs: Named arguments.
-        """
-        
-        super().__init__(*args, **kwargs)  
-        for field_name, field in self.fields.items():   
-            field.widget.attrs['class'] = 'form-control' 
 
         
 class OneStopShopForm(forms.ModelForm):

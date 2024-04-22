@@ -10,7 +10,7 @@
         <link rel="stylesheet" type='text/css' href="{% static '/styles/messages.css' %}">
     </head>
     <body>
-        <form method="POST" autocomplete="off">
+        <form method="POST" enctype="multipart/form-data" autocomplete="off">
             {% csrf_token %}
             <div class="charge-account-form">
                 <div class="div">
@@ -99,6 +99,10 @@
                             <span class="text-c">(marque la casilla si es su respuesta es afirmativa)</span>
                         </p>
                         <div class="box-c">{{ form.colombian_resident|add_class:"box-c" }}</div>
+                    </div>
+                    <div class="field-support">
+                        <div class="text-field">RUT y certificado bancario (en un solo archivo comprimido)</div>
+                        <div class="boxes">{{ form.supports|add_class:"boxes" }}</div>
                     </div>
                     <button type="submit" class="button-enviar">Enviar</button>
                 </div>

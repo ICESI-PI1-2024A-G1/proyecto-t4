@@ -44,8 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_renderpdf',
     'multiupload',
-    
-    
+    'openpyxl'
 ]
 
 MIDDLEWARE = [
