@@ -106,3 +106,48 @@ tr:hover{
     height: max-content;
     width: max-content;
 }
+
+
+.edit-btn{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background-image: url('/static/images/edit.png');
+    background-size: cover;
+    background-position: center;
+    background-color: transparent;
+    border: none;  
+}
+
+.popup {
+    display: none; /* Ocultar el popup por defecto */
+    position: fixed; /* Posición fija para que el popup se mantenga en su lugar incluso al hacer scroll */
+    top: 50%; /* Centrar verticalmente */
+    left: 50%; /* Centrar horizontalmente */
+    transform: translate(-50%, -50%); /* Centrar completamente */
+    background-color: rgb(130, 130, 238);
+    border: 1px solid #ccc; /* Borde del popup */
+    padding: 20px; /* Espaciado interno del contenido del popup */
+    z-index: 9999; /* Z-index para asegurar que esté por encima del resto del conte
+}
+
+.popup-content {
+    /* Estilos adicionales para el contenido del popup, como tamaño de fuente, color, etc. */
+}
+
+.close {
+    position: absolute; /* Posición absoluta para poder colocar el botón de cierre en la esquina */
+    top: 10px; /* Espacio desde la parte superior */
+    right: 10px; /* Espacio desde la derecha */
+    cursor: pointer; /* Cambiar cursor al pasar sobre el botón de cierre */
+}
+
+.close:hover {
+    color: red; /* Cambiar color del botón de cierre al pasar sobre él */
+}
+
+/* Estilos para el botón de guardar cambios */
+.popup-content button {
+    margin-top: 10px; /* Espacio superior para separar del formulario */
+    /* Otros estilos según tus preferencias */
+}

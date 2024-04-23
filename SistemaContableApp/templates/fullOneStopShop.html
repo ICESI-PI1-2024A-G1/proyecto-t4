@@ -9,6 +9,7 @@
         <meta charset="UTF-8">
         <title >Ventanilla unica</title>
         <link rel="stylesheet" href= "{% static '/styles/oneStopShopStyle.css' %}" >
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     </head>
 </html>
 
@@ -157,9 +158,31 @@
                             <td>
                                 {{following.manager}}
                             </td>
-                            <td bgcolor = {{following.currentState.color}}>
-                                {{following.currentState.state}}
+
+                            <td bgcolor="{{ following.currentState.color }}">
+                                <span id="state_{{ following.id }}">{{ following.currentState.state }}</span>
+                                <button id="edit-btn_{{ following.id }}" class="edit-btn" onclick="openPop('{{ following.id }}')"></button>
+                                <div id="popup_{{ following.id }}" class="popup">
+                                    <div class="popup-content">
+                                        <span class="close" onclick="closePop('{{ following.id }}')">&times;</span>
+                                        <form id="editStateForm_{{ following.id }}" method="post" action="{% url 'update_state' following.id %}">
+                                            {% csrf_token %}
+                                            <div class="form-group row">
+                                                <label for="estadoEdit">Estados:</label>
+                                                <select id="estados_{{ following.id }}" name="estadoEdit" required>
+                                                    {% for estado in states %}
+                                                    <option value="{{ estado.state }}">{{ estado.state }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <button class="btn btn-primary" type="submit">Actualizar Estado</button>
+                                            </div>
+                                        </form>                                        
+                                    </div>
+                                </div>
                             </td>
+                            
+                              
+                            
                             <td>
                                 {{following.acceptor}}
                             </td>
@@ -241,6 +264,9 @@
                 </div>
             </div>
     </div>
+    
+    <script src="{% static '/js/popup.js' %}"></script>
+
 </body>
 {% endblock %}
 
