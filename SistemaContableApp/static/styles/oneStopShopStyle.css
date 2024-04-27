@@ -151,3 +151,16 @@ tr:hover{
     margin-top: 10px; /* Espacio superior para separar del formulario */
     /* Otros estilos según tus preferencias */
 }
+
+
+/* Estilos para el botón con icono del historial */
+.button-with-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background-image: url('/static/images/historial.png');
+    background-size: cover;
+    background-position: center;
+    background-color: transparent;
+    border: none; 
+}
