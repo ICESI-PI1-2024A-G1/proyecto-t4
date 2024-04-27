@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 #Create your models here.
 
@@ -193,3 +195,82 @@ class AttachedDocument(models.Model):
     
     def __str__(self):
         return self.file.name
+    
+    
+class Rol(models.Model):
+    """"
+    Model definition for Rol
+    """
+    id= models.AutoField(primary_key= True)
+    rol= models.CharField('Rol', max_length=50, unique= True)
+    
+    class Meta:
+        """"
+        Meta definition for Rol
+        """
+        verbose_name= 'Rol'
+        verbose_name_plural= 'Rols'
+        
+    def _str_(self):
+        """"
+        Unicode representation of Rol
+        """
+        return self.rol
+
+
+class UserManager(BaseUserManager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
+
+    def _create_user(self, username, email, name, password, is_staff, is_superuser, **extra_fields):
+        user = self.model(
+            username=username,
+            email=email,
+            name=name,
+            is_staff=is_staff,
+            is_superuser=is_superuser,
+            **extra_fields
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, username, email, name, password=None, **extra_fields):
+        return self._create_user(username, email, name, password, False, False, **extra_fields)
+
+    def create_superuser(self, username, email, name, password=None, **extra_fields):
+        return self._create_user(username, email, name, password, True, True, **extra_fields) 
+       
+class User(AbstractBaseUser, PermissionsMixin):
+
+    username=models.CharField('Nombre de usuario', unique=True, max_length=100)
+    email = models.EmailField(unique=True)
+    name= models.CharField('Nombre', max_length=200, blank=True, null= True)
+    last_name = models.CharField('Apellidos', max_length=200, blank=True, null= True)
+    is_staff = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
+    USERNAME_FIELD = 'username'
+
+    REQUIRED_FIELDS = ['email', 'name']
+
+    objects = UserManager()
+
+    groups = models.ManyToManyField(
+        'auth.Group',
+        verbose_name='groups',
+        blank=True,
+        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+        related_name='user_customizado_set',
+        related_query_name='user_customizado',
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        verbose_name='user permissions',
+        blank=True,
+        help_text='Specific permissions for this user.',
+        related_name='user_customizado_set',
+        related_query_name='user_customizado',
+    )
+
+    def _str_(self):
+        return f'{self.name}, {self.last_name}'

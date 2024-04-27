@@ -3,7 +3,7 @@ from ftplib import MAXLINE
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import *
-        
+from  .models import User      
 
 class DateInput(forms.DateInput):
     """
@@ -70,7 +70,7 @@ class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget= forms.PasswordInput)
 
-class CustomUserCreationForm(UserCreationForm):
+class CustomUserCreationForm(forms.ModelForm):
     first_name = forms.CharField(label = "Nombre",max_length=30, required=True)
     last_name = forms.CharField(label ="Apellidos",max_length=30, required=True)
     email = forms.EmailField(label = "Correo Electrónico",max_length=254, help_text='Required. Inform a valid email address.')
