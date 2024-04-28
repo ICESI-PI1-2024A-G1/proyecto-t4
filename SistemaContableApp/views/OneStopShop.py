@@ -139,7 +139,7 @@ def oneStopShopFormView(request):
         return render(request, 'oneStopShopForm.html', {'oneStopShopForm': oneStopShopForm, 'attachedDocumentForm': attachedDocumentForm})
 
 
-def update_state(request, following_id):
+def updateState(request, following_id):
     # Obtener el objeto Following que deseas actualizar
     following = get_object_or_404(Following, id=following_id)
 
@@ -155,11 +155,21 @@ def update_state(request, following_id):
                 following.currentState = new_state
                 # Guardar los cambios en la base de datos
                 following.save()
+                state_change = StateChange(following=following, state=new_state)
+                state_change.save()
                 messages.success(request, 'Estado actualizado con éxito.')
             except State.DoesNotExist:
                 messages.error(request, 'El estado proporcionado no existe.')
         else:
             messages.error(request, 'No se proporcionó ningún estado.')
 
+    
+
     return redirect('fullOneStopShop')  # Redirigir a la página principal
 
+
+def changeHistory(request, following_id):
+    following = Following.objects.get(pk=following_id)
+    state_changes = StateChange.objects.filter(following=following)
+
+    return render(request, 'changeHistory.html', {'following': following, 'state_changes': state_changes})

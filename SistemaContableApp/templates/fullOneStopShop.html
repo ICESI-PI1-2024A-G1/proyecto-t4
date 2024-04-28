@@ -124,6 +124,9 @@
                             <th>
                                 Fecha de cierre
                             </th>
+                            <th>
+                                Historial
+                            </th>
                         </tr>
                         {% for following in followingData %}
                         <tr>
@@ -179,10 +182,7 @@
                                         </form>                                        
                                     </div>
                                 </div>
-                            </td>
-                            
-                              
-                            
+                            </td>                                                          
                             <td>
                                 {{following.acceptor}}
                             </td>
@@ -258,6 +258,9 @@
                             <td>
                                 {{following.closeDate}}
                             </td>
+                            <td>
+                                <button class="button-with-icon" onclick="showHistory('{{ following.pk }}')"></button>                    
+                            </td>                                                    
                         </tr>
                         {% endfor %}
                     </table>
@@ -266,6 +269,7 @@
     </div>
     
     <script src="{% static '/js/popup.js' %}"></script>
+    <script src="{% static '/js/showHistory.js' %}"></script>
 
 </body>
 {% endblock %}
