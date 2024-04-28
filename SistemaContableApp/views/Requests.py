@@ -195,21 +195,25 @@ def createLegalizationForm(request):
 def createLegalizationForm(request):
     TravelExpenseFormSet = inlineformset_factory(
         Legalization, LegalizationExpense,
-        form=TravelExpenseForm, extra=1
+        form=TravelExpenseForm, extra=1, can_delete=True
     )
 
     if request.method == 'POST':
         solicitation_form = TravelExpensesSolicitationForm(request.POST, request.FILES)
-        if solicitation_form.is_valid():
-            solicitation = solicitation_form.save(commit=False)
-            expense_formset = TravelExpenseFormSet(request.POST, request.FILES, instance=solicitation)
-            if expense_formset.is_valid():
-                solicitation.save()
-                expense_formset.save()
-                # Enviar el archivo Excel al correo
-                send_travel_expenses_solicitation_as_excel(request, solicitation)
-                
-                return redirect('viewLegalizationForm')
+        expense_formset = TravelExpenseFormSet(request.POST, request.FILES, instance=None)
+
+        if solicitation_form.is_valid() and expense_formset.is_valid():
+            solicitation = solicitation_form.save()
+
+            expenses = expense_formset.save(commit=False)
+            for expense in expenses:
+                expense.solicitation = solicitation
+                expense.save()
+
+            # Enviar el archivo Excel al correo
+            send_travel_expenses_solicitation_as_excel(request, solicitation)
+
+            return redirect('viewLegalizationForm')
     else:
         solicitation_form = TravelExpensesSolicitationForm()
         expense_formset = TravelExpenseFormSet()
@@ -218,7 +222,6 @@ def createLegalizationForm(request):
         'solicitation_form': solicitation_form,
         'expense_formset': expense_formset
     })
-
     
 
 
@@ -297,12 +300,25 @@ def generate_excel_report(solicitation):
     start_row = 20
     end_row = 34
     start_column = 1  # Columna A
-    end_column = 8  # Columna H
+    end_column = 9  # Columna H
     
     for row in range(start_row, end_row + 1):
         for col in range(start_column, end_column + 1):
             cell = worksheet.cell(row=row, column=col)
             cell.border = thin_border
+            
+     
+    #borde derecho de la solicitud       
+    right_border = Border(
+        right=Side(style='thin')
+    )
+    start_row = 1
+    end_row = 48
+    
+    for row in range(start_row, end_row + 1):
+        for col in range(9, 9 + 1):
+            cell = worksheet.cell(row=row, column=col)
+            cell.border = right_border
             
             
     
@@ -446,12 +462,14 @@ def generate_excel_report(solicitation):
     merged_cell.value = 'Rubro'
     merged_cell.font = bold_font
     merged_cell.fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+    merged_cell.border = thin_border
     merged_cell.alignment = Alignment(horizontal='center', vertical='center')
 
     worksheet.merge_cells('B18:B19')
     merged_cell = worksheet['B18']
     merged_cell.value = '# de\nsoporte'
     merged_cell.fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+    merged_cell.border = thin_border
     merged_cell.alignment = Alignment(horizontal='center', vertical='center')
     merged_cell.font = bold_font
     
@@ -459,6 +477,7 @@ def generate_excel_report(solicitation):
     merged_cell = worksheet['C18']
     merged_cell.value = 'Nombre del tercero\nde la factura'
     merged_cell.fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+    merged_cell.border = thin_border
     merged_cell.alignment = Alignment(horizontal='center', vertical='center')
     merged_cell.font = bold_font 
     
@@ -466,6 +485,7 @@ def generate_excel_report(solicitation):
     merged_cell = worksheet['D18']
     merged_cell.value = 'NIT del\ntercero\nde la factura'
     merged_cell.fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+    merged_cell.border = thin_border
     merged_cell.alignment = Alignment(horizontal='center', vertical='center')
     merged_cell.font = bold_font    
     
@@ -473,19 +493,27 @@ def generate_excel_report(solicitation):
     merged_cell = worksheet['E18']
     merged_cell.value = 'Concepto de la compra'
     merged_cell.fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+    merged_cell.border = thin_border
     merged_cell.alignment = Alignment(horizontal='center', vertical='center')
     merged_cell.font = bold_font 
     
     worksheet.merge_cells('F18:H18')
     merged_cell = worksheet['F18']
     merged_cell.value = 'Si su anticipo fue en:'
+    merged_cell.fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+    merged_cell.border = thin_border
     merged_cell.alignment = Alignment(horizontal='center', vertical='center')
     merged_cell.font = bold_font 
     
 
     worksheet['F19'] = 'Pesos\ncolombianos'
+    worksheet['F19'].border = thin_border
+    
     worksheet['G19'] = 'Dólares'
+    worksheet['G19'].border = thin_border
+    
     worksheet['H19'] = 'Euros'
+    worksheet['H19'].border = thin_border
 
     
     
@@ -529,9 +557,24 @@ def generate_excel_report(solicitation):
           
     # Valor del anticipo
     worksheet['A32'] = 'Valor del anticipo'
-    worksheet['F32'] = '0'  # Valor de anticipo en pesos colombianos
-    worksheet['G32'] = '0'  # Valor de anticipo en dólares
-    worksheet['H32'] = '0'  # Valor de anticipo en euros
+    if solicitation.currency_type_of_advance_value == 'PESOS COLOMBIANOS':
+
+        worksheet['F32'] = solicitation.advance_payment_value  # Valor de anticipo en pesos colombianos
+        worksheet['G32'] = 0  # Valor de anticipo en dólares
+        worksheet['H32'] = 0  # Valor de anticipo en euros
+        
+    elif solicitation.currency_type_of_advance_value == 'DOLARES':
+        
+        worksheet['F32'] = 0  # Valor de anticipo en pesos colombianos
+        worksheet['G32'] = solicitation.advance_payment_value  # Valor de anticipo en dólares
+        worksheet['H32'] = 0  # Valor de anticipo en euros
+        
+    elif solicitation.currency_type_of_advance_value == 'EUROS':
+        
+        worksheet['F32'] = 0  # Valor de anticipo en pesos colombianos
+        worksheet['G32'] = 0  # Valor de anticipo en dólares
+        worksheet['H32'] = solicitation.advance_payment_value  # Valor de anticipo en euros
+        
     
     #color azul para la parte de valor de anticipo
     
@@ -567,12 +610,12 @@ def generate_excel_report(solicitation):
     merged_cell.value = 'Autorizo que el saldo a favor de la Universidad Icesi, sea descontado en una sola\ncuota en el siguiente pago de nómina.'
     
     
-    if solicitation.descount_in_one_quote == 'TRUE':
-        worksheet['C38'] = 'SÍ autorizo'
-        worksheet['C38'].fill = PatternFill(start_color='C6E0B4', end_color='DDEBF7', fill_type='solid')
-    else:
-        worksheet['C38'] = 'NO autorizo'
-        worksheet['C38'].fill = PatternFill(start_color='FFABAB', end_color='DDEBF7', fill_type='solid')
+    if solicitation.descount_in_one_quote == 1:
+        worksheet['C38'].value = 'SÍ autorizo'
+        worksheet['C38'].fill = PatternFill(start_color='C6E0B4', end_color='C6E0B4', fill_type='solid')
+    elif solicitation.descount_in_one_quote == 0:
+        worksheet['C38'].value = 'NO autorizo'
+        worksheet['C38'].fill = PatternFill(start_color='FFABAB', end_color='FFABAB', fill_type='solid')
     
     top_border = Border(
         top=Side(style='thin')
@@ -611,12 +654,11 @@ def generate_excel_report(solicitation):
     merged_cell.fill = PatternFill(start_color='DDEBF7', end_color='DDEBF7', fill_type='solid')
     
     
-    
 
 
 
     # Guardar el archivo Excel
-    filename = f'legalizacion_{solicitation.id}.xlsx'
+    filename = f'media/legalizacion_{solicitation.id}.xlsx'
     workbook.save(filename)
     return filename
 
@@ -646,6 +688,11 @@ def send_travel_expenses_solicitation_as_excel(request, solicitation):
         to=["pinedapablo6718@gmail.com"]
     )
     email.attach_file(excel_filename)
+    
+    # Adjuntar archivos de cada gasto
+    for expense in solicitation.expenses.all():
+        if expense.support:
+            email.attach_file(expense.support.path)
 
     try:
         email.send()

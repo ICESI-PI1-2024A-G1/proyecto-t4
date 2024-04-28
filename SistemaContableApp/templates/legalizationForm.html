@@ -84,6 +84,14 @@
                         </p>
                         <div class="box-authorization">{{ solicitation_form.descount_in_one_quote|add_class:"box-authorization" }}</div>
                     </div>
+                    <div class="field-currency-type-of-advance-value">
+                        <p class="textfields">Tipo de moneda del valor del anticipo</p>
+                        <div class="boxes">{{ solicitation_form.currency_type_of_advance_value|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-advance-payment-value">
+                        <p class="textfields">Valor del anticipo</p>
+                        <div class="boxes">{{ solicitation_form.advance_payment_value|add_class:"boxes" }}</div>
+                    </div>
                 </div>
             </div>
             <div class="expense-form" id="form-set">
@@ -127,10 +135,11 @@
                 </div>
                 {% endfor %}
             </div>
-            <input type="button" id="add-form" value="Add Expense">
-            <input type="submit" value="Submit">
+            <button id="add-form" class="add-form">Añadir un gasto más</button>
+            <button type="submit" class="button-enviar">Enviar todo</button>
         </form>
         <div id="empty-form" style="display:none;">
+            
             <div class="expense-form">
                 {% for solicitation_form in expense_formset %}
                 <div class="div-2">
@@ -174,17 +183,42 @@
             </div>
         </div>
         <script>
-            $(document).ready(function() {
-                var form_idx = {{ expense_formset.total_form_count }};
-                $('#add-form').click(function(){
-                    $('#form-set').append($('#empty-form').html().replace(/__prefix__/g, form_idx));
-                    $('#id_expenses-TOTAL_FORMS').val(parseInt($('#id_expenses-TOTAL_FORMS').val()) + 1);
-                    form_idx++;
-                    
-                    return false;
+            $('#add-form').click(function() {
+                var empty_form = $('#empty-form .expense-form').clone();
+                var form_idx = $('#id_expenses-TOTAL_FORMS').val();
+            
+                empty_form.find('.div-2 .field-category .expenseBoxes').html('<input type="text" name="expenses-' + form_idx + '-category" id="id_expenses-' + form_idx + '-category" class="expenseBoxes">');
+                empty_form.find('.div-2 .field-support .expenseBoxes').html('<input type="file" name="expenses-' + form_idx + '-support" id="id_expenses-' + form_idx + '-support" class="expenseBoxes">');
+                empty_form.find('.div-2 .field-no-support .expenseBoxes').html('<input type="text" name="expenses-' + form_idx + '-support_no" id="id_expenses-' + form_idx + '-support_no" class="expenseBoxes">');
+                empty_form.find('.div-2 .field-third-person .expenseBoxes').html('<input type="text" name="expenses-' + form_idx + '-third_person_name" id="id_expenses-' + form_idx + '-third_person_name" class="expenseBoxes">');
+                empty_form.find('.div-2 .field-third-person-2 .expenseBoxes').html('<input type="text" name="expenses-' + form_idx + '-third_person_nit" id="id_expenses-' + form_idx + '-third_person_nit" class="expenseBoxes">');
+                empty_form.find('.div-2 .field-purchase .box-concepto-compra').html('<textarea name="expenses-' + form_idx + '-concept" id="id_expenses-' + form_idx + '-concept" class="box-concepto-compra">');
+                empty_form.find('.div-2 .field-currency .expenseBoxes').html('<select name="expenses-' + form_idx + '-money_type" id="id_expenses-' + form_idx + '-money_type" class="expenseBoxes">');
+                empty_form.find('.div-2 .field-purchase-value .expenseBoxes').html('<input type="text" name="expenses-' + form_idx + '-money_value" id="id_expenses-' + form_idx + '-money_value" class="expenseBoxes">');
+                
+                
+                var moneyTypeOptions = ['---------', 'PESOS COLOMBIANOS', 'DOLARES', 'EUROS'];
+                var moneyTypeSelect = empty_form.find('.div-2 .field-currency .expenseBoxes select');
+            
+                $.each(moneyTypeOptions, function(index, value) {
+                    moneyTypeSelect.append($('<option>', {
+                        value: value,
+                        text: value
+                    }));
                 });
+
+                empty_form.find(':input').each(function() {
+                    var name = $(this).attr('name').replace(/__prefix__/g, form_idx);
+                    $(this).attr('name', name);
+                });
+            
+                $('#form-set').append(empty_form);
+                $('#id_expenses-TOTAL_FORMS').val(parseInt($('#id_expenses-TOTAL_FORMS').val()) + 1);
+                form_idx++;
+                return false;
             });
-            </script>
+
+        </script>
     </body>
 </html>
 {% endblock %}

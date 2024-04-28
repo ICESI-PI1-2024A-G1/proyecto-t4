@@ -9,7 +9,7 @@
 .legalization-form .div {
     background-color: #ffffff;
     width: 1280px;
-    height: 728px;
+    height: 850px;
     position: relative;
 }
 
@@ -141,8 +141,8 @@
     align-items: flex-start;
     padding: 9px 4px;
     position: absolute;
-    top: 152px;
-    left: 692px;
+    top: 704px;
+    left: 287px;
 }
 
 .legalization-form .box-motivo-viaje {
@@ -154,7 +154,7 @@
 
 .legalization-form .field-bank {
     display: inline-flex;
-    top: 289px;
+    top: 152px;
     left: 692px;
     flex-direction: column;
     align-items: flex-start;
@@ -168,13 +168,13 @@
     align-items: flex-start;
     padding: 9px 4px;
     position: absolute;
-    top: 359px;
+    top: 221px;
     left: 692px;
 }
 
 .legalization-form .field-account {
     display: inline-flex;
-    top: 428px;
+    top: 290px;
     left: 692px;
     flex-direction: column;
     align-items: flex-start;
@@ -188,7 +188,7 @@
     align-items: flex-start;
     padding: 9px 4px;
     position: absolute;
-    top: 497px;
+    top: 359px;
     left: 692px;
 }
 
@@ -198,15 +198,41 @@
     align-items: flex-start;
     padding: 9px 4px;
     position: absolute;
+    top: 428px;
+    left: 692px;
+}
+
+
+.legalization-form .field-currency-type-of-advance-value {
+    display: flex;
+    width: 308px;
+    height: 69px;
+    top: 497px;
+    left: 692px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+
+.legalization-form .field-advance-payment-value {
+    display: flex;
+    width: 308px;
+    height: 69px;
     top: 566px;
     left: 692px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
 }
 
 .legalization-form .field-authorization {
     display: flex;
     width: 308px;
     height: 69px;
-    top: 635px;
+    top: 655px;
     left: 692px;
     flex-direction: column;
     align-items: flex-start;

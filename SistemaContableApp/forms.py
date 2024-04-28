@@ -34,13 +34,31 @@ class TravelExpensesSolicitationForm(forms.ModelForm):
                   "account_number",
                   "orderer_name",
                   "elaborator_name",
-                  "descount_in_one_quote"]
+                  "descount_in_one_quote",
+                  "advance_payment_value",
+                  "currency_type_of_advance_value"]
+        
         widgets = {
             'legalization_date': DateInput(),
             'travel_date': DateInput(),
             'return_date': DateInput(),
             
         }
+        
+    def __init__(self, *args, **kwargs):
+        """
+        Constructor for the ChargeAccountForm class.
+
+        Initializes the form and adds the 'form-control' class to all fields.
+
+        Args:
+            *args: Positional arguments.
+            **kwargs: Named arguments.
+        """
+        
+        super().__init__(*args, **kwargs)  
+        for field_name, field in self.fields.items():   
+            field.widget.attrs['class'] = 'form-control'
 
 class TravelExpenseForm(forms.ModelForm):
     class Meta:

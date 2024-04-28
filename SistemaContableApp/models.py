@@ -110,6 +110,12 @@ class Legalization(models.Model):
         ('De ahorros','De ahorros'),
         ('Corriente','Corriente')
     ]
+    
+    MONEY_TYPE =[
+        ('PESOS COLOMBIANOS','PESOS COLOMBIANOS'),
+        ('DOLARES','DOLARES'),
+        ('EUROS','EUROS')
+    ]
 
     legalization_date = models.DateField()
     traveler_name = models.CharField(max_length=50)
@@ -126,6 +132,8 @@ class Legalization(models.Model):
     orderer_name = models.CharField(max_length = 50)
     elaborator_name = models.CharField(max_length = 50)
     descount_in_one_quote = models.BooleanField()
+    advance_payment_value = models.DecimalField(max_digits=10, decimal_places=2)
+    currency_type_of_advance_value = models.CharField(max_length = 20,choices = MONEY_TYPE)
     
     def __str__(self):
         return self.id
@@ -142,8 +150,8 @@ class LegalizationExpense(models.Model):
     support_no = models.CharField(max_length=20)
     third_person_name = models.CharField(max_length=100)
     third_person_nit = models.CharField(max_length=20)
-    concept = models.CharField(max_length=100)
-    money_type =models.CharField(max_length = 20,choices = MONEY_TYPE)
+    concept = models.TextField()
+    money_type = models.CharField(max_length = 20,choices = MONEY_TYPE)
     money_value = models.DecimalField(max_digits=10, decimal_places=2)
 
 
