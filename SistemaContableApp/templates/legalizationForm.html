@@ -9,7 +9,7 @@
     <head>
         <link rel='stylesheet' type='text/css' href="{% static '/styles/legalizationForm.css' %}">
         <link rel="stylesheet" type='text/css' href="{% static '/styles/messages.css' %}">
-        <link rel='stylesheet' type='text/css' href="{% static '/styles/expenseForm.css' %}">
+        <link rel='stylesheet' type='text/css' href="{% static '/styles/legalizationExpenseForm.css' %}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
@@ -70,11 +70,11 @@
                         <div class="boxes">{{ solicitation_form.account_number|add_class:"boxes" }}</div>
                     </div>
                     <div class="field-expense">
-                        <p class="textfields">Nombre del ordenador de gasto</p>
+                        <div class="textfields">Nombre del ordenador de gasto</div>
                         <div class="boxes">{{ solicitation_form.orderer_name|add_class:"boxes" }}</div>
                     </div>
                     <div class="field-author-name">
-                        <p class="textfields">Nombre de quien labora la solicitud</p>
+                        <div class="textfields">Nombre de quien labora la solicitud</div>
                         <div class="boxes">{{ solicitation_form.elaborator_name|add_class:"boxes" }}</div>
                     </div>
                     <div class="field-authorization">
@@ -85,11 +85,11 @@
                         <div class="box-authorization">{{ solicitation_form.descount_in_one_quote|add_class:"box-authorization" }}</div>
                     </div>
                     <div class="field-currency-type-of-advance-value">
-                        <p class="textfields">Tipo de moneda del valor del anticipo</p>
+                        <div class="textfields">Tipo de moneda del valor del anticipo</div>
                         <div class="boxes">{{ solicitation_form.currency_type_of_advance_value|add_class:"boxes" }}</div>
                     </div>
                     <div class="field-advance-payment-value">
-                        <p class="textfields">Valor del anticipo</p>
+                        <div class="textfields">Valor del anticipo</div>
                         <div class="boxes">{{ solicitation_form.advance_payment_value|add_class:"boxes" }}</div>
                     </div>
                 </div>

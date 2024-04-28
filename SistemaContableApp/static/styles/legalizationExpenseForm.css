@@ -1,0 +1,160 @@
+.expense-form {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.expense-form .div-2 {
+    background-color: #ffffff;
+    width: 1280px;
+    height: 600px;
+    position: relative;
+}
+
+.expense-form .title-legalization {
+    position: absolute;
+    width: 1280px;
+    height: 57px;
+    top: 59px;
+    left: 0;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 25px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.expense-form .field-category {
+    top: 152px;
+    left: 287px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.expense-form .text-fields {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.expense-form .expenseBoxes {
+    position: relative;
+    width: 300px;
+    height: 30px;
+    background-color: #e2edfa;
+}
+
+.expense-form .overlap-group {
+    position: absolute;
+    width: 308px;
+    height: 137px;
+    top: 221px;
+    left: 287px;
+}
+
+.expense-form .field-support {
+    top: 0;
+    left: 0;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.expense-form .field-no-support {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 68px;
+    left: 0;
+}
+
+.expense-form .field-third-person {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 359px;
+    left: 287px;
+}
+
+.expense-form .field-third-person-2 {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 428px;
+    left: 287px;
+}
+
+.expense-form .field-purchase {
+    top: 152px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    left: 692px;
+}
+
+.expense-form .box-concepto-compra {
+    position: relative;
+    width: 300px;
+    height: 90px;
+    background-color: #e2edfa;
+}
+
+.expense-form .field-currency {
+    top: 289px;
+    left: 692px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.expense-form .field-purchase-value {
+    top: 359px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    left: 692px;
+}
+
+
+.general-form .add-form {
+    display: flex;
+    width: 323px;
+    height: 54px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 8px 16px;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    background-color: #b6cde0;
+    font-weight: bold;
+}

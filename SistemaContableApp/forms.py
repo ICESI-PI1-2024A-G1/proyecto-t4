@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import *
 from django.forms import inlineformset_factory
+from django.forms import BaseInlineFormSet
         
 
 class DateInput(forms.DateInput):
@@ -17,91 +18,6 @@ class DateInput(forms.DateInput):
     input_type = 'date'    
 
 
-class TravelExpensesSolicitationForm(forms.ModelForm):
-    class Meta:
-        model = Legalization
-        fields = ["legalization_date",
-                  "traveler_name",
-                  "identification",
-                  "cost_center",
-                  "dependency",
-                  "destiny_city",
-                  "travel_date",
-                  "return_date",
-                  "motive",
-                  "bank",
-                  "type_account",
-                  "account_number",
-                  "orderer_name",
-                  "elaborator_name",
-                  "descount_in_one_quote",
-                  "advance_payment_value",
-                  "currency_type_of_advance_value"]
-        
-        widgets = {
-            'legalization_date': DateInput(),
-            'travel_date': DateInput(),
-            'return_date': DateInput(),
-            
-        }
-        
-    def __init__(self, *args, **kwargs):
-        """
-        Constructor for the ChargeAccountForm class.
-
-        Initializes the form and adds the 'form-control' class to all fields.
-
-        Args:
-            *args: Positional arguments.
-            **kwargs: Named arguments.
-        """
-        
-        super().__init__(*args, **kwargs)  
-        for field_name, field in self.fields.items():   
-            field.widget.attrs['class'] = 'form-control'
-
-class TravelExpenseForm(forms.ModelForm):
-    class Meta:
-        model = LegalizationExpense
-        fields = ['category',
-                  'support',
-                  'support_no',
-                  'third_person_name',
-                  'third_person_nit',
-                  'concept',
-                  'money_type',
-                  'money_value']
-
-class TravelExpensesSolicitationFormSet(forms.BaseInlineFormSet):
-   
-    def __init__(self, *args, **kwargs):  
-        super().__init__(*args, **kwargs)  
-        for field in self.fields.items():   
-              field.widget.attrs['class'] = 'form-control'
-            
-TravelExpenseFormSet = inlineformset_factory(
-    Legalization, LegalizationExpense,
-    fields=['category',
-            'support',
-            'support_no',
-            'third_person_name',
-            'third_person_nit',
-            'concept',
-            'money_type',
-            'money_value'],
-    extra=0,
-)     
-
-from django.forms import BaseInlineFormSet
-
-
-from django.forms import BaseInlineFormSet
-
-class LegalizationExpenseInlineFormSet(BaseInlineFormSet):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fk = LegalizationExpense._meta.get_field('solicitation')
-        
 class ChargeAccountForm(forms.ModelForm):
     """
     Form to create a charge account request.
@@ -245,6 +161,164 @@ class ExteriorPaymentForm(forms.ModelForm):
         super().__init__(*args, **kwargs)  
         for field_name, field in self.fields.items():   
               field.widget.attrs['class'] = 'form-control'
+              
+              
+
+class TravelExpensesSolicitationForm(forms.ModelForm):
+    class Meta:
+        model = Legalization
+        fields = ["legalization_date",
+                  "traveler_name",
+                  "identification",
+                  "cost_center",
+                  "dependency",
+                  "destiny_city",
+                  "travel_date",
+                  "return_date",
+                  "motive",
+                  "bank",
+                  "type_account",
+                  "account_number",
+                  "orderer_name",
+                  "elaborator_name",
+                  "descount_in_one_quote",
+                  "advance_payment_value",
+                  "currency_type_of_advance_value"]
+        
+        widgets = {
+            'legalization_date': DateInput(),
+            'travel_date': DateInput(),
+            'return_date': DateInput(),
+            
+        }
+        
+    def __init__(self, *args, **kwargs):
+        """
+        Constructor for the TravelExpensesSolicitationForm class.
+
+        Initializes the form and adds the 'form-control' class to all fields.
+
+        Args:
+            *args: Positional arguments.
+            **kwargs: Named arguments.
+        """
+        
+        super().__init__(*args, **kwargs)  
+        for field_name, field in self.fields.items():   
+            field.widget.attrs['class'] = 'form-control'
+
+class TravelExpenseForm(forms.ModelForm):
+    class Meta:
+        model = LegalizationExpense
+        fields = ['category',
+                  'support',
+                  'support_no',
+                  'third_person_name',
+                  'third_person_nit',
+                  'concept',
+                  'money_type',
+                  'money_value']
+
+class TravelExpensesSolicitationFormSet(forms.BaseInlineFormSet):
+   
+    def __init__(self, *args, **kwargs):  
+        super().__init__(*args, **kwargs)  
+        for field in self.fields.items():   
+              field.widget.attrs['class'] = 'form-control'
+            
+TravelExpenseFormSet = inlineformset_factory(
+    Legalization, LegalizationExpense,
+    fields=['category',
+            'support',
+            'support_no',
+            'third_person_name',
+            'third_person_nit',
+            'concept',
+            'money_type',
+            'money_value'],
+    extra=0,
+)     
+
+
+class LegalizationExpenseInlineFormSet(BaseInlineFormSet):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fk = LegalizationExpense._meta.get_field('solicitation')
+
+
+
+
+
+class TravelAdvanceSolicitationForm(forms.ModelForm):
+    class Meta:
+        model = AdvancePayment
+        fields = ["radicate",
+                  "payment_order_code",
+                  "request_date",
+                  "traveler_name",
+                  "traveler_id",
+                  "cost_center",
+                  "dependency",
+                  "destiny_city",
+                  "travel_date",
+                  "return_date",
+                  "motive",
+                  "currency_type_of_advance_value",
+                  "last_day_in_icesi",
+                  "descount_in_one_quote",
+                  "orderer_name",
+                  "elaborator_name"]
+        
+        widgets = {
+            'request_date': DateInput(),
+            'travel_date': DateInput(),
+            'return_date': DateInput(),
+            'last_day_in_icesi' : DateInput(),
+            
+        }
+        
+    def __init__(self, *args, **kwargs):
+        """
+        Constructor for the TravelAdvanceSolicitationForm class.
+
+        Initializes the form and adds the 'form-control' class to all fields.
+
+        Args:
+            *args: Positional arguments.
+            **kwargs: Named arguments.
+        """
+        super().__init__(*args, **kwargs)  
+        for field_name, field in self.fields.items():   
+            field.widget.attrs['class'] = 'form-control'
+
+
+class TravelAdvanceExpenseForm(forms.ModelForm):
+    class Meta:
+        model = AdvanceExpense
+        fields=['category',
+                'money_value']
+
+class TravelAdvanceExpensesSolicitationFormSet(forms.BaseInlineFormSet):
+   
+    def __init__(self, *args, **kwargs):  
+        super().__init__(*args, **kwargs)  
+        for field in self.fields.items():   
+              field.widget.attrs['class'] = 'form-control'
+            
+TravelAdvanceExpenseFormSet = inlineformset_factory(
+    AdvancePayment, AdvanceExpense,
+    fields=['category',
+            'money_value'],
+    extra=0,
+)     
+
+class AdvanceExpenseInlineFormSet(BaseInlineFormSet):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fk = AdvanceExpense._meta.get_field('solicitation')
+
+
+
 
 class LoginForm(forms.Form):
     username = forms.CharField()

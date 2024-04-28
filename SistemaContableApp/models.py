@@ -153,6 +153,42 @@ class LegalizationExpense(models.Model):
     concept = models.TextField()
     money_type = models.CharField(max_length = 20,choices = MONEY_TYPE)
     money_value = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    
+class AdvancePayment(models.Model):
+    
+    MONEY_TYPE =[
+        ('PESOS COLOMBIANOS','PESOS COLOMBIANOS'),
+        ('DOLARES','DOLARES'),
+        ('EUROS','EUROS')
+    ]
+    
+    radicate = models.CharField(max_length = 20)
+    payment_order_code = models.CharField(max_length = 20)
+    request_date = models.DateField()
+    traveler_name = models.CharField(max_length=50)
+    traveler_id = models.CharField(max_length = 10,default = "")  
+    cost_center = models.CharField(max_length = 30)
+    dependency = models.CharField(max_length = 30)
+    destiny_city = models.CharField(max_length = 20)
+    travel_date = models.DateField()
+    return_date = models.DateField()
+    motive = models.TextField()
+    currency_type_of_advance_value = models.CharField(max_length = 20,choices = MONEY_TYPE)
+    last_day_in_icesi = models.DateField()
+    descount_in_one_quote = models.BooleanField()
+    orderer_name = models.CharField(max_length = 50)
+    elaborator_name = models.CharField(max_length = 50)
+    
+    
+    def __str__(self):
+        return self.id
+    
+class AdvanceExpense(models.Model):
+
+    solicitation = models.ForeignKey(AdvancePayment, on_delete=models.CASCADE, related_name='expenses')
+    category = models.CharField(max_length=100)
+    money_value = models.DecimalField(max_digits=10, decimal_places=2)
 
 
 

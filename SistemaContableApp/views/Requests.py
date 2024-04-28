@@ -8,6 +8,12 @@ from django.contrib import messages
 import weasyprint
 from weasyprint import HTML, CSS
 from django.core.files.storage import default_storage
+from openpyxl import Workbook
+from openpyxl.styles import Font, Alignment, Border, Side, PatternFill
+from openpyxl.drawing.image import Image
+from openpyxl.utils import get_column_letter
+from django.template.loader import get_template
+
 
 def sendFormAsPdf(request, template_name, css_file, subject, recipient_email, form_data, pdf_filename, form_instance):
     """
@@ -113,7 +119,7 @@ def createExteriorPaymentForm(request):
         "SistemaContableApp/static/styles/sendExteriorPaymentForm.css",
         "Solicitud de requisición de pago al exterior",
         email,
-        "Pago al exterior",
+        "Pago al exterior\n Universidad Icesi Nit. 890.316.745-5.",
         createExteriorPaymentForm
     )
 
@@ -133,7 +139,7 @@ def createChargeAccountForm(request):
         "chargeAccountForm.html",
         "sendChargeAccountForm.html",
         "SistemaContableApp/static/styles/sendChargeAccountForm.css",
-        "Solicitud de cuenta de cobro",
+        "Solicitud de cuenta de cobro\n Universidad Icesi Nit. 890.316.745-5.",
         email,
         "Cuenta de cobro",
         createChargeAccountForm
@@ -156,41 +162,13 @@ def createRequisitionForm(request):
         "requisitionForm.html",
         "sendRequisitionForm.html",
         "SistemaContableApp/static/styles/sendRequisitionForm.css",
-        "Solicitud de requisición",
+        "Solicitud de requisición\n Universidad Icesi Nit. 890.316.745-5.",
         email,
         "Requisición",
         createRequisitionForm
     )
 
-"""    
-   
-    
-def createAdvanceForm(request):
-    return createForm(
-        request,
-        AdvanceForm,
-        "advanceForm.html",
-        "sendAdvanceForm.html",
-        "SistemaContableApp/static/styles/sendAdvanceForm.css",
-        "Solicitud de anticipo",
-        email,
-        "Anticipo",
-        createAdvanceForm
-    )
-    
-def createLegalizationForm(request):
-    return createForm(
-        request,
-        LegalizationForm,
-        "legalizationForm.html",
-        "sendLegalizationForm.html",
-        "SistemaContableApp/static/styles/sendLegalizationForm.css",
-        "Solicitud de legalización de gastos de viaje",
-        email,
-        "Legalización de gastos de viaje",
-        createLegalizationForm
-    )
-"""
+
 
 def createLegalizationForm(request):
     TravelExpenseFormSet = inlineformset_factory(
@@ -211,7 +189,7 @@ def createLegalizationForm(request):
                 expense.save()
 
             # Enviar el archivo Excel al correo
-            send_travel_expenses_solicitation_as_excel(request, solicitation)
+            sendLegalizationFormAsExcel(request, solicitation)
 
             return redirect('viewLegalizationForm')
     else:
@@ -224,63 +202,345 @@ def createLegalizationForm(request):
     })
     
 
-
-'''
-def send_travel_expenses_solicitation_as_pdf(request, solicitation):
-    """
-    Function to send the travel expenses solicitation as a PDF email.
+def createAdvancePaymentForm(request):
     
-    Args:
-        request (HttpRequest): HTTP request object.
-        solicitation (TravelExpensesSolicitation): Travel expenses solicitation instance.
+    TravelAdvanceExpenseFormSet = inlineformset_factory(
+    AdvancePayment, AdvanceExpense,
+    form=TravelAdvanceExpenseForm, extra=1, can_delete=True,
+)
+
+    if request.method == 'POST':
+        solicitation_form = TravelAdvanceSolicitationForm(request.POST, request.FILES)
+        expense_formset = TravelAdvanceExpenseFormSet(request.POST, request.FILES, instance=None)
+
+        if solicitation_form.is_valid() and expense_formset.is_valid():
+            solicitation = solicitation_form.save()
+
+            expenses = expense_formset.save(commit=False)
+            for expense in expenses:
+                expense.solicitation = solicitation
+                expense.save()
+
+            # Enviar el archivo Excel al correo
+            sendAdvancePaymentFormAsExcel(request, solicitation)
+
+            return redirect('viewAdvancePaymentForm')
+    else:
+        solicitation_form =TravelAdvanceSolicitationForm()
+        expense_formset = TravelAdvanceExpenseFormSet()
+
+    return render(request, 'advancePaymentForm.html', {
+        'solicitation_form': solicitation_form,
+        'expense_formset': expense_formset
+    })
     
-    Returns:
-        None
-    """
-    # Renderizar el HTML del correo electrónico
-    html_template = 'send_travel_expenses_solicitation_email.html'
-    html_content = get_template(html_template).render({'object': solicitation})
 
-    # Convertir a PDF
-    #css_file = 'SistemaContableApp/static/styles/send_travel_expenses_solicitation_email.css'
-    #css = CSS(filename=css_file)
-    pdf = HTML(string=html_content).write_pdf()
 
-    # Enviar correo electrónico con PDF adjunto
-    email = EmailMessage(
-        'Solicitud de gastos de viaje',
-        'Adjunto se encuentra la solicitud de gastos de viaje.',
-        settings.DEFAULT_FROM_EMAIL,
-        to =["pinedapablo6718@gmail.com"]
+
+
+
+def generateExcelAdvancePayment(solicitation):
+    workbook = Workbook()
+    worksheet = workbook.active
+    
+    #estilo de los bordes de la casilla
+    bold_font = Font(bold=True)
+    
+    thin_border = Border(
+        left=Side(style='thin'),
+        right=Side(style='thin'),
+        top=Side(style='thin'),
+        bottom=Side(style='thin')
     )
-    email.attach('solicitud_gastos_viaje.pdf', pdf, 'application/pdf')
+    
+    
+    
+    # Ancho de la columna
+    column_letter = 'A'
+    column_width = 11
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'B'
+    column_width = 20
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'C'
+    column_width = 20
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'D'
+    column_width = 2
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'E'
+    column_width = 23
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'F'
+    column_width = 2
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'G'
+    column_width = 33
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'H'
+    column_width = 11
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    #borde derecho de la solicitud       
+    right_border = Border(
+        right=Side(style='thin')   
+    )
+    start_row = 1
+    end_row = 42
+    
+    for row in range(start_row, end_row + 1):
+        for col in range(8, 8 + 1):
+            cell = worksheet.cell(row=row, column=col)
+            cell.border = right_border
 
-    try:
-        email.send()
-        messages.success(request, 'La solicitud de gastos de viaje se envió correctamente.')
-    except Exception as e:
-        messages.error(request, 'Error al enviar la solicitud de gastos de viaje.')
 
-def travel_expenses_solicitation_list(request):
-    solicitations = Legalization.objects.all()
-    return render(request, 'travel_expenses_solicitation_list.html', {'solicitations': solicitations})
-
-def travel_expenses_solicitation_detail(request, pk):
-    solicitation = Legalization.objects.get(pk=pk)
-    return render(request, 'travel_expenses_solicitation_detail.html', {'solicitation': solicitation})
-'''
+    # Agregar una imagen al archivo Excel
+    image_path = 'SistemaContableApp\static\images\LogoIcesi.jpg'  # Reemplaza con la ruta de tu imagen
+    img = Image(image_path)
+    img_width, img_height = img.width, img.height
 
 
-from openpyxl import Workbook
-from openpyxl.styles import Font, Alignment, Border, Side, PatternFill
-from openpyxl.drawing.image import Image
-from openpyxl.utils import get_column_letter
-from django.conf import settings
-from django.template.loader import get_template
-from django.core.mail import EmailMessage
-from django.contrib import messages
+    # Escribir encabezados
+    
+    # Agregar Logo de icesi en la primera casilla
+    #image_path = 'SistemaContableApp\static\images\LogoIcesi.jpg'  # Reemplaza con la ruta de tu imagen
+    #img = Image(image_path)
+    worksheet.merge_cells('A1:B4')
+    merged_cell = worksheet['A1']
+    #merged_cell.add_image(img,'A1' )
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    
+    worksheet.merge_cells('C1:F2')
+    merged_cell = worksheet['C1']
+    merged_cell.value = 'CONTABILIDAD'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    
+    worksheet.merge_cells('C3:F4')
+    merged_cell = worksheet['C3']
+    merged_cell.value = 'FORMATO SOLICITUD DE ANTICIPO PARA GASTOS DE VIAJE'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    
+    worksheet.merge_cells('G1:H2')
+    merged_cell = worksheet['G1']
+    merged_cell.value = 'Código:\nCTA-FR-008'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    
+    worksheet.merge_cells('G3:H4')
+    merged_cell = worksheet['G3']
+    merged_cell.value = 'Versión:\n1.0'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    
 
-def generate_excel_report(solicitation):
+# -------------------------------------------parte de arriba del formato---------------------------------
+    
+    worksheet['B6'] = 'No. de Radicado'
+    worksheet['B6'].font = bold_font
+    worksheet['C6'].fill = PatternFill(start_color='DDEBF7', end_color='DDEBF7', fill_type='solid')
+    worksheet['C6'] = solicitation.radicate
+    worksheet['C6'].alignment = Alignment(horizontal='center', vertical='center')
+
+    worksheet['E6'] = 'Código de Orden de pago'
+    worksheet['E6'].font = bold_font
+    worksheet.merge_cells('F6:G6')
+    merged_cell = worksheet['F6']
+    merged_cell.fill = PatternFill(start_color='DDEBF7', end_color='DDEBF7', fill_type='solid')
+    worksheet['F6'] = solicitation.payment_order_code
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet['B8'] = 'Fecha de solicitud'
+    worksheet['B8'].font = bold_font
+    worksheet['C8'] = solicitation.request_date
+    worksheet['C8'].alignment = Alignment(horizontal='center', vertical='center')
+
+    worksheet['B9'] = 'Nombre del viajero'
+    worksheet['B9'].font = bold_font
+    worksheet.merge_cells('C9:G9')
+    merged_cell = worksheet['C9']
+    worksheet['C9'] = solicitation.traveler_name
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet['B10'] = 'No. de identificación'
+    worksheet['B10'].font = bold_font
+    worksheet.merge_cells('C10:D10')
+    merged_cell = worksheet['C14']
+    worksheet['C10'] = solicitation.traveler_id
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet['E10'] = 'Centro de Costos'
+    worksheet['E10'].font = bold_font
+    worksheet.merge_cells('F10:G10')
+    merged_cell = worksheet['F10']
+    worksheet['F10'] = solicitation.cost_center
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+
+    worksheet['B11'] = 'Dependencia'
+    worksheet['B11'].font = bold_font
+    worksheet.merge_cells('C11:G11')
+    merged_cell = worksheet['C11']
+    worksheet['C11'] = solicitation.dependency
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+
+    worksheet['B13'] = 'Ciudad de destino'
+    worksheet['B13'].font = bold_font
+    worksheet.merge_cells('C13:D13')
+    merged_cell = worksheet['C13']
+    worksheet['C13'] = solicitation.destiny_city
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+
+    worksheet['B14'] = 'Fecha de Salida'
+    worksheet['B14'].font = bold_font
+    worksheet.merge_cells('C14:D14')
+    merged_cell = worksheet['C14']
+    worksheet['C14'] = solicitation.travel_date
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+
+    worksheet['E14'] = 'Fecha de Regreso'
+    worksheet['E14'].font = bold_font
+    worksheet.merge_cells('F14:G14')
+    merged_cell = worksheet['F14']
+    worksheet['F14'] = solicitation.return_date
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+
+    worksheet['B15'] = 'Motivo del Viaje'
+    worksheet['B15'].font = bold_font
+    worksheet.merge_cells('C15:G15')
+    merged_cell = worksheet['C15']
+    worksheet['C15'] = solicitation.motive
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet['B17'] = 'Tipo de moneda:'
+    worksheet['B17'].font = bold_font
+    worksheet.merge_cells('C17:G17')
+    merged_cell = worksheet['C17']
+    worksheet['C17'] = solicitation.currency_type_of_advance_value
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet.merge_cells('B18:D18')
+    merged_cell = worksheet['B18']
+    worksheet['B18'].value = 'Indique el último día que estará en Icesi antes de su viaje'
+    worksheet.merge_cells('E18:G18')
+    merged_cell = worksheet['E18']
+    worksheet['E18'] = solicitation.last_day_in_icesi
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+#------------------------ parte del formato media (tabla de gastos)--------------------------------------------------
+    worksheet.merge_cells('C20:E20')
+    merged_cell = worksheet['C20']
+    worksheet['C20'] = 'PRESUPUESTO DE GASTOS'
+    worksheet['C20'].font = bold_font
+    worksheet['C20'].alignment = Alignment(horizontal='center', vertical='center')
+    
+    
+    #Gris el valor de los gastos
+    start_row = 21
+    end_row = 29
+    start_column = 5  # Columna A
+    end_column = 5  # Columna H
+    
+    for row in range(start_row, end_row + 1):
+        for col in range(start_column, end_column + 1):
+            cell = worksheet.cell(row=row, column=col)
+            cell.fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+            cell.border = thin_border
+    row = 21
+    for expense in solicitation.expenses.all():
+        worksheet.cell(row=row, column=3, value=expense.category)
+        worksheet.cell(row=row, column=5, value=expense.money_value)
+
+        row += 1
+        
+    worksheet['C29'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['C29'] = 'TOTAL DEL ANTICIPO'
+    worksheet['C29'].font = bold_font
+    worksheet['E29'].value ='=SUM(E21:E28)'
+    worksheet['E29'].border = thin_border
+
+
+    
+    
+#----------------------------------Parte de abajo del formato-------------------------------------------------------------------------
+    worksheet.merge_cells('B30:G31')
+    merged_cell = worksheet['B30']
+    merged_cell.value = 'Autorización de descuento : Si pasados 15 días después de finalizar el viaje no he legalizado este anticipo;\n autorizo que su valor me sea descontado por nómina en lel mes más próximo.'
+    
+    
+    top_border = Border(
+        top=Side(style='thin')
+    )
+    
+    worksheet['B34'] = 'Firma del viajero'
+    worksheet['B34'].border = top_border
+    worksheet['B34'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['B33'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['B33'] = solicitation.traveler_name
+    
+    worksheet['E34'] = 'Firma Ordenador de Gasto'
+    worksheet['E34'].border = top_border
+    worksheet['E34'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['E33'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['E33'] = solicitation.orderer_name
+
+    worksheet['B37'] = 'Nombre de quien elabora'
+    worksheet['B37'].border = top_border
+    worksheet['B37'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['B36'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['B36'] = solicitation.orderer_name
+    
+    worksheet['E37'] = 'Nombre Ordenador de Gasto'
+    worksheet['E37'].border = top_border
+    worksheet['E37'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['E36'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['E36'] = solicitation.orderer_name
+    
+    
+    worksheet.merge_cells('B39:G39')
+    merged_cell = worksheet['B39']
+    merged_cell.value = 'Campo de uso exclusivo de la Oficina de Contabilidad'
+    merged_cell.font = bold_font  
+    merged_cell.fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+    
+    worksheet.merge_cells('B40:G40')
+    merged_cell = worksheet['B40']
+    merged_cell.value = 'Motivo de devolución:'
+    merged_cell.fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+    
+    
+    
+    worksheet.merge_cells('A42:H42')
+    merged_cell = worksheet['A42']
+    merged_cell.value = 'Espacio para ser diligenciado por la oficina de contabilidad:'
+    merged_cell.font = bold_font  
+    merged_cell.fill = PatternFill(start_color='DDEBF7', end_color='DDEBF7', fill_type='solid')
+    
+    
+    # Guardar el archivo Excel
+    filename = f'media/advancePayment_{solicitation.id}.xlsx'
+    workbook.save(filename)
+    return filename
+
+
+ 
+
+
+
+def generateExcelLegalization(solicitation):
     workbook = Workbook()
     worksheet = workbook.active
     
@@ -310,7 +570,7 @@ def generate_excel_report(solicitation):
      
     #borde derecho de la solicitud       
     right_border = Border(
-        right=Side(style='thin')
+        right=Side(style='thin')   
     )
     start_row = 1
     end_row = 48
@@ -653,20 +913,13 @@ def generate_excel_report(solicitation):
     merged_cell.font = bold_font  
     merged_cell.fill = PatternFill(start_color='DDEBF7', end_color='DDEBF7', fill_type='solid')
     
-    
-
-
-
     # Guardar el archivo Excel
     filename = f'media/legalizacion_{solicitation.id}.xlsx'
     workbook.save(filename)
     return filename
 
 
-
-
-
-def send_travel_expenses_solicitation_as_excel(request, solicitation):
+def sendLegalizationFormAsExcel(request, solicitation):
     """
     Function to send the travel expenses solicitation as an Excel file.
     
@@ -678,12 +931,12 @@ def send_travel_expenses_solicitation_as_excel(request, solicitation):
         None
     """
     # Generar archivo Excel
-    excel_filename = generate_excel_report(solicitation)
+    excel_filename = generateExcelLegalization(solicitation)
 
     # Enviar correo electrónico con el archivo Excel adjunto
     email = EmailMessage(
         'Solicitud de gastos de viaje',
-        'Adjunto se encuentra la solicitud de gastos de viaje en formato Excel.',
+        'Adjunto se encuentra la solicitud de gastos de viaje en formato Excel.\n Universidad Icesi Nit. 890.316.745-5.',
         settings.DEFAULT_FROM_EMAIL,
         to=["pinedapablo6718@gmail.com"]
     )
@@ -699,3 +952,37 @@ def send_travel_expenses_solicitation_as_excel(request, solicitation):
         messages.success(request, 'La solicitud de gastos de viaje se envió correctamente.')
     except Exception as e:
         messages.error(request, 'Error al enviar la solicitud de gastos de viaje.')
+        
+        
+        
+def sendAdvancePaymentFormAsExcel(request, solicitation) :
+    """
+    Function to send the travel expenses solicitation as an Excel file.
+    
+    Args:
+        request (HttpRequest): HTTP request object.
+        solicitation (TravelExpensesSolicitation): Travel expenses solicitation instance.
+    
+    Returns:
+        None
+    """
+    # Generar archivo Excel
+    excel_filename = generateExcelAdvancePayment(solicitation)
+
+    # Enviar correo electrónico con el archivo Excel adjunto
+    email = EmailMessage(
+        'Solicitud de gastos de viaje',
+        'Adjunto se encuentra la solicitud de anticipo para gastos de viaje en formato Excel.\n Universidad Icesi Nit. 890.316.745-5.',
+        settings.DEFAULT_FROM_EMAIL,
+        to=["pinedapablo6718@gmail.com"]
+    )
+    email.attach_file(excel_filename)
+    
+
+    try:
+        email.send()
+        messages.success(request, 'La solicitud de anticipo para gastos de viaje se envió correctamente.')
+    except Exception as e:
+        messages.error(request, 'Error al enviar la solicitud de anticipo para gastos de viaje.')
+        
+        
