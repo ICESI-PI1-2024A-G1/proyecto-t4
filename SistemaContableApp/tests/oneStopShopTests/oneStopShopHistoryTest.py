@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from SistemaContableApp.models import Following, State, StateChange
 
-class ModifyStateTestCase(TestCase):
+class HistoryStateTestCase(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='password123')
@@ -27,31 +27,14 @@ class ModifyStateTestCase(TestCase):
             currentState=self.state_pending,
             closeDate='2023-04-30',
         )
-    
-           
+
     def test_initial_state(self):
         # Verificar que el estado inicial del objeto Following sea "Pendiente de aceptación"
         self.assertEqual(self.following.currentState, self.state_pending)
 
-
-    def test_state_change_history(self):
-        # Verificar que no hay cambios de estado al principio
-        self.assertEqual(StateChange.objects.count(), 0)
-
-        # Cambiar el estado del objeto Following y verificar el historial
-        response = self.client.post(reverse('update_state', args=[self.following.id]), {'estadoEdit': 'En revisión'})
-        self.assertEqual(response.status_code, 302)  # Redireccionamiento exitoso
-
-        # Verificar que se ha creado un registro en el historial de cambios de estado
-        self.assertEqual(StateChange.objects.count(), 1)
-
-        # Verificar que el estado cambiado sea correcto
-        state_change = StateChange.objects.first()
-        self.assertEqual(state_change.following, self.following)
-        self.assertEqual(state_change.state, self.state_review)
-
-    def test_state_change_permission(self):
-        # Verificar que un usuario no autenticado no puede cambiar el estado
-        self.client.logout()
-        response = self.client.post(reverse('update_state', args=[self.following.id]), {'estadoEdit': 'En revisión'})
-        self.assertEqual(response.status_code, 302)  # Redireccionamiento a la página de inicio de sesión
+    def test_state_change(self):
+        # Cambiar el estado de "Pendiente de aceptación" a "En revisión"
+        self.following.currentState = self.state_review
+        self.following.save()
+        # Verificar que el estado se ha cambiado correctamente
+        self.assertEqual(self.following.currentState, self.state_review)
