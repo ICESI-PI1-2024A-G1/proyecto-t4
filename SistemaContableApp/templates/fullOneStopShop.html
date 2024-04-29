@@ -1,246 +1,145 @@
 {% extends 'layouts/base.html' %}
 
-
 {% block content %}
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title >Ventanilla unica</title>
-        <link rel="stylesheet" href= "{% static '/styles/oneStopShopStyle.css' %}" >
-    </head>
-</html>
-
+<head>
+    <meta charset="UTF-8">
+    <title>Ventanilla única</title>
+    <link rel="stylesheet" href="{% static '/styles/oneStopShopStyle.css' %}">
+</head>
 <body>
-    <div class="heading">
-        <h1><span style="font-size: 40px;">Ventanilla unica </span></h1>
+<div class="heading">
+    <h1><span style="font-size: 40px;">Ventanilla única</span></h1>
+</div>
+<div>
+    <div class="outer-wrapper">
+        <div class="table-wrapper">
+            <table>
+                <tr>
+                    <th>Fecha de creación</th>
+                    <th>Creador</th>
+                    <th>Tipo de solicitud</th>
+                    <th>Proveedor</th>
+                    <th>Identificación</th>
+                    <th>Número de documento</th>
+                    <th>Datos adjuntos</th>
+                    <th>Gestor</th>
+                    <th>Estado</th>
+                    <th>Aprobado por</th>
+                    <th>Revisado por</th>
+                    <th>Estado de aceptación</th>
+                    <th>Fecha de aceptación</th>
+                    <th>Estado de revisión</th>
+                    <th>Revisión</th>
+                    <th>Concepto</th>
+                    <th>Email del proveedor</th>
+                    <th>Moneda</th>
+                    <th>Valor del documento</th>
+                    <th>CENCO</th>
+                    <th>Número de contrato CEX</th>
+                    <th>Observaciones</th>
+                    <th>Fecha de Revisión</th>
+                    <th>Estado de aprobación</th>
+                    <th>Aprobación</th>
+                    <th>Fecha de aprobación</th>
+                    <th>Comentarios de aprobación</th>
+                    <th>Recibido área contable</th>
+                    <th>Comentarios área contable</th>
+                    <th>Fecha del trámite</th>
+                    <th>Modificado</th>
+                    <th>Modificado por</th>
+                    <th>Fecha de cierre</th>
+                </tr>
+                {% for following in followingData %}
+                <tr>
+                    <td>{{ following.creationDate }}</td>
+                    <td>{{ following.creator }}</td>
+                    <td>{{ following.type }}</td>
+                    <td>{{ following.supplier }}</td>
+                    <td>{{ following.supplierId }}</td>
+                    <td>{{ following.documentNumber }}</td>
+                    <td>
+                        <ul>
+                            {% for document in files %}
+                                {% if document.associatedFollowing == following %}
+                                    <a href="{{ document.file.url }}">{{ document }}</a><br>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        {{ following.manager }}
+                        <button onclick="mostrarLista('gestor')">Seleccionar</button>
+                    </td>
+                    <td bgcolor="{{ following.currentState.color }}">{{ following.currentState.state }}</td>
+                    <td>
+                        {{ following.acceptor }}
+                        <button onclick="mostrarLista('aprobadoPor')">Seleccionar</button>
+                    </td>
+                    <td>
+                        {{ following.revisor }}
+                        <button onclick="mostrarLista('revisadoPor')">Seleccionar</button>
+                    </td>
+                    <td>{{ following.acceptanceState }}</td>
+                    <td>{{ following.acceptanceDate }}</td>
+                    <td>{{ following.revisionState }}</td>
+                    <td>{{ following.revision }}</td>
+                    <td>{{ following.concept }}</td>
+                    <td>{{ following.supplierEmail }}</td>
+                    <td>{{ following.moneyType }}</td>
+                    <td>{{ following.amount }}</td>
+                    <td>{{ following.cenco }}</td>
+                    <td>{{ following.cexNumber }}</td>
+                    <td>{{ following.observations }}</td>
+                    <td>{{ following.revisionDate }}</td>
+                    <td>{{ following.approvalState }}</td>
+                    <td>{{ following.approval }}</td>
+                    <td>{{ following.approvalDate }}</td>
+                    <td>{{ following.approvalComments }}</td>
+                    <td>{{ following.accountingReception }}</td>
+                    <td>{{ following.accountingComments }}</td>
+                    <td>{{ following.accountingDate }}</td>
+                    <td>{{ following.receptor }}</td>
+                    <td>{{ following.modificationDate }}</td>
+                    <td>{{ following.modifier }}</td>
+                    <td>{{ following.closeDate }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
-    <div>
-            <div class = "outer-wrapper">
-                <div class="table-wrapper">
-                    <table >
-                        <tr>
-                            <th>
-                               Fecha de creación
-                            </th>
-                            <th>
-                                Creador
-                            </th>
-                            <th>
-                                Tipo de solicitud
-                            </th>
-                            <th>
-                                Proveedor
-                            </th>
-                            <th>
-                                Identificacion
-                            </th>
-                            <th>
-                                Numero de documento
-                            </th>
-                            <th>
-                                Datos adjuntos
-                            </th>
-                            <th>
-                                Gestor
-                            </th>
-                            <th>
-                                Estado
-                            </th>
-                            <th>
-                                aprobado por
-                            </th>
-                            <th>
-                                Revisado por
-                            </th>
-                            <th>
-                                Estado de aceptacion
-                            </th>
-                            <th>
-                                Fecha de aceptacion
-                            </th>
-                            <th>
-                                Estado de revision
-                            </th>
-                            <th>
-                                Revision
-                            </th>
-                            <th>
-                                Concepto
-                            </th>
-                            <th>
-                                Email del proveedor
-                            </th>
-                            <th>
-                                Moneda
-                            </th>
-                            <th>
-                                Valor del documento
-                            </th>
-                            <th>
-                                CENCO
-                            </th>
-                            <th>
-                                Numero de contrato CEX
-                            </th>
-                            <th>
-                                Observaciones
-                            </th>
-                            <th>
-                                Fecha de Revision
-                            </th>
-                            <th>
-                                Estado de aprovacion
-                            </th>
-                            <th>
-                                Aprobacion
-                            </th>
-                            <th>
-                                Fecha de aprovacion
-                            </th>
-                            <th>
-                                Comentarios de aprovacion
-                            </th>
-                            <th>
-                                Recibido area contable
-                            </th>
-                            <th>
-                                Comentarios area contable
-                            </th>
-                            <th>
-                                Fecha del tramite
-                            </th>
-                            <th>
-                                Recibido por(Area contable)
-                            </th>
-                            <th>
-                                Modificado
-                            </th>
-                            <th>
-                                Modificado por
-                            </th>
-                            <th>
-                                Fecha de cierre
-                            </th>
-                        </tr>
-                        {% for following in followingData %}
-                        <tr>
-                            <td>
-                                {{following.creationDate}}
-                            </td>
-                            <td>
-                                {{following.creator}}
-                            </td>
-                            <td>
-                                {{following.type}}
-                            </td>
-                            <td>
-                                {{following.supplier}}
-                            </td>
-                            <td>
-                                {{following.supplierId}}
-                            </td>
-                            <td>
-                                {{following.documentNumber}}
-                            </td>
-                            <td>
-                                <ul>
-                                    {% for document in files %}
-                                    {% if document.associatedFollowing == following %}
-                                    <a href="{{document.file.url}}">{{document}}</a>
-                                    <br>
-                                    {% endif %}
-                                    {% endfor %}
-                                </ul>
-                            </td>
-                            <td>
-                                {{following.manager}}
-                            </td>
-                            <td bgcolor = {{following.currentState.color}}>
-                                {{following.currentState.state}}
-                            </td>
-                            <td>
-                                {{following.acceptor}}
-                            </td>
-                            <td>
-                                {{following.revisor}}
-                            </td>
-                            <td>
-                                {{following.acceptanceState}}
-                            </td>
-                            <td>
-                                {{following.acceptanceDate}}
-                            </td>
-                            <td>
-                                {{following.revisionState}}
-                            </td>
-                            <td>
-                                {{following.revision}}
-                            </td>
-                            <td>
-                                {{following.concept}}
-                            </td>
-                            <td>
-                                {{following.supplierEmail}}
-                            </td>
-                            <td>
-                                {{following.moneyType}}
-                            </td>
-                            <td>
-                                {{following.amount}}
-                            </td>
-                            <td>
-                                {{following.cenco}}
-                            </td>
-                            <td>
-                                {{following.cexNumber}}
-                            </td>
-                            <td>
-                                {{following.observations}}
-                            </td>
-                            <td>
-                                {{following.revisionDate}}
-                            </td>
-                            <td>
-                                {{following.approvalState}}
-                            </td>
-                            <td>
-                                {{following.approval}}
-                            </td>
-                            <td>
-                                {{following.approvalDate}}
-                            </td>
-                            <td>
-                                {{following.approvalComments}}
-                            </td>
-                            <td>
-                                {{following.accountingReception}}
-                            </td>
-                            <td>
-                                {{following.accountingComments}}
-                            </td>
-                            <td>
-                                {{following.accountingDate}}
-                            </td>
-                            <td>
-                                {{following.receptor}}
-                            </td>
-                            <td>
-                                {{following.modificationDate}}
-                            </td>
-                            <td>
-                                {{following.modifier}}
-                            </td>
-                            <td>
-                                {{following.closeDate}}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-            </div>
-    </div>
+</div>
+
+<!-- Sección para mostrar la lista de usuarios -->
+<div id="listaUsuarios" style="display: none; position: absolute; background-color: white; border: 1px solid black; padding: 10px;">
+    <h3>Selecciona un usuario:</h3>
+    <form method="post">
+        {% csrf_token %}
+        <ul>
+            {% for usuario in usuarios %}
+                <li><input type="radio" name="usuario" value="{{ usuario.id }}"> {{ usuario.first_name }} {{ usuario.last_name }}</li>
+            {% endfor %}
+        </ul>
+        <button type="submit">Seleccionar</button>
+    </form>
+</div>
+
+<script>
+    function mostrarLista(tipo) {
+        var listaUsuarios = document.getElementById("listaUsuarios");
+        if (listaUsuarios.style.display === "none") {
+            listaUsuarios.style.display = "block";
+        } else {
+            listaUsuarios.style.display = "none";
+        }
+    }
+</script>
+
 </body>
 {% endblock %}
+
+
 

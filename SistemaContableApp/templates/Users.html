@@ -1,0 +1,26 @@
+<!-- Sección para mostrar la lista de usuarios -->
+<div id="listaUsuarios" style="display: none;">
+    <h3>Selecciona un usuario:</h3>
+    <form method="post">
+        {% csrf_token %}
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Lista de Usuarios Registrados</title>
+        </head>
+        <body>
+            <h1>Lista de Usuarios Registrados</h1>
+            <ul>
+                {% for usuario in usuarios %}
+                <li>
+                    <input type="radio" name="usuario" value="{{ usuario.id }}"> {{ usuario.first_name }} {{ usuario.last_name }} - {{ usuario.email }}
+                </li>
+                {% endfor %}
+            </ul>
+            <button type="submit">Seleccionar</button>
+        </body>
+        </html>
+    </form>
+</div>
