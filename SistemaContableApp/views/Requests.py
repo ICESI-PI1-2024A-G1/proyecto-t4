@@ -302,9 +302,9 @@ def generateExcelAdvancePayment(solicitation):
 
 
     # Agregar una imagen al archivo Excel
-    image_path = 'SistemaContableApp\static\images\LogoIcesi.jpg'  # Reemplaza con la ruta de tu imagen
-    img = Image(image_path)
-    img_width, img_height = img.width, img.height
+    #image_path = 'SistemaContableApp\static\images\LogoIcesi.jpg'  # Reemplaza con la ruta de tu imagen
+    #img = Image(image_path)
+    #img_width, img_height = img.width, img.height
 
 
     # Escribir encabezados
@@ -622,9 +622,9 @@ def generateExcelLegalization(solicitation):
 
 
     # Agregar una imagen al archivo Excel
-    image_path = 'SistemaContableApp\static\images\LogoIcesi.jpg'  # Reemplaza con la ruta de tu imagen
-    img = Image(image_path)
-    img_width, img_height = img.width, img.height
+    #image_path = 'SistemaContableApp\static\images\LogoIcesi.jpg'  # Reemplaza con la ruta de tu imagen
+    #img = Image(image_path)
+    #img_width, img_height = img.width, img.height
 
 
     # Escribir encabezados
