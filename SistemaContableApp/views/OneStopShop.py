@@ -1,6 +1,8 @@
+from django.http import JsonResponse
 from SistemaContableApp.models import  *
 from SistemaContableApp.forms import *
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib import messages
 from django.db.models import Q  
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
@@ -97,9 +99,10 @@ def fullOneStopShopView(request):
     """
 
     followingData = Following.objects.all()
+    states = State.objects.all()
     attachedDocuments = AttachedDocument.objects.all()
 
-    return render(request, 'fullOneStopShop.html', {'followingData': followingData, 'files': attachedDocuments})
+    return render(request, 'fullOneStopShop.html', {'followingData': followingData, 'files': attachedDocuments, 'states': states})
 
 
 def oneStopShopFormView(request):
@@ -135,3 +138,38 @@ def oneStopShopFormView(request):
         attachedDocumentForm = AttachedDocumentForm()
         return render(request, 'oneStopShopForm.html', {'oneStopShopForm': oneStopShopForm, 'attachedDocumentForm': attachedDocumentForm})
 
+
+def updateState(request, following_id):
+    # Obtener el objeto Following que deseas actualizar
+    following = get_object_or_404(Following, id=following_id)
+
+    if request.method == 'POST':
+        # Obtener el nuevo estado del formulario
+        estado_edit = request.POST.get('estadoEdit')
+
+        if estado_edit:
+            try:
+                # Obtener el objeto State correspondiente al nuevo estado
+                new_state = State.objects.get(state=estado_edit)
+                # Actualizar el campo currentState del objeto Following
+                following.currentState = new_state
+                # Guardar los cambios en la base de datos
+                following.save()
+                state_change = StateChange(following=following, state=new_state)
+                state_change.save()
+                messages.success(request, 'Estado actualizado con éxito.')
+            except State.DoesNotExist:
+                messages.error(request, 'El estado proporcionado no existe.')
+        else:
+            messages.error(request, 'No se proporcionó ningún estado.')
+
+    
+
+    return redirect('fullOneStopShop')  # Redirigir a la página principal
+
+
+def changeHistory(request, following_id):
+    following = Following.objects.get(pk=following_id)
+    state_changes = StateChange.objects.filter(following=following)
+
+    return render(request, 'changeHistory.html', {'following': following, 'state_changes': state_changes})
