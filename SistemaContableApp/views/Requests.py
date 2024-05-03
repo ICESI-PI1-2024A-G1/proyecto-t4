@@ -1,28 +1,27 @@
-from django.conf import settings 
-from SistemaContableApp.models import  *
+from django.conf import settings
+from SistemaContableApp.models import *
 from SistemaContableApp.forms import *
-from django.template.loader import get_template  
+from django.template.loader import get_template
 from django.shortcuts import render, redirect
-from django.core.mail import  EmailMessage 
+from django.core.mail import EmailMessage
 from django.contrib import messages
-import weasyprint
-from weasyprint import HTML, CSS
+import xhtml2pdf
+from xhtml2pdf import pisa
 from django.core.files.storage import default_storage
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment, Border, Side, PatternFill
 from openpyxl.drawing.image import Image
 from openpyxl.utils import get_column_letter
 from django.template.loader import get_template
+from django.http import HttpResponse
 
-
-def sendFormAsPdf(request, template_name, css_file, subject, recipient_email, form_data, pdf_filename, form_instance):
+def sendFormAsPdf(request, template_name, subject, recipient_email, form_data, pdf_filename, form_instance):
     """
     Function to send a form as a PDF email.
 
     Args:
         request (HttpRequest): HTTP request object.
         template_name (str): Name of the HTML template to generate the message body.
-        css_file (str): Path to the CSS file to apply styles to the PDF.
         subject (str): Subject of the email.
         recipient_email (str): Email address of the recipient.
         form_data (dict): Form data.
@@ -32,20 +31,27 @@ def sendFormAsPdf(request, template_name, css_file, subject, recipient_email, fo
     Returns:
         None
     """
-    
     message_body = get_template(template_name).render(form_data)
-    css = CSS(filename=css_file)
-    pdf = weasyprint.HTML(string=message_body).write_pdf(stylesheets=[css])
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{pdf_filename}.pdf"'
+
+    pisa_status = pisa.CreatePDF(
+        message_body,
+        dest=response
+    )
+
+    if pisa_status.err:
+        return HttpResponse('Ocurrió un error al generar el PDF: %s' % pisa_status.err)
 
     email = EmailMessage(
         subject,
-        "Aqui se encuentra una solicitud requerida",
+        "Aquí se encuentra una solicitud requerida",
         settings.DEFAULT_FROM_EMAIL,
         to=[recipient_email]
     )
-    email.attach(f'{pdf_filename}.pdf', pdf, 'application/pdf')
+    email.attach(f'{pdf_filename}.pdf', response.content, 'application/pdf')
 
-    # Attach the uploaded files
+    # Adjuntar los archivos cargados
     for field in form_instance._meta.get_fields():
         if isinstance(field, models.FileField):
             file_field = getattr(form_instance, field.name)
@@ -55,12 +61,12 @@ def sendFormAsPdf(request, template_name, css_file, subject, recipient_email, fo
 
     try:
         email.send()
-        messages.success(request, 'la solicitud se envió correctamente a ventanilla unica')
+        messages.success(request, 'La solicitud se envió correctamente a ventanilla única')
     except Exception as e:
-        messages.error(request, 'Error al enviar la solicitud a ventanilla unica')
+        messages.error(request, 'Error al enviar la solicitud a ventanilla única')
 
 
-def createForm(request, form_class, template_name, pdf_template_name, css_file, subject, recipient_email, pdf_filename, redirectTo):
+def createForm(request, form_class, template_name, pdf_template_name, subject, recipient_email, pdf_filename, redirectTo):
     """
     Function to create a form and send it as a PDF email.
 
@@ -69,7 +75,6 @@ def createForm(request, form_class, template_name, pdf_template_name, css_file, 
         form_class (forms.ModelForm): Form class.
         template_name (str): Name of the HTML template to render the form.
         pdf_template_name (str): Name of the HTML template to generate the PDF body.
-        css_file (str): Path to the CSS file to apply styles to the PDF.
         subject (str): Subject of the email.
         recipient_email (str): Email address of the recipient.
         pdf_filename (str): Name of the PDF file.
@@ -78,14 +83,14 @@ def createForm(request, form_class, template_name, pdf_template_name, css_file, 
     Returns:
         HttpResponse: HTTP response with the form or success/error message.
     """
-    
+
     if request.method == "POST":
         form = form_class(request.POST, request.FILES)
         if form.is_valid():
             form_instance = form.save(commit=False)
             form_instance.save()
             form_data = form.cleaned_data
-            sendFormAsPdf(request, pdf_template_name, css_file, subject, recipient_email, form_data, pdf_filename, form_instance)
+            sendFormAsPdf(request, pdf_template_name, subject, recipient_email, form_data, pdf_filename, form_instance)
             messages.success(request, 'El formulario se ha creado correctamente y se ha enviado en pdf.')
             return redirect(redirectTo)
         else:
@@ -116,7 +121,6 @@ def createExteriorPaymentForm(request):
         ExteriorPaymentForm,
         "exteriorPaymentForm.html",
         "sendExteriorPaymentForm.html",
-        "SistemaContableApp/static/styles/sendExteriorPaymentForm.css",
         "Solicitud de requisición de pago al exterior",
         email,
         "Pago al exterior\n Universidad Icesi Nit. 890.316.745-5.",
@@ -131,20 +135,19 @@ def createChargeAccountForm(request):
         request (HttpRequest): HTTP request object.
 
     Returns:
-        HttpResponse: HTTP response with the form or success/error message. 
-    """ 
+        HttpResponse: HTTP response with the form or success/error message.
+    """
     return createForm(
         request,
         ChargeAccountForm,
         "chargeAccountForm.html",
         "sendChargeAccountForm.html",
-        "SistemaContableApp/static/styles/sendChargeAccountForm.css",
         "Solicitud de cuenta de cobro\n Universidad Icesi Nit. 890.316.745-5.",
         email,
         "Cuenta de cobro",
         createChargeAccountForm
     )
-    
+
 def createRequisitionForm(request):
     """
     View that displays the form to create a requisition request.
@@ -155,13 +158,12 @@ def createRequisitionForm(request):
     Returns:
         HttpResponse: HTTP response with the form or success/error message.
     """
-    
+
     return createForm(
         request,
         RequisitionForm,
         "requisitionForm.html",
         "sendRequisitionForm.html",
-        "SistemaContableApp/static/styles/sendRequisitionForm.css",
         "Solicitud de requisición\n Universidad Icesi Nit. 890.316.745-5.",
         email,
         "Requisición",

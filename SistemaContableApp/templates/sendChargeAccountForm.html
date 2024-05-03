@@ -2,7 +2,1218 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel='stylesheet' type='text/css' href="{% static '/styles/sendChargeAccountForm.css' %}">
+		<style>
+			.charge-account-format {
+				background-color: #ffffff;
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				width: 100%;
+			}
+			
+			.charge-account-format .div {
+				background-color: #ffffff;
+				width: 635px;
+				height: 882px;
+				position: relative;
+			}
+			
+			.charge-account-format .header {
+				position: absolute;
+				width: 532px;
+				height: 66px;
+				top: 0;
+				left: 40px;
+				background-color: transparent;
+			}
+			
+			.charge-account-format .box-version {
+				position: absolute;
+				width: 128px;
+				height: 40px;
+				top: 26px;
+				left: 404px;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .version {
+				position: absolute;
+				height: 12px;
+				top: 13px;
+				left: 38px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 10px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .box-format {
+				position: absolute;
+				width: 241px;
+				height: 40px;
+				top: 26px;
+				left: 163px;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .formato-text {
+				position: absolute;
+				width: 230px;
+				height: 27px;
+				top: 5px;
+				left: 8px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 9.1px;
+				text-align: center;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .box-codigo {
+				position: absolute;
+				width: 128px;
+				height: 26px;
+				top: 0;
+				left: 404px;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .codigo {
+				position: absolute;
+				height: 11px;
+				top: 8px;
+				left: 20px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 9px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .box-contabilidad {
+				position: absolute;
+				width: 241px;
+				height: 26px;
+				top: 0;
+				left: 163px;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .contabilidad {
+				position: absolute;
+				height: 11px;
+				top: 8px;
+				left: 90px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 9.3px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .box-procesos {
+				position: absolute;
+				width: 163px;
+				height: 66px;
+				top: 0;
+				left: 0;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .procesos {
+				position: absolute;
+				height: 11px;
+				top: 28px;
+				left: 28px;
+				font-family: "Inter-Bold", Helvetica;
+				font-weight: 700;
+				color: #000000;
+				font-size: 9px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .logo {
+				position: absolute;
+				width: 75px;
+				height: 28px;
+				top: 11px;
+				left: 40px;
+			
+			}
+			
+			.charge-account-format .high-area {
+				position: absolute;
+				width: 476px;
+				height: 223px;
+				top: 114px;
+				left: 69px;
+			}
+			
+			.charge-account-format .field-concept {
+				position: absolute;
+				width: 411px;
+				height: 35px;
+				top: 185px;
+				left: 65px;
+			}
+			
+			.charge-account-format .line-concepto {
+				top: 26px;
+				position: absolute;
+				width: 410px;
+				height: 7px;
+				left: 0;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.5px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .text-wrapper {
+				top: 15px;
+				position: absolute;
+				width: 410px;
+				height: 7px;
+				left: 0;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.5px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .line-concepto-2 {
+				height: 10px;
+				top: 2px;
+				font-size: 8.5px;
+				position: absolute;
+				left: 0;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .input-concepto {
+				width: 410px;
+				top: -1px;
+				left: 0;
+				position: absolute;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: 1.5;
+			}
+			
+			.charge-account-format .concepto {
+				position: absolute;
+				height: 10px;
+				top: 184px;
+				left: 5px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.4px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .field-value-in-numbers {
+				position: absolute;
+				width: 114px;
+				height: 22px;
+				top: 147px;
+				left: 362px;
+			}
+			
+			.charge-account-format .overlap-5 {
+				position: absolute;
+				width: 114px;
+				height: 22px;
+				top: 0;
+				left: 0;
+			}
+			
+			.charge-account-format .line-valor-numeros {
+				width: 114px;
+				top: 9px;
+				left: 0px;
+				position: absolute;
+				height: 3px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.5px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .valor-numeros {
+				top: 19px;
+				left: 5px;
+				position: absolute;
+				height: 10px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .money-symbol {
+				height: 11px;
+				top: 9px;
+				left: 0;
+				position: absolute;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 9px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .input-valor-numeros {
+				width: 107px;
+				top: 9px;
+				left: -10px;
+				position: absolute;
+				height: 10px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				text-align: center;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .line-valor-letras {
+				width: 283px;
+				top: 156px;
+				left: 64px;
+				position: absolute;
+				height: 3px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.5px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .input-valor-letras {
+				width: 282px;
+				top: 156px;
+				left: 65px;
+				position: absolute;
+				height: 10px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				text-align: center;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .valor-letras {
+				top: 167px;
+				left: 181px;
+				position: absolute;
+				height: 10px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .line-la-suma-de {
+				position: absolute;
+				height: 10px;
+				top: 136px;
+				left: 64px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.5px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .la-suma-de {
+				position: absolute;
+				height: 10px;
+				top: 134px;
+				left: 5px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.5px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .field-id {
+				position: absolute;
+				width: 325px;
+				height: 14px;
+				top: 92px;
+				left: 81px;
+			}
+			
+			.charge-account-format .line-identificacion {
+				height: 10px;
+				top: 4px;
+				font-size: 8.6px;
+				position: absolute;
+				left: 0;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .input-identificacion {
+				width: 324px;
+				height: 10px;
+				top: 3px;
+				left: 0;
+				text-align: center;
+				position: absolute;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .identificacion {
+				position: absolute;
+				width: 56px;
+				height: 13px;
+				top: 107px;
+				left: 215px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .field-name {
+				position: absolute;
+				width: 329px;
+				height: 12px;
+				top: 57px;
+				left: 78px;
+			}
+			
+			.charge-account-format .line-nombre {
+				width: 329px;
+				height: 3px;
+				top: 0px;
+				font-size: 8.6px;
+				position: absolute;
+				left: 0;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .input-nombre {
+				width: 327px;
+				height: 10px;
+				top: 0px;
+				left: 0;
+				text-align: center;
+				position: absolute;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .nombre {
+				position: absolute;
+				height: 10px;
+				top: 70px;
+				left: 225px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .debe-a {
+				position: absolute;
+				height: 10px;
+				top: 36px;
+				left: 233px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .nit {
+				position: absolute;
+				width: 98px;
+				height: 10px;
+				top: 12px;
+				left: 211px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.7px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .icesi {
+				position: absolute;
+				height: 10px;
+				top: -1px;
+				left: 210px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.2px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .middle-area {
+				position: absolute;
+				width: 494px;
+				height: 220px;
+				top: 371px;
+				left: 75px;
+			}
+			
+			.charge-account-format .c {
+				position: absolute;
+				width: 300px;
+				height: 14px;
+				top: 206px;
+				left: 5px;
+			}
+			
+			.charge-account-format .box-no-c {
+				top: 1px;
+				left: 287px;
+				position: absolute;
+				width: 13px;
+				height: 13px;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .no-c {
+				position: absolute;
+				height: 10px;
+				top: 1px;
+				left: 269px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.5px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			
+			
+			.charge-account-format .box-si-c {
+				width: 13px;
+				top: 0;
+				left: 249px;
+				position: absolute;
+				height: 13px;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			
+			.charge-account-format .si-c {
+				top: 1px;
+				left: 234px;
+				position: absolute;
+				height: 10px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .p {
+				position: absolute;
+				height: 10px;
+				top: 1px;
+				left: 0;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .b {
+				position: absolute;
+				width: 300px;
+				height: 13px;
+				top: 181px;
+				left: 5px;
+			}
+			
+			.charge-account-format .box-no-b {
+				top: 0;
+				left: 287px;
+				position: absolute;
+				width: 13px;
+				height: 13px;
+				border: 0.3px solid;
+				border-color: #00000000;
+			}
+			
+			.charge-account-format .no-b {
+				top: 1px;
+				left: 268px;
+				position: absolute;
+				height: 10px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.5px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .box-si-b {
+				width: 13px;
+				top: 0;
+				left: 249px;
+				position: absolute;
+				height: 13px;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .si-b {
+				top: 1px;
+				left: 233px;
+				position: absolute;
+				height: 10px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .warning {
+				position: absolute;
+				height: 10px;
+				top: 157px;
+				left: 40px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .a {
+				position: absolute;
+				width: 403px;
+				height: 63px;
+				top: 82px;
+				left: 18px;
+			}
+			
+			.charge-account-format .box-no-a {
+				top: 50px;
+				left: 42px;
+				position: absolute;
+				width: 13px;
+				height: 13px;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .no-a {
+				top: 50px;
+				left: 22px;
+				position: absolute;
+				height: 10px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.5px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .no-a-text {
+				position: absolute;
+				height: 10px;
+				top: 50px;
+				left: 63px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .box-si-a {
+				position: absolute;
+				width: 13px;
+				height: 13px;
+				top: 24px;
+				left: 42px;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .si-a {
+				top: 25px;
+				left: 22px;
+				position: absolute;
+				height: 10px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .si-a-text {
+				position: absolute;
+				height: 10px;
+				top: 25px;
+				left: 63px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .a-text {
+				position: absolute;
+				height: 11px;
+				top: -1px;
+				left: 0;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.8px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .second-text {
+				position: absolute;
+				width: 494px;
+				height: 34px;
+				top: 33px;
+				left: 0;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .first-text {
+				position: absolute;
+				width: 494px;
+				height: 22px;
+				top: -1px;
+				left: 0;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .low-area {
+				position: absolute;
+				width: 368px;
+				height: 148px;
+				top: 620px;
+				left: 75px;
+			}
+			
+			.charge-account-format .field-cex {
+				position: absolute;
+				width: 172px;
+				height: 14px;
+				top: 136px;
+				left: 158px;
+			}
+			
+			.charge-account-format .box-cex-no {
+				position: absolute;
+				width: 172px;
+				height: 13px;
+				top: 1px;
+				left: 0;
+				background-color: #d9d9d9;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .input-cex-no {
+				position: absolute;
+				width: 132px;
+				height: 13px;
+				top: 4px;
+				left: 40px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				text-align: center;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .cex-no {
+				position: absolute;
+				height: 10px;
+				top: 2px;
+				left: 5px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .field-account-number {
+				position: absolute;
+				width: 172px;
+				height: 27px;
+				top: 98px;
+				left: 275px;
+			}
+			
+			.charge-account-format .box-empty-no {
+				position: absolute;
+				width: 160px;
+				height: 13px;
+				top: 14px;
+				left: 0;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .input-no {
+				width: 160px;
+				height: 13px;
+				top: 17px;
+				left: 0;
+				text-align: center;
+				position: absolute;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .box-no {
+				width: 160px;
+				top: 1px;
+				left: 0;
+				position: absolute;
+				height: 13px;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .no {
+				position: absolute;
+				height: 10px;
+				top: 4px;
+				left: 75px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .field-type-account {
+				position: absolute;
+				width: 92px;
+				height: 26px;
+				top: 99px;
+				left: 183px;
+			}
+			
+			.charge-account-format .box-empty-tipo {
+				position: absolute;
+				width: 92px;
+				height: 13px;
+				top: 13px;
+				left: 0;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .input-tipo-cuenta {
+				position: absolute;
+				width: 92px;
+				height: 13px;
+				top: 17px;
+				left: 0;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				text-align: center;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .box-tipo-cuenta {
+				position: absolute;
+				width: 92px;
+				height: 13px;
+				top: 0;
+				left: 0;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .tipo-cuenta {
+				position: absolute;
+				height: 10px;
+				top: 0;
+				left: 15px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .field-bank {
+				position: absolute;
+				width: 142px;
+				height: 26px;
+				top: 99px;
+				left: 41px;
+			}
+			
+			.charge-account-format .box-empty-nombre-banco {
+				position: absolute;
+				width: 142px;
+				height: 13px;
+				top: 13px;
+				left: 0;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .input-nombre-banco {
+				position: absolute;
+				width: 142px;
+				height: 13px;
+				top: 17px;
+				left: 0;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				text-align: center;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .box-nombre-banco {
+				position: absolute;
+				width: 142px;
+				height: 13px;
+				top: 0;
+				left: 0;
+				border: 0.3px solid;
+				border-color: #000000;
+			}
+			
+			.charge-account-format .nombre-banco {
+				position: absolute;
+				height: 10px;
+				top: 0;
+				left: 33px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .input-telefono {
+				width: 200px;
+				height: 10px;
+				top: 74px;
+				left: 50px;
+				white-space: nowrap;
+				position: absolute;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .telefono {
+				position: absolute;
+				height: 10px;
+				top: 74px;
+				left: 7px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .input-direccion {
+				width: 200px;
+				height: 10px;
+				top: 62px;
+				left: 54px;
+				white-space: nowrap;
+				position: absolute;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .direccion {
+				position: absolute;
+				height: 10px;
+				top: 62px;
+				left: 7px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .input-cc {
+				width: 200px;
+				height: 10px;
+				top: 50px;
+				left: 32px;
+				white-space: nowrap;
+				position: absolute;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .CC {
+				position: absolute;
+				height: 10px;
+				top: 50px;
+				left: 7px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .input-firma {
+				width: 200px;
+				height: 10px;
+				top: 38px;
+				left: 32px;
+				white-space: nowrap;
+				position: absolute;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .firma {
+				position: absolute;
+				height: 10px;
+				top: 38px;
+				left: 7px;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .field-ciudad-y-fecha {
+				position: absolute;
+				width: 164px;
+				height: 16px;
+				top: -5px;
+				left: 65px;
+			}
+			
+			.charge-account-format .line-c-y-f {
+				position: absolute;
+				width: 164px;
+				height: 9px;
+				top: 7px;
+				left: 0;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+			
+			.charge-account-format .input-fecha {
+				width: 66px;
+				height: 13px;
+				top: 6px;
+				left: 98px;
+				text-align: center;
+				position: absolute;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .input-ciudad {
+				width: 98px;
+				height: 14px;
+				top: 6px;
+				left: 0;
+				text-align: center;
+				position: absolute;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+			}
+			
+			.charge-account-format .c-y-f {
+				position: absolute;
+				height: 10px;
+				top: -1px;
+				left: 0;
+				font-family: "Inter-Light", Helvetica;
+				font-weight: 300;
+				color: #000000;
+				font-size: 8.6px;
+				letter-spacing: 0;
+				line-height: normal;
+				white-space: nowrap;
+			}
+		</style>
     </head>
 	{% block content %}
 	<body>

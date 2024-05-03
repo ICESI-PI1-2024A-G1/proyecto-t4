@@ -30,7 +30,7 @@ DEBUG = True
 if DEBUG:
     os.environ['wsgi.url_scheme'] = 'http'
 
-ALLOWED_HOSTS = ['proyecto-t4.onrender.com', ]
+ALLOWED_HOSTS = []
 
 
 # Application definition
