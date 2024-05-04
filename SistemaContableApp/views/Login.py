@@ -5,8 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm
 from django.shortcuts import render, redirect   
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
-
+@login_required(login_url='', redirect_field_name='next')
 def index(request):
     """
     View for the home page.
@@ -76,9 +77,7 @@ def user_login(request):
         form = LoginForm()
         return render(request, 'registration/login.html', {'form': form})          
            
-@login_required
-def dashboard(request):
-    return render(request,'index.html')
+
     
 
 def registration(request):
