@@ -36,15 +36,15 @@ def summaryOneStopShopView(request):
     fecha_cierre_inicio = request.GET.get('fecha_cierre_inicio')
     fecha_cierre_fin = request.GET.get('fecha_cierre_fin')
     
+
     if query:
         queryset = queryset.filter(
-            Q(type = query) | Q(currentState = query) 
+            Q(type__icontains=query) | Q(currentState__state__icontains=query) 
         )
     if estado:
-        queryset = queryset.filter(currentState = estado)
-        
+        queryset = queryset.filter(currentState__state=estado)        
     if tipo:
-        queryset = queryset.filter(type = tipo)
+        queryset = queryset.filter(type__icontains=tipo)
     
     if ordenar_por:
         queryset = queryset.order_by(ordenar_por)
@@ -142,6 +142,7 @@ def oneStopShopFormView(request):
 def updateState(request, following_id):
     # Obtener el objeto Following que deseas actualizar
     following = get_object_or_404(Following, id=following_id)
+    description = request.POST.get('description')
 
     if request.method == 'POST':
         # Obtener el nuevo estado del formulario
@@ -154,8 +155,9 @@ def updateState(request, following_id):
                 # Actualizar el campo currentState del objeto Following
                 following.currentState = new_state
                 # Guardar los cambios en la base de datos
+
                 following.save()
-                state_change = StateChange(following=following, state=new_state)
+                state_change = StateChange(following=following, state=new_state, description=description)
                 state_change.save()
                 messages.success(request, 'Estado actualizado con éxito.')
             except State.DoesNotExist:
