@@ -7,12 +7,6 @@ from django.db.models import Q
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
-
- 
- 
-
-
-
 def summaryOneStopShopView(request):
 
     """
@@ -128,10 +122,12 @@ def oneStopShopFormView(request):
             attachedDocument = attachedDocumentForm.save(commit=False)
             attachedDocument.associatedFollowing = following 
             attachedDocument.save()
+            messages.success(request, 'Formulario enviado con éxito.')
             return redirect('OneStopShopForm')  
         else:
             oneStopShopForm = OneStopShopForm()
             attachedDocumentForm = AttachedDocumentForm()
+            messages.error(request, 'Error al enviar el formulario.')
             return render(request, 'oneStopShopForm.html', {'oneStopShopForm': oneStopShopForm, 'attachedDocumentForm': attachedDocumentForm})
     else:
         oneStopShopForm = OneStopShopForm()

@@ -1,7 +1,7 @@
 {% extends 'layouts/base.html' %}
-
-{% block content %}  
 {% load static %}
+{% block content %}  
+{% include 'partials/messages.html' %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,7 +10,6 @@
         <link rel="stylesheet" href= "{% static '/styles/oneStopShopFormStyle.css' %}" >
     </head>
 </html>
-
 
 <form method="post" enctype="multipart/form-data" class="following-form">
     {% csrf_token %}
