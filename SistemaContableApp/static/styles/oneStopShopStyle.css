@@ -125,10 +125,12 @@ tr:hover{
     top: 50%; /* Centrar verticalmente */
     left: 50%; /* Centrar horizontalmente */
     transform: translate(-50%, -50%); /* Centrar completamente */
-    background-color: rgb(130, 130, 238);
+    background-color: #a3a1a1;
     border: 1px solid #ccc; /* Borde del popup */
     padding: 20px; /* Espaciado interno del contenido del popup */
+    border-radius: 5px;
     z-index: 9999; /* Z-index para asegurar que esté por encima del resto del conte
+    
 }
 
 .popup-content {
@@ -163,4 +165,18 @@ tr:hover{
     background-position: center;
     background-color: transparent;
     border: none; 
+}
+
+/* Estilos para el comentario */
+
+.comentar-btn{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background-image: url('/static/images/comentar.png');
+    background-size: cover;
+    background-position: center;
+    background-color: transparent;
+    border: none;  
+    float: right;
 }

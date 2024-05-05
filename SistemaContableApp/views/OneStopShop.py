@@ -171,3 +171,20 @@ def changeHistory(request, following_id):
     state_changes = StateChange.objects.filter(following=following)
 
     return render(request, 'changeHistory.html', {'following': following, 'state_changes': state_changes})
+
+# Función para guardar comentarios en un objeto Following, "comentario de aprovación"
+def approval_comment(request, following_id):
+    if request.method == 'POST':
+        following = get_object_or_404(Following, pk=following_id)
+        approval_comment_text = request.POST.get('approval_comment', '')
+        following.approvalComments = approval_comment_text
+        following.save()
+    return redirect('fullOneStopShop')
+
+def accounting_comment(request, following_id):
+    if request.method == 'POST':
+        following = get_object_or_404(Following, pk=following_id)
+        accounting_comment_text = request.POST.get('accounting_comment', '')
+        following.accountingComments = accounting_comment_text
+        following.save()
+    return redirect('fullOneStopShop')

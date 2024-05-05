@@ -240,16 +240,50 @@
                             </td>
                             <td>
                                 {{following.approvalDate}}
+                            </td>     
+                            <td {{ following.approvalComments }}>
+                                <span id="following_{{ following.id }}">{{ following.approvalComments }}</span>
+                                <button class="comentar-btn" onclick="openCommentModal('{{ following.id }}', 'approval')"></button>
+                                
+                                <div id="commentModal_approval_{{ following.id }}" class="popup">
+                                    <div class="popup-content">
+                                        <span class="close" onclick="closeCommentModal('{{ following.id }}', 'approval')">&times;</span>
+                                        <form id="commentForm_approval_{{ following.id }}" method="post" action="{% url 'approval_comment' following.id %}">
+                                            {% csrf_token %}
+                                            <div class="form-group row">
+                                                <label for="approval_comment_{{ following.id }}">Comentario de Aprobación:</label>
+                                                <textarea id="approval_comment_{{ following.id }}" name="approval_comment" required></textarea>                                                
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Guardar comentario</button>
+                                        </form>    
+                                    </div>
+                                </div>    
                             </td>
+                            
                             <td>
-                                {{following.approvalComments}}
+                                {{ following.accountingReception }}
                             </td>
-                            <td>
-                                {{following.accountingReception}}
+                            
+                            <td {{ following.accountingComments }}>
+                                <span id="following_accounting_{{ following.id }}">{{ following.accountingComments }}</span>
+                                <button class="comentar-btn" onclick="openCommentModal('{{ following.id }}', 'accounting')"></button>
+                                
+                                <div id="commentModal_accounting_{{ following.id }}" class="popup">
+                                    <div class="popup-content">
+                                        <span class="close" onclick="closeCommentModal('{{ following.id }}', 'accounting')">&times;</span>
+                                        <form id="commentForm_accounting_{{ following.id }}" method="post" action="{% url 'accounting_comment' following.id %}">
+                                            {% csrf_token %}
+                                            <div class="form-group row">
+                                                <label for="accounting_comment_{{ following.id }}">Comentario de Contabilidad:</label>
+                                                <textarea id="accounting_comment_{{ following.id }}" name="accounting_comment" required></textarea>                                                
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Guardar comentario</button>
+                                        </form>    
+                                    </div>
+                                </div>    
                             </td>
-                            <td>
-                                {{following.accountingComments}}
-                            </td>
+                            
+
                             <td>
                                 {{following.accountingDate}}
                             </td>
@@ -277,6 +311,7 @@
     
     <script src="{% static '/js/popup.js' %}"></script>
     <script src="{% static '/js/showHistory.js' %}"></script>
+    <script src="{% static '/js/toggleCommentForm.js' %}"></script>
 
 </body>
 {% endblock %}
