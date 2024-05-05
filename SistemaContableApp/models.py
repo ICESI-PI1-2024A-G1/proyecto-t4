@@ -106,6 +106,10 @@ class Exterior_payment(models.Model):
     
     
 class Legalization(models.Model):
+    """
+    Model representing a legalization request.
+    """
+    
     BANK_ACCOUNT_TYPE =[
         ('De ahorros','De ahorros'),
         ('Corriente','Corriente')
@@ -139,6 +143,10 @@ class Legalization(models.Model):
         return self.id
     
 class LegalizationExpense(models.Model):
+    """
+    Model representing a legalization expense request.
+    """
+    
     MONEY_TYPE =[
         ('PESOS COLOMBIANOS','PESOS COLOMBIANOS'),
         ('DOLARES','DOLARES'),
@@ -156,6 +164,9 @@ class LegalizationExpense(models.Model):
     
     
 class AdvancePayment(models.Model):
+    """
+    Model representing a advance payment request.
+    """
     
     MONEY_TYPE =[
         ('PESOS COLOMBIANOS','PESOS COLOMBIANOS'),
@@ -185,6 +196,9 @@ class AdvancePayment(models.Model):
         return self.id
     
 class AdvanceExpense(models.Model):
+    """
+    Model representing a advance payment expense request.
+    """
 
     solicitation = models.ForeignKey(AdvancePayment, on_delete=models.CASCADE, related_name='expenses')
     category = models.CharField(max_length=100)

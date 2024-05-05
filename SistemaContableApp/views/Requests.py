@@ -14,6 +14,15 @@ email2 = "daniela32156@hotmail.com"
 
     
 def createChargeAccountForm(request):
+    """
+    View function to create a charge account form.
+
+    Args:
+        request (HttpRequest): HTTP request object.
+
+    Returns:
+        HttpResponse: Rendered HTML template response.
+    """
 
     if request.method == 'POST':
         form = ChargeAccountForm(request.POST, request.FILES)
@@ -29,7 +38,16 @@ def createChargeAccountForm(request):
 
 
 def createRequisitionForm(request):
+    """
+    View function to create a requisition form.
 
+    Args:
+        request (HttpRequest): HTTP request object.
+
+    Returns:
+        HttpResponse: Rendered HTML template response.
+    """
+    
     if request.method == 'POST':
         form = RequisitionForm(request.POST)
         if form.is_valid():
@@ -43,6 +61,15 @@ def createRequisitionForm(request):
 
 
 def createExteriorPaymentForm(request):
+    """
+    View function to create an exterior payment form.
+
+    Args:
+        request (HttpRequest): HTTP request object.
+
+    Returns:
+        HttpResponse: Rendered HTML template response.
+    """
 
     if request.method == 'POST':
         form = ExteriorPaymentForm(request.POST)
@@ -58,6 +85,16 @@ def createExteriorPaymentForm(request):
 
 
 def createLegalizationForm(request):
+    """
+    View function to create a legalization form.
+
+    Args:
+        request (HttpRequest): HTTP request object.
+
+    Returns:
+        HttpResponse: Rendered HTML template response.
+    """
+    
     TravelExpenseFormSet = inlineformset_factory(
         Legalization, LegalizationExpense,
         form=TravelExpenseForm, extra=1, can_delete=True
@@ -90,6 +127,15 @@ def createLegalizationForm(request):
     
 
 def createAdvancePaymentForm(request):
+    """
+    View function to create an advance payment form.
+
+    Args:
+        request (HttpRequest): HTTP request object.
+
+    Returns:
+        HttpResponse: Rendered HTML template response.
+    """
     
     TravelAdvanceExpenseFormSet = inlineformset_factory(
     AdvancePayment, AdvanceExpense,
@@ -125,6 +171,17 @@ def createAdvancePaymentForm(request):
 
 
 def sendChargeAccountFormAsExcel(request, chargeAccount):
+    """
+    Function to send the charge account form as an Excel file.
+
+    Args:
+        request (HttpRequest): HTTP request object.
+        chargeAccount (ChargeAccount): ChargeAccount model instance.
+
+    Returns:
+        None
+    """
+    
     excel_filename = generateExcelChargeAccount(chargeAccount)
 
     # Enviar correo electrónico con el archivo Excel adjunto
@@ -136,6 +193,9 @@ def sendChargeAccountFormAsExcel(request, chargeAccount):
     )
     email.attach_file(excel_filename)
     
+    if chargeAccount.supports:
+        email.attach_file(chargeAccount.supports.path)
+    
 
     try:
         email.send()
@@ -145,6 +205,17 @@ def sendChargeAccountFormAsExcel(request, chargeAccount):
 
 
 def sendExteriorPaymentFormAsExcel(request, exteriorPayment):
+    """
+    Function to send the exterior payment form as an Excel file.
+
+    Args:
+        request (HttpRequest): HTTP request object.
+        exteriorPayment (ExteriorPayment): ExteriorPayment model instance.
+
+    Returns:
+        None
+    """
+    
     excel_filename = generateExcelExteriorPayment(exteriorPayment)
 
     # Enviar correo electrónico con el archivo Excel adjunto
@@ -166,6 +237,17 @@ def sendExteriorPaymentFormAsExcel(request, exteriorPayment):
 
 
 def sendRequisitionFormAsExcel(request, requisition):
+    """
+    Function to send the requisition form as an Excel file.
+
+    Args:
+        request (HttpRequest): HTTP request object.
+        requisition (Requisition): Requisition model instance.
+
+    Returns:
+        None
+    """
+    
     excel_filename = generateExcelRequisition(requisition)
 
     # Enviar correo electrónico con el archivo Excel adjunto
@@ -188,14 +270,15 @@ def sendRequisitionFormAsExcel(request, requisition):
 def sendLegalizationFormAsExcel(request, solicitation):
     """
     Function to send the travel expenses solicitation as an Excel file.
-    
+
     Args:
         request (HttpRequest): HTTP request object.
         solicitation (TravelExpensesSolicitation): Travel expenses solicitation instance.
-    
+
     Returns:
         None
     """
+    
     # Generar archivo Excel
     excel_filename = generateExcelLegalization(solicitation)
 
@@ -223,11 +306,11 @@ def sendLegalizationFormAsExcel(request, solicitation):
         
 def sendAdvancePaymentFormAsExcel(request, solicitation) :
     """
-    Function to send the travel expenses solicitation as an Excel file.
+    Function to send the advancePayment solicitation as an Excel file.
     
     Args:
         request (HttpRequest): HTTP request object.
-        solicitation (TravelExpensesSolicitation): Travel expenses solicitation instance.
+        solicitation (AdvancePaymentSolicitation): Advance Payment solicitation instance.
     
     Returns:
         None
@@ -256,6 +339,16 @@ def sendAdvancePaymentFormAsExcel(request, solicitation) :
 
 
 def generateExcelChargeAccount(chargeAccount):
+    """
+    Function to generate an Excel file for a charge account.
+
+    Args:
+        chargeAccount (ChargeAccount): ChargeAccount model instance.
+
+    Returns:
+        str: Path to the generated Excel file.
+    """
+    
     workbook = Workbook()
     worksheet = workbook.active
     
@@ -595,6 +688,16 @@ def generateExcelChargeAccount(chargeAccount):
 
 
 def generateExcelExteriorPayment(exteriorPayment):
+    """
+    Function to generate an Excel file for an exterior payment.
+
+    Args:
+        exteriorPayment (ExteriorPayment): ExteriorPayment model instance.
+
+    Returns:
+        str: Path to the generated Excel file.
+    """
+    
     workbook = Workbook()
     worksheet = workbook.active
     
@@ -705,6 +808,16 @@ def generateExcelExteriorPayment(exteriorPayment):
 
 
 def generateExcelRequisition(requisition):
+    """
+    Function to generate an Excel file for a requisition.
+
+    Args:
+        requisition (Requisition): Requisition model instance.
+
+    Returns:
+        str: Path to the generated Excel file.
+    """
+    
     workbook = Workbook()
     worksheet = workbook.active
     
@@ -1055,6 +1168,16 @@ def generateExcelRequisition(requisition):
     
     
 def generateExcelAdvancePayment(solicitation):
+    """
+    Function to generate an Excel file for a travel advance payment solicitation.
+
+    Args:
+        solicitation (AdvancePayment): AdvancePayment model instance.
+
+    Returns:
+        str: Path to the generated Excel file.
+    """
+    
     workbook = Workbook()
     worksheet = workbook.active
     
@@ -1356,6 +1479,16 @@ def generateExcelAdvancePayment(solicitation):
 
 
 def generateExcelLegalization(solicitation):
+    """
+    Function to generate an Excel file for a travel expenses legalization.
+
+    Args:
+        solicitation (TravelExpensesSolicitation): Travel expenses solicitation instance.
+
+    Returns:
+        str: Path to the generated Excel file.
+    """
+    
     workbook = Workbook()
     worksheet = workbook.active
     
