@@ -55,6 +55,7 @@
                 </tr>
                 {% for following in followingData %}
                 <tr>
+                    <tr data-following-id="{{ following.id }}">
                     <td>{{ following.creationDate }}</td>
                     <td>{{ following.creator }}</td>
                     <td>{{ following.type }}</td>
@@ -72,16 +73,16 @@
                     </td>
                     <td>
                         {{ following.manager }}
-                        <button onclick="mostrarLista('gestor')">Seleccionar</button>
+                        <button onclick="mostrarLista('gestor', event, this)">Seleccionar</button>
                     </td>
                     <td bgcolor="{{ following.currentState.color }}">{{ following.currentState.state }}</td>
                     <td>
                         {{ following.acceptor }}
-                        <button onclick="mostrarLista('aprobadoPor')">Seleccionar</button>
+                        <button onclick="mostrarLista('aprobador', event, this)">Seleccionar</button>
                     </td>
                     <td>
                         {{ following.revisor }}
-                        <button onclick="mostrarLista('revisadoPor')">Seleccionar</button>
+                        <button onclick="mostrarLista('revisor', event, this)">Seleccionar</button>
                     </td>
                     <td>{{ following.acceptanceState }}</td>
                     <td>{{ following.acceptanceDate }}</td>
@@ -113,7 +114,6 @@
     </div>
 </div>
 
-<!-- Sección para mostrar la lista de usuarios -->
 <div id="listaUsuarios" style="display: none; position: absolute; background-color: white; border: 1px solid black; padding: 10px;">
     <h3>Selecciona un usuario:</h3>
     <form method="post">
@@ -128,15 +128,114 @@
 </div>
 
 <script>
-    function mostrarLista(tipo) {
-        var listaUsuarios = document.getElementById("listaUsuarios");
-        if (listaUsuarios.style.display === "none") {
-            listaUsuarios.style.display = "block";
-        } else {
-            listaUsuarios.style.display = "none";
-        }
+
+var gestorSeleccionado = null;
+var aprobadorSeleccionado = null;
+var revisorSeleccionado = null;
+var celdaActual = null;
+
+function mostrarLista(tipo, event, boton) {
+    const endpoint = '/api/get-users/';
+    const exclusions = {
+        gestor: gestorSeleccionado
+    };
+
+    if (tipo === 'gestor') {
+        exclusions.aprobador = aprobadorSeleccionado;
+        exclusions.revisor = revisorSeleccionado;
     }
+
+    const parametros = new URLSearchParams({
+        exclude: JSON.stringify(exclusions)
+    });
+
+    
+
+    fetch(endpoint + '?' + parametros.toString())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(users => {
+            const listaUsuarios = document.getElementById("listaUsuarios");
+            let content = `<h3>Selecciona un usuario:</h3><form method="post">{% csrf_token %}<ul>`;
+            users.forEach(user => {
+                content += `<li><input type="radio" name="usuario" value="${user.id}" onclick="seleccionarUsuario(${user.id}, '${user.first_name} ${user.last_name}', '${tipo}')"> ${user.first_name} ${user.last_name}</li>`;
+            });
+            content += '</ul><button type="submit">Seleccionar</button></form>';
+            listaUsuarios.innerHTML = content;
+            listaUsuarios.style.display = 'block';
+            listaUsuarios.style.left = `${event.clientX}px`;
+            listaUsuarios.style.top = `${event.clientY}px`;
+            celdaActual = boton.parentElement;
+        })
+        .catch(error => {
+            console.error('Error loading the users:', error);
+            alert('Error loading the users: ' + error.message);
+        });
+}
+
+function actualizarListaUsuarios(users, tipo, event, boton) {
+    const listaUsuarios = document.getElementById("listaUsuarios");
+    let content = `<h3>Selecciona un usuario:</h3><form method="post">{% csrf_token %}<ul>`;
+    users.forEach(user => {
+        content += `<li><input type="radio" name="usuario" value="${user.id}" onclick="seleccionarUsuario('${user.id}', '${user.first_name} ${user.last_name}', '${tipo}')"> ${user.first_name} ${user.last_name}</li>`;
+    });
+    content += '</ul><button type="submit">Seleccionar</button></form>';
+    listaUsuarios.innerHTML = content;
+    listaUsuarios.style.display = 'block';
+    listaUsuarios.style.left = `${event.clientX}px`;
+    listaUsuarios.style.top = `${event.clientY}px`;
+    celdaActual = boton.parentElement;
+}
+
+function seleccionarUsuario(id, nombre, tipo) {
+    const fila = celdaActual.closest('tr');
+    const followingId = fila.dataset.followingId;  // Aquí obtenemos el ID del seguimiento
+
+    if (!followingId) {
+        alert('No se pudo encontrar el ID del seguimiento');
+        return;
+    }
+
+    celdaActual.innerHTML = `${nombre} <button onclick="mostrarLista('${tipo}', event, this)">Seleccionar</button>`;
+    document.getElementById("listaUsuarios").style.display = 'none';
+    alert(`Has asignado a ${nombre} como ${tipo}.`);
+
+    const url = '/api/update-role/';  // Asegúrate de que esta URL es correcta y accesible
+    const data = `following_id=${followingId}&user_id=${id}&role_type=${tipo}`;
+
+    fetch(url, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: data
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log(data.message);
+        } else {
+            console.error(data.message);
+        }
+    })
+    .catch(error => console.error('Error updating the user:', error));
+
+    // Actualiza los IDs seleccionados basados en el tipo
+    if (tipo === 'gestor') {
+        gestorSeleccionado = id;
+        aprobadorSeleccionado = null;
+        revisorSeleccionado = null;
+    } else if (tipo === 'aprobador') {
+        aprobadorSeleccionado = id;
+    } else if (tipo === 'revisor') {
+        revisorSeleccionado = id;
+    }
+}
+
 </script>
+
 
 </body>
 {% endblock %}
