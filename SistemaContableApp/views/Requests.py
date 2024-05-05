@@ -1,172 +1,59 @@
 from django.conf import settings 
 from SistemaContableApp.models import  *
-from SistemaContableApp.forms import *
-from django.template.loader import get_template  
+from SistemaContableApp.forms import * 
 from django.shortcuts import render, redirect
 from django.core.mail import  EmailMessage 
 from django.contrib import messages
-import weasyprint
-from weasyprint import HTML, CSS
-from django.core.files.storage import default_storage
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment, Border, Side, PatternFill
-from openpyxl.drawing.image import Image
-from openpyxl.utils import get_column_letter
-from django.template.loader import get_template
 
-
-def sendFormAsPdf(request, template_name, css_file, subject, recipient_email, form_data, pdf_filename, form_instance):
-    """
-    Function to send a form as a PDF email.
-
-    Args:
-        request (HttpRequest): HTTP request object.
-        template_name (str): Name of the HTML template to generate the message body.
-        css_file (str): Path to the CSS file to apply styles to the PDF.
-        subject (str): Subject of the email.
-        recipient_email (str): Email address of the recipient.
-        form_data (dict): Form data.
-        pdf_filename (str): Name of the PDF file.
-        form_instance (Model): The instance of the form model.
-
-    Returns:
-        None
-    """
-    
-    message_body = get_template(template_name).render(form_data)
-    css = CSS(filename=css_file)
-    pdf = weasyprint.HTML(string=message_body).write_pdf(stylesheets=[css])
-
-    email = EmailMessage(
-        subject,
-        "Aqui se encuentra una solicitud requerida",
-        settings.DEFAULT_FROM_EMAIL,
-        to=[recipient_email]
-    )
-    email.attach(f'{pdf_filename}.pdf', pdf, 'application/pdf')
-
-    # Attach the uploaded files
-    for field in form_instance._meta.get_fields():
-        if isinstance(field, models.FileField):
-            file_field = getattr(form_instance, field.name)
-            if file_field:
-                file_path = default_storage.path(file_field.name)
-                email.attach_file(file_path)
-
-    try:
-        email.send()
-        messages.success(request, 'la solicitud se envió correctamente a ventanilla unica')
-    except Exception as e:
-        messages.error(request, 'Error al enviar la solicitud a ventanilla unica')
-
-
-def createForm(request, form_class, template_name, pdf_template_name, css_file, subject, recipient_email, pdf_filename, redirectTo):
-    """
-    Function to create a form and send it as a PDF email.
-
-    Args:
-        request (HttpRequest): HTTP request object.
-        form_class (forms.ModelForm): Form class.
-        template_name (str): Name of the HTML template to render the form.
-        pdf_template_name (str): Name of the HTML template to generate the PDF body.
-        css_file (str): Path to the CSS file to apply styles to the PDF.
-        subject (str): Subject of the email.
-        recipient_email (str): Email address of the recipient.
-        pdf_filename (str): Name of the PDF file.
-        redirectTo (str): URL to redirect to after sending the form.
-
-    Returns:
-        HttpResponse: HTTP response with the form or success/error message.
-    """
-    
-    if request.method == "POST":
-        form = form_class(request.POST, request.FILES)
-        if form.is_valid():
-            form_instance = form.save(commit=False)
-            form_instance.save()
-            form_data = form.cleaned_data
-            sendFormAsPdf(request, pdf_template_name, css_file, subject, recipient_email, form_data, pdf_filename, form_instance)
-            messages.success(request, 'El formulario se ha creado correctamente y se ha enviado en pdf.')
-            return redirect(redirectTo)
-        else:
-            form = form_class()
-            messages.error(request, 'Error al crear el formulario.')
-            return render(request, template_name, {"form": form})
-    else:
-        form = form_class()
-        return render(request, template_name, {"form": form})
 
 
 email = "pinedapablo6718@gmail.com"
 email2 = "daniela32156@hotmail.com"
 
+    
+def createChargeAccountForm(request):
+
+    if request.method == 'POST':
+        form = ChargeAccountForm(request.POST, request.FILES)
+        if form.is_valid():
+            chargeAccount = form.save()
+            sendChargeAccountFormAsExcel(request, chargeAccount)
+            return redirect('viewChargeAccountForm')
+    else:
+        form = ChargeAccountForm()
+
+    return render(request, 'chargeAccountForm.html', {'form': form})
+
+
+
+def createRequisitionForm(request):
+
+    if request.method == 'POST':
+        form = RequisitionForm(request.POST)
+        if form.is_valid():
+            requisition = form.save()
+            sendRequisitionFormAsExcel(request, requisition)
+            return redirect('viewRequisitionForm')
+    else:
+        form = RequisitionForm()
+
+    return render(request, 'requisitionForm.html', {'form': form})
+
 
 def createExteriorPaymentForm(request):
-    """
-    View that displays the form to create an exterior payment request.
 
-    Args:
-        request (HttpRequest): HTTP request object.
+    if request.method == 'POST':
+        form = ExteriorPaymentForm(request.POST)
+        if form.is_valid():
+            exteriorPayment = form.save()
+            sendExteriorPaymentFormAsExcel(request, exteriorPayment)
+            return redirect('viewExteriorPaymentForm')
+    else:
+        form = ExteriorPaymentForm()
 
-    Returns:
-        HttpResponse: HTTP response with the form or success/error message.
-    """
-    return createForm(
-        request,
-        ExteriorPaymentForm,
-        "exteriorPaymentForm.html",
-        "sendExteriorPaymentForm.html",
-        "SistemaContableApp/static/styles/sendExteriorPaymentForm.css",
-        "Solicitud de requisición de pago al exterior",
-        email,
-        "Pago al exterior\n Universidad Icesi Nit. 890.316.745-5.",
-        createExteriorPaymentForm
-    )
-
-def createChargeAccountForm(request):
-    """
-    View that displays the form to create a charge account request.
-
-    Args:
-        request (HttpRequest): HTTP request object.
-
-    Returns:
-        HttpResponse: HTTP response with the form or success/error message. 
-    """ 
-    return createForm(
-        request,
-        ChargeAccountForm,
-        "chargeAccountForm.html",
-        "sendChargeAccountForm.html",
-        "SistemaContableApp/static/styles/sendChargeAccountForm.css",
-        "Solicitud de cuenta de cobro\n Universidad Icesi Nit. 890.316.745-5.",
-        email,
-        "Cuenta de cobro",
-        createChargeAccountForm
-    )
-    
-def createRequisitionForm(request):
-    """
-    View that displays the form to create a requisition request.
-
-    Args:
-        request (HttpRequest): HTTP request object.
-
-    Returns:
-        HttpResponse: HTTP response with the form or success/error message.
-    """
-    
-    return createForm(
-        request,
-        RequisitionForm,
-        "requisitionForm.html",
-        "sendRequisitionForm.html",
-        "SistemaContableApp/static/styles/sendRequisitionForm.css",
-        "Solicitud de requisición\n Universidad Icesi Nit. 890.316.745-5.",
-        email,
-        "Requisición",
-        createRequisitionForm
-    )
+    return render(request, 'exteriorPaymentForm.html', {'form': form})
 
 
 
@@ -237,8 +124,936 @@ def createAdvancePaymentForm(request):
 
 
 
+def sendChargeAccountFormAsExcel(request, chargeAccount):
+    excel_filename = generateExcelChargeAccount(chargeAccount)
+
+    # Enviar correo electrónico con el archivo Excel adjunto
+    email = EmailMessage(
+        'Solicitud de cuenta de cobro',
+        'Adjunto se encuentra la solicitud de cuenta de cobro en formato Excel.\n Universidad Icesi Nit. 890.316.745-5.',
+        settings.DEFAULT_FROM_EMAIL,
+        to=["pinedapablo6718@gmail.com"]
+    )
+    email.attach_file(excel_filename)
+    
+
+    try:
+        email.send()
+        messages.success(request, 'La solicitud de cuenta de cobro e envió correctamente.')
+    except Exception as e:
+        messages.error(request, 'Error al enviar la solicitud de cuenta de cobro.')
 
 
+def sendExteriorPaymentFormAsExcel(request, exteriorPayment):
+    excel_filename = generateExcelExteriorPayment(exteriorPayment)
+
+    # Enviar correo electrónico con el archivo Excel adjunto
+    email = EmailMessage(
+        'Solicitud de pago al exterior',
+        'Adjunto se encuentra la solicitud de pago al exterior en formato Excel.\n Universidad Icesi Nit. 890.316.745-5.',
+        settings.DEFAULT_FROM_EMAIL,
+        to=["pinedapablo6718@gmail.com"]
+    )
+    email.attach_file(excel_filename)
+    
+
+    try:
+        email.send()
+        messages.success(request, 'La solicitud de pago al exterior se envió correctamente.')
+    except Exception as e:
+        messages.error(request, 'Error al enviar la solicitud de pago al exterior.')
+
+
+
+def sendRequisitionFormAsExcel(request, requisition):
+    excel_filename = generateExcelRequisition(requisition)
+
+    # Enviar correo electrónico con el archivo Excel adjunto
+    email = EmailMessage(
+        'Solicitud de requisición',
+        'Adjunto se encuentra la solicitud de requisición en formato Excel.\n Universidad Icesi Nit. 890.316.745-5.',
+        settings.DEFAULT_FROM_EMAIL,
+        to=["pinedapablo6718@gmail.com"]
+    )
+    email.attach_file(excel_filename)
+    
+
+    try:
+        email.send()
+        messages.success(request, 'La solicitud de requisición se envió correctamente.')
+    except Exception as e:
+        messages.error(request, 'Error al enviar la solicitud de requisición.')
+    
+
+def sendLegalizationFormAsExcel(request, solicitation):
+    """
+    Function to send the travel expenses solicitation as an Excel file.
+    
+    Args:
+        request (HttpRequest): HTTP request object.
+        solicitation (TravelExpensesSolicitation): Travel expenses solicitation instance.
+    
+    Returns:
+        None
+    """
+    # Generar archivo Excel
+    excel_filename = generateExcelLegalization(solicitation)
+
+    # Enviar correo electrónico con el archivo Excel adjunto
+    email = EmailMessage(
+        'Solicitud de gastos de viaje',
+        'Adjunto se encuentra la solicitud de gastos de viaje en formato Excel.\n Universidad Icesi Nit. 890.316.745-5.',
+        settings.DEFAULT_FROM_EMAIL,
+        to=["pinedapablo6718@gmail.com"]
+    )
+    email.attach_file(excel_filename)
+    
+    # Adjuntar archivos de cada gasto
+    for expense in solicitation.expenses.all():
+        if expense.support:
+            email.attach_file(expense.support.path)
+
+    try:
+        email.send()
+        messages.success(request, 'La solicitud de gastos de viaje se envió correctamente.')
+    except Exception as e:
+        messages.error(request, 'Error al enviar la solicitud de gastos de viaje.')
+        
+        
+        
+def sendAdvancePaymentFormAsExcel(request, solicitation) :
+    """
+    Function to send the travel expenses solicitation as an Excel file.
+    
+    Args:
+        request (HttpRequest): HTTP request object.
+        solicitation (TravelExpensesSolicitation): Travel expenses solicitation instance.
+    
+    Returns:
+        None
+    """
+    # Generar archivo Excel
+    excel_filename = generateExcelAdvancePayment(solicitation)
+
+    # Enviar correo electrónico con el archivo Excel adjunto
+    email = EmailMessage(
+        'Solicitud de gastos de viaje',
+        'Adjunto se encuentra la solicitud de anticipo para gastos de viaje en formato Excel.\n Universidad Icesi Nit. 890.316.745-5.',
+        settings.DEFAULT_FROM_EMAIL,
+        to=["pinedapablo6718@gmail.com"]
+    )
+    email.attach_file(excel_filename)
+    
+
+    try:
+        email.send()
+        messages.success(request, 'La solicitud de anticipo para gastos de viaje se envió correctamente.')
+    except Exception as e:
+        messages.error(request, 'Error al enviar la solicitud de anticipo para gastos de viaje.')
+
+
+
+
+
+def generateExcelChargeAccount(chargeAccount):
+    workbook = Workbook()
+    worksheet = workbook.active
+    
+    #estilo de los bordes de la casilla
+    bold_font = Font(bold=True)
+    
+    thin_border = Border(
+        left=Side(style='thin'),
+        right=Side(style='thin'),
+        top=Side(style='thin'),
+        bottom=Side(style='thin')
+    )
+    
+    #borde derecho de la solicitud       
+    right_border = Border(
+        right=Side(style='thin')   
+    )
+    
+    bottom_border = Border(
+        bottom=Side(style='thin')
+    )
+    
+    top_border = Border(
+        top=Side(style='thin')
+    )
+    
+    
+    
+    # Ancho de la columna
+    column_letter = 'A'
+    column_width = 33
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'B'
+    column_width = 22
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'C'
+    column_width = 3
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'D'
+    column_width = 18
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'E'
+    column_width = 31
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'F'
+    column_width = 3
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'G'
+    column_width = 33
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+
+    start_row = 1
+    end_row = 64
+    
+    for row in range(start_row, end_row + 1):
+        for col in range(7, 7 + 1):
+            cell = worksheet.cell(row=row, column=col)
+            cell.border = right_border
+
+
+    # Agregar una imagen al archivo Excel
+    #image_path = 'SistemaContableApp\static\images\LogoIcesi.jpg'  # Reemplaza con la ruta de tu imagen
+    #img = Image(image_path)
+    #img_width, img_height = img.width, img.height
+
+
+    # Escribir encabezados
+    
+    # Agregar Logo de icesi en la primera casilla
+    #image_path = 'SistemaContableApp\static\images\LogoIcesi.jpg'  # Reemplaza con la ruta de tu imagen
+    #img = Image(image_path)
+    worksheet.merge_cells('A1:A4')
+    merged_cell = worksheet['A1']
+    #merged_cell.add_image(img,'A1' )
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    
+    worksheet.merge_cells('B1:E2')
+    merged_cell = worksheet['B1']
+    merged_cell.value = 'CONTABILIDAD'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    
+    worksheet.merge_cells('B3:E4')
+    merged_cell = worksheet['B3']
+    merged_cell.value = 'FORMATO DE GESTION DE COBRO PARA CONTRATOS DE\nGESTION HUMANA'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    
+    worksheet.merge_cells('F1:G2')
+    merged_cell = worksheet['F1']
+    merged_cell.value = 'Código:\nCTA-FR-015'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    
+    worksheet.merge_cells('F3:G4')
+    merged_cell = worksheet['F3']
+    merged_cell.value = 'Versión:\n1.0'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    
+
+# -------------------------------------------parte de arriba del formato---------------------------------
+    
+    worksheet.merge_cells('B6:E6')
+    merged_cell = worksheet['B6']
+    merged_cell.value = 'UNIVERSIDAD ICESI'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.font = bold_font
+    
+    worksheet.merge_cells('B7:E7')
+    merged_cell = worksheet['B7']
+    merged_cell.value = 'NIT. 890.316.745-5'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.font = bold_font
+    
+    worksheet.merge_cells('B9:E9')
+    merged_cell = worksheet['B9']
+    merged_cell.value = 'DEBE A:'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.font = bold_font
+    
+
+    worksheet.merge_cells('B12:E12')
+    merged_cell = worksheet['B12']
+    merged_cell.value = 'Nombre:'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.font = bold_font
+    merged_cell.border = top_border
+    
+    worksheet.merge_cells('B11:E11')
+    merged_cell = worksheet['B11']
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.value = chargeAccount.name
+    
+    worksheet.merge_cells('B15:E15')
+    merged_cell = worksheet['B15']
+    merged_cell.value = 'identificación:'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.font = bold_font
+    merged_cell.border = top_border
+    worksheet.merge_cells('B14:E14')
+    merged_cell = worksheet['B14']
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.value = chargeAccount.identification
+    
+    worksheet['B17'] = 'La suma de:'
+    worksheet['B17'].font = bold_font
+    
+    worksheet.merge_cells('B20:C20')
+    merged_cell = worksheet['B20']
+    merged_cell.value = '(valor en letras)'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.font = bold_font
+    merged_cell.border = top_border
+    
+    worksheet.merge_cells('B19:C19')
+    merged_cell = worksheet['B19']
+    merged_cell.value = chargeAccount.value_letters
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    
+    worksheet['E20'] = '(valor en números)'
+    worksheet['E20'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['E20'].font = bold_font
+    worksheet['E20'].border = top_border
+    worksheet['E19'] = chargeAccount.value_numbers
+    worksheet['E19'].alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet['B22'] = 'Concepto'
+    worksheet['B22'].font = bold_font
+    worksheet.merge_cells('B23:F24')
+    merged_cell = worksheet['B23']
+    merged_cell.value = chargeAccount.concept
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.font = bold_font
+    
+#------------------------ parte del formato media--------------------------------------------------
+
+    
+    worksheet.merge_cells('B28:E31')
+    merged_cell = worksheet['B28']
+    merged_cell.value = 'Con el fin de atender lo establecido en la Ley 2277 del año 2022, reglamentada con el Decreto 2231 de\ndiciembre de 2023 declaro, bajo la gravedad de juramento, que:\n\nLos ingresos recibidos como persona natural por concepto de renta de trabajo no proveniente de una\nrelación laboral, legal o reglamentaria correspondiente a los servicios prestados a LA UNIVERSIDAD\nICESI durante el año 2024, se les dará el siguiente tratamiento:'
+
+    worksheet.merge_cells('B34:E35')
+    merged_cell = worksheet['B34']
+    merged_cell.value="a. Se tomarán costos y deducciones asociados a las rentas de trabajo por los servicios prestados:\nRetención en la fuente artículos 392 y 401 del Estatuto Tributario\nRetención en la fuente artículos 392 y 401 del Estatuto Tributario"
+    
+    worksheet['B37'] = 'SI'
+    worksheet['B37'].font = bold_font
+    
+    worksheet['B38'] = 'NO'
+    worksheet['B38'].font = bold_font
+    
+    if(chargeAccount.retentions==1):
+        worksheet['C37'] = 'x'
+    elif(chargeAccount.retentions==0):
+        worksheet['C38'] = 'x'
+        
+    worksheet.merge_cells('B41:D41')
+    merged_cell = worksheet['B41']
+    merged_cell.value = 'b. Soy declarante del Impuesto de Renta'
+    
+    worksheet['E41'] = 'SI'
+    worksheet['E41'].font = bold_font
+    
+    worksheet['E42'] = 'NO'
+    worksheet['E42'].font = bold_font
+    
+    if(chargeAccount.declarant==1):
+        worksheet['F41'] = 'x'
+    elif(chargeAccount.declarant==0):
+        worksheet['F42'] = 'x'
+    
+    worksheet.merge_cells('B44:D44')
+    merged_cell = worksheet['B44']
+    merged_cell.value = 'c. Soy residente fiscal en Colombia'
+    
+    worksheet['E44'] = 'SI'
+    worksheet['E44'].font = bold_font
+    
+    worksheet['E45'] = 'NO'
+    worksheet['E45'].font = bold_font
+    
+    if(chargeAccount.colombian_resident==1):
+        worksheet['F44'] = 'x'
+    elif(chargeAccount.colombian_resident==0):
+        worksheet['F45'] = 'x'
+        
+        
+    worksheet['B48'] = 'Ciudad y Fecha'
+    worksheet['B48'].font = bold_font
+    worksheet.merge_cells('C48:D48')
+    merged_cell = worksheet['C48']
+    merged_cell.value = chargeAccount.city 
+    merged_cell.border = bottom_border
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet['E48'].value = chargeAccount.date
+    worksheet['E48'].border = bottom_border
+    worksheet['E48'].alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet['B51'] = 'Firma'
+    worksheet['B51'].font = bold_font
+    worksheet.merge_cells('C51:E51')
+    merged_cell = worksheet['C51']
+    merged_cell.value = chargeAccount.name
+    merged_cell.border = bottom_border
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet['B52'] = 'C.C'
+    worksheet['B52'].font = bold_font
+    worksheet.merge_cells('C52:E52')
+    merged_cell = worksheet['C52']
+    merged_cell.value = chargeAccount.identification
+    merged_cell.border = bottom_border
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet['B53'] = 'Dirección'
+    worksheet['B53'].font = bold_font
+    worksheet.merge_cells('C53:E53')
+    merged_cell = worksheet['C53']
+    merged_cell.value = chargeAccount.addres
+    merged_cell.border = bottom_border
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet['B54'] = 'Telefono'
+    worksheet['B54'].font = bold_font
+    worksheet.merge_cells('C54:E54')
+    merged_cell = worksheet['C54']
+    merged_cell.value = chargeAccount.phone
+    merged_cell.border = bottom_border
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+
+#------------------------ parte del formato baja--------------------------------------------------
+
+
+    worksheet.merge_cells('B57:C57')
+    merged_cell = worksheet['B57']
+    merged_cell.value = "Nombre del banco"
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet.merge_cells('B58:C58')
+    merged_cell = worksheet['B58']
+    merged_cell.value = chargeAccount.bank
+    merged_cell.border = thin_border
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    
+    worksheet['D57'].value = "Tipo de cuenta"
+    worksheet['D57'].border = thin_border
+    worksheet['D57'].font = bold_font
+    worksheet['D57'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['D58'] = chargeAccount.type
+    worksheet['D58'].border = thin_border
+    worksheet['D58'].alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet['E57'].value = "No."
+    worksheet['E57'].border = thin_border
+    worksheet['E57'].font = bold_font
+    worksheet['E57'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['E58'] = chargeAccount.account_number
+    worksheet['E58'].border = thin_border
+    worksheet['E58'].alignment = Alignment(horizontal='center', vertical='center')
+
+    worksheet.merge_cells('B60:E60')
+    merged_cell = worksheet['B60']
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.value = "Cex No."
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    worksheet.merge_cells('B61:E61')
+    merged_cell = worksheet['B61']
+    merged_cell.value = chargeAccount.cex
+    merged_cell.border = thin_border
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    
+    filename = f'media/chargeAccount_{chargeAccount.id}.xlsx'
+    workbook.save(filename)
+    return filename
+
+
+def generateExcelExteriorPayment(exteriorPayment):
+    workbook = Workbook()
+    worksheet = workbook.active
+    
+    #borde derecho de la solicitud       
+    right_border = Border(
+        right=Side(style='thin')   
+    )
+    start_row = 1
+    end_row = 36
+    
+    for row in range(start_row, end_row + 1):
+        for col in range(1, 1 + 1):
+            cell = worksheet.cell(row=row, column=col)
+            cell.border = right_border
+    
+    
+    
+    top_border = Border(
+        top=Side(style='thin')
+    )
+
+    
+    
+    column_letter = 'A'
+    column_width = 80
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    bold_font = Font(bold=True)
+    
+    worksheet['A2'] = 'SOLICITUD DE PAGO AL EXTERIOR'
+    worksheet['A2'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['A2'].font = bold_font
+    worksheet['A2'].fill = PatternFill(start_color='DDEBF7', end_color='DDEBF7', fill_type='solid')
+    
+    worksheet['A4'] = 'DATOS DEL BENEFICIARIO'
+    worksheet['A4'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['A4'].font = bold_font
+    worksheet['A4'].fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+    
+    worksheet['A5'] = 'Nombre Completo'
+    worksheet['A5'].font = bold_font
+    worksheet['A6'] = exteriorPayment.beneficiary_name + " " + exteriorPayment.beneficiary_last_name
+    
+    worksheet['A7'] = 'Tipo de identificación'
+    worksheet['A7'].font = bold_font
+    worksheet['A8'] = exteriorPayment.beneficiary_document_type
+    
+    worksheet['A9'] = 'Numero de identificación'
+    worksheet['A9'].font = bold_font
+    worksheet['A10'] = exteriorPayment.beneficiary_document_no
+    
+    worksheet['A11'] = 'Numero de Pasaporte:'
+    worksheet['A11'].font = bold_font
+    worksheet['A12'] = exteriorPayment.passport_number
+    
+    worksheet['A13'] = 'ciudad de expedición:'
+    worksheet['A13'].font = bold_font
+    worksheet['A14'] = exteriorPayment.passport_expedition_city
+    
+    worksheet['A15'] = 'Datos de domicilio'
+    worksheet['A15'].font = bold_font
+    worksheet['A16'] = exteriorPayment.address
+    
+    
+    worksheet['A19'] = 'DATOS DE LA ENTIDAD BANCARIA DEL BENEFICIARIO'
+    worksheet['A19'].font = bold_font
+    worksheet['A19'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['A19'].fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+    
+    worksheet['A21'] = 'Nombre de la entidad bancaria:'
+    worksheet['A21'].font = bold_font
+    worksheet['A22'] = exteriorPayment.bank_name
+    
+    worksheet['A23'] = 'Tipo de cuenta(Ahorros o Corriente):'
+    worksheet['A23'].font = bold_font
+    worksheet['A24'] = exteriorPayment.account_type
+    
+    worksheet['A25'] = 'Código Swift:'
+    worksheet['A25'].font = bold_font
+    worksheet['A26'] = exteriorPayment.swift_code
+    
+    worksheet['A27'] = 'Tipo de código IBAN/ABA'
+    worksheet['A27'].font = bold_font
+    worksheet['A28'] = exteriorPayment.iban_aba_code_type
+    
+    worksheet['A29'] = 'Código IBAN/ABA'
+    worksheet['A29'].font = bold_font
+    worksheet['A30'] = exteriorPayment.iban_aba_code
+    
+    worksheet['A31'] = 'Nombre de la cuenta:'
+    worksheet['A31'].font = bold_font
+    worksheet['A32'] = exteriorPayment.account_name
+    
+    worksheet['A33'] = 'Numero de la cuenta:'
+    worksheet['A33'].font = bold_font
+    worksheet['A34'] = exteriorPayment.account_number
+    
+    worksheet['A35'] = 'Dirección de la entidad bancaria'
+    worksheet['A35'].font = bold_font
+    worksheet['A36'] = exteriorPayment.bank_address
+    
+    
+    filename = f'media/exteriorPayment_{exteriorPayment.id}.xlsx'
+    workbook.save(filename)
+    return filename
+
+
+
+
+def generateExcelRequisition(requisition):
+    workbook = Workbook()
+    worksheet = workbook.active
+    
+    #estilo de los bordes de la casilla
+    bold_font = Font(bold=True)
+    
+    thin_border = Border(
+        left=Side(style='thin'),
+        right=Side(style='thin'),
+        top=Side(style='thin'),
+        bottom=Side(style='thin')
+    )
+    
+    #borde derecho de la solicitud       
+    right_border = Border(
+        right=Side(style='thin')   
+    )
+    
+    bottom_border = Border(
+        bottom=Side(style='thin')
+    )
+    
+    top_border = Border(
+        top=Side(style='thin')
+    )
+    
+    
+    
+    # Ancho de la columna
+    column_letter = 'A'
+    column_width = 11
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'B'
+    column_width = 20
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'C'
+    column_width = 20
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'D'
+    column_width = 2
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'E'
+    column_width = 23
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'F'
+    column_width = 2
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'G'
+    column_width = 33
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+    column_letter = 'H'
+    column_width = 11
+    worksheet.column_dimensions[column_letter].width = column_width
+    
+
+    start_row = 1
+    end_row = 42
+    
+    for row in range(start_row, end_row + 1):
+        for col in range(8, 8 + 1):
+            cell = worksheet.cell(row=row, column=col)
+            cell.border = right_border
+
+
+    # Agregar una imagen al archivo Excel
+    #image_path = 'SistemaContableApp\static\images\LogoIcesi.jpg'  # Reemplaza con la ruta de tu imagen
+    #img = Image(image_path)
+    #img_width, img_height = img.width, img.height
+
+
+    # Escribir encabezados
+    
+    # Agregar Logo de icesi en la primera casilla
+    #image_path = 'SistemaContableApp\static\images\LogoIcesi.jpg'  # Reemplaza con la ruta de tu imagen
+    #img = Image(image_path)
+    worksheet.merge_cells('A1:B4')
+    merged_cell = worksheet['A1']
+    #merged_cell.add_image(img,'A1' )
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    
+    worksheet.merge_cells('C1:F2')
+    merged_cell = worksheet['C1']
+    merged_cell.value = 'CONTABILIDAD'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    
+    worksheet.merge_cells('C3:F4')
+    merged_cell = worksheet['C3']
+    merged_cell.value = 'FORMATO DE REQUISICIÓN'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    
+    worksheet.merge_cells('G1:H2')
+    merged_cell = worksheet['G1']
+    merged_cell.value = 'Código:\nCTA-FR-005'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    
+    worksheet.merge_cells('G3:H4')
+    merged_cell = worksheet['G3']
+    merged_cell.value = 'Versión:\n1.0'
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = thin_border
+    merged_cell.font = bold_font
+    
+
+# -------------------------------------------parte de arriba del formato---------------------------------
+    worksheet['B6'] = 'No. de Radicado'
+    worksheet['B6'].font = bold_font
+    worksheet['C6'].fill = PatternFill(start_color='DDEBF7', end_color='DDEBF7', fill_type='solid')
+    worksheet['C6'] = requisition.radicate
+    worksheet['C6'].alignment = Alignment(horizontal='center', vertical='center')
+
+    worksheet['E6'] = 'Código de Orden de pago'
+    worksheet['E6'].font = bold_font
+    worksheet.merge_cells('F6:G6')
+    merged_cell = worksheet['F6']
+    merged_cell.fill = PatternFill(start_color='DDEBF7', end_color='DDEBF7', fill_type='solid')
+    worksheet['F6'] = requisition.payment_order_code
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet['B8'] = 'Fecha'
+    worksheet['B8'].font = bold_font
+    worksheet.merge_cells('C8:F8')
+    merged_cell = worksheet['C8']
+    worksheet['C8'] = requisition.date
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = top_border
+    
+       
+    worksheet['B9'] = 'A favor de'
+    worksheet['B9'].font = bold_font
+    worksheet.merge_cells('C9:F9')
+    merged_cell = worksheet['C9']
+    worksheet['C9'] = requisition.beneficiaryName
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = top_border
+    
+    worksheet['B10'] = 'Numero de cedula'
+    worksheet['B10'].font = bold_font
+    worksheet.merge_cells('C10:F10')
+    merged_cell = worksheet['C10']
+    worksheet['C10'] = requisition.idNumber
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = top_border
+    
+    worksheet['B11'] = 'Cargo'
+    worksheet['B11'].font = bold_font
+    worksheet.merge_cells('C11:F11')
+    merged_cell = worksheet['C11']
+    worksheet['C11'] = requisition.charge
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = top_border
+
+    worksheet['B12'] = 'Dependencia'
+    worksheet['B12'].font = bold_font
+    worksheet.merge_cells('C12:F12')
+    merged_cell = worksheet['C12']
+    worksheet['C12'] = requisition.dependency
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = top_border
+
+    worksheet['B13'] = 'Cenco'
+    worksheet['B13'].font = bold_font
+    worksheet.merge_cells('C13:F13')
+    merged_cell = worksheet['C13']
+    worksheet['C13'] = requisition.cenco
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = top_border
+
+    worksheet['B14'] = 'Valor'
+    worksheet['B14'].font = bold_font
+    worksheet.merge_cells('C14:F14')
+    merged_cell = worksheet['C14']
+    worksheet['C14'] = requisition.value
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = top_border
+
+    worksheet['B15'] = 'Concepto'
+    worksheet['B15'].font = bold_font
+    worksheet.merge_cells('C15:F15')
+    merged_cell = worksheet['C15']
+    worksheet['C15'] = requisition.concept
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    merged_cell.border = top_border
+    
+    worksheet.merge_cells('C16:F16')
+    merged_cell = worksheet['C16']
+    merged_cell.border = top_border
+    
+    
+    #Gris el valor de los datos
+    start_row = 8
+    end_row = 15
+    start_column = 3  # Columna A
+    end_column = 6  # Columna H
+    
+    for row in range(start_row, end_row + 1):
+        for col in range(start_column, end_column + 1):
+            cell = worksheet.cell(row=row, column=col)
+            cell.fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+            cell.border = thin_border
+    row = 21
+    
+#------------------------ parte del formato media (Descripcion)--------------------------------------------------
+
+    
+    worksheet.merge_cells('B17:G17')
+    merged_cell = worksheet['B17']
+    merged_cell.border = bottom_border
+    worksheet['B17'] = 'DESCRIPCIÓN'
+    worksheet['B17'].font = bold_font
+    worksheet['B17'].alignment = Alignment(horizontal='center', vertical='center')
+    
+    
+    worksheet.merge_cells('B18:G26')
+    merged_cell = worksheet['B18']
+    worksheet['B18'] = requisition.description
+    
+    
+    
+    
+    #borde derecho de la Descripción    
+    start_row = 18
+    end_row = 26
+    
+    for row in range(start_row, end_row + 1):
+        for col in range(7, 7 + 1):
+            cell = worksheet.cell(row=row, column=col)
+            cell.border = right_border
+            
+      
+    #borde derecho de la Descripción    
+    start_row = 18
+    end_row = 26
+    
+    for row in range(start_row, end_row + 1):
+        for col in range(1, 1 + 1):
+            cell = worksheet.cell(row=row, column=col)
+            cell.border = right_border      
+            
+    #Gris el valor de la Descripcion
+    start_row = 18
+    end_row = 26
+    start_column = 2  # Columna A
+    end_column = 7  # Columna H
+    
+    for row in range(start_row, end_row + 1):
+        for col in range(start_column, end_column + 1):
+            cell = worksheet.cell(row=row, column=col)
+            cell.fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+            cell.border = thin_border
+    row = 21
+
+#----------------------------------Parte de abajo del formato-------------------------------------------------------------------------
+
+    worksheet['B28'] = 'Datos para pago: '
+    worksheet['B28'].font = bold_font
+    
+    worksheet.merge_cells('C28:E28')
+    merged_cell = worksheet['C28']
+    merged_cell.fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet['C28'] = requisition.paymentMethod
+    
+    worksheet['B30'] = 'Ahorros'
+    worksheet['B30'].font = bold_font
+    
+    worksheet['B31'] = 'Corriente'
+    worksheet['B31'].font = bold_font
+    
+    if(requisition.typeAccount=="De ahorros"):
+        worksheet['C30'] = 'x'
+    elif(requisition.typeAccount=="Corriente"):
+        worksheet['C31'] = 'x'
+        
+        
+    worksheet['E30'] = '# Cuenta Bancaria'
+    worksheet['E30'].font = bold_font
+    
+    worksheet['G30'] = requisition.account_number
+    worksheet['G30'].font = bold_font
+    worksheet['G30'].fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+    worksheet['G30'].alignment = Alignment(horizontal='center', vertical='center')
+        
+    worksheet['B35'] = 'Firma Ordenador de Gasto'
+    worksheet['B35'].border = top_border
+    worksheet['B35'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['B34'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['B34'] = requisition.beneficiaryName
+    
+    worksheet['E35'] = 'Firma de quien elabora'
+    worksheet['E35'].border = top_border
+    worksheet['E35'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['E34'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['E34'] = requisition.authorName
+
+    worksheet['B38'] = 'Nombre Ordenador de gasto'
+    worksheet['B38'].border = top_border
+    worksheet['B38'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['B37'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['B37'] = requisition.beneficiaryName
+    
+    worksheet['E38'] = 'Nombre de quien elabora'
+    worksheet['E38'].border = top_border
+    worksheet['E38'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['E37'].alignment = Alignment(horizontal='center', vertical='center')
+    worksheet['E37'] = requisition.authorName
+    
+    
+    worksheet.merge_cells('B43:G43')
+    merged_cell = worksheet['B43']
+    merged_cell.value = 'Campo de uso exclusivo de la Oficina de Contabilidad'
+    merged_cell.font = bold_font  
+    merged_cell.fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+    merged_cell.alignment = Alignment(horizontal='center', vertical='center')
+    
+    worksheet.merge_cells('B44:G44')
+    merged_cell = worksheet['B44']
+    merged_cell.value = 'Motivo de devolución:'
+    merged_cell.fill = PatternFill(start_color='D0CECE', end_color='D0CECE', fill_type='solid')
+    
+    worksheet.merge_cells('A46:H46')
+    merged_cell = worksheet['A46']
+    merged_cell.value = 'Espacio para ser diligenciado por la oficina de contabilidad:'
+    merged_cell.font = bold_font  
+    merged_cell.fill = PatternFill(start_color='DDEBF7', end_color='DDEBF7', fill_type='solid')
+
+
+    
+    
+    filename = f'media/requisition_{requisition.id}.xlsx'
+    workbook.save(filename)
+    return filename
+    
+    
 def generateExcelAdvancePayment(solicitation):
     workbook = Workbook()
     worksheet = workbook.active
@@ -302,9 +1117,9 @@ def generateExcelAdvancePayment(solicitation):
 
 
     # Agregar una imagen al archivo Excel
-    image_path = 'SistemaContableApp\static\images\LogoIcesi.jpg'  # Reemplaza con la ruta de tu imagen
-    img = Image(image_path)
-    img_width, img_height = img.width, img.height
+    #image_path = 'SistemaContableApp\static\images\LogoIcesi.jpg'  # Reemplaza con la ruta de tu imagen
+    #img = Image(image_path)
+    #img_width, img_height = img.width, img.height
 
 
     # Escribir encabezados
@@ -622,9 +1437,9 @@ def generateExcelLegalization(solicitation):
 
 
     # Agregar una imagen al archivo Excel
-    image_path = 'SistemaContableApp\static\images\LogoIcesi.jpg'  # Reemplaza con la ruta de tu imagen
-    img = Image(image_path)
-    img_width, img_height = img.width, img.height
+    #image_path = 'SistemaContableApp\static\images\LogoIcesi.jpg'  # Reemplaza con la ruta de tu imagen
+    #img = Image(image_path)
+    #img_width, img_height = img.width, img.height
 
 
     # Escribir encabezados
@@ -919,70 +1734,6 @@ def generateExcelLegalization(solicitation):
     return filename
 
 
-def sendLegalizationFormAsExcel(request, solicitation):
-    """
-    Function to send the travel expenses solicitation as an Excel file.
-    
-    Args:
-        request (HttpRequest): HTTP request object.
-        solicitation (TravelExpensesSolicitation): Travel expenses solicitation instance.
-    
-    Returns:
-        None
-    """
-    # Generar archivo Excel
-    excel_filename = generateExcelLegalization(solicitation)
 
-    # Enviar correo electrónico con el archivo Excel adjunto
-    email = EmailMessage(
-        'Solicitud de gastos de viaje',
-        'Adjunto se encuentra la solicitud de gastos de viaje en formato Excel.\n Universidad Icesi Nit. 890.316.745-5.',
-        settings.DEFAULT_FROM_EMAIL,
-        to=["pinedapablo6718@gmail.com"]
-    )
-    email.attach_file(excel_filename)
-    
-    # Adjuntar archivos de cada gasto
-    for expense in solicitation.expenses.all():
-        if expense.support:
-            email.attach_file(expense.support.path)
-
-    try:
-        email.send()
-        messages.success(request, 'La solicitud de gastos de viaje se envió correctamente.')
-    except Exception as e:
-        messages.error(request, 'Error al enviar la solicitud de gastos de viaje.')
-        
-        
-        
-def sendAdvancePaymentFormAsExcel(request, solicitation) :
-    """
-    Function to send the travel expenses solicitation as an Excel file.
-    
-    Args:
-        request (HttpRequest): HTTP request object.
-        solicitation (TravelExpensesSolicitation): Travel expenses solicitation instance.
-    
-    Returns:
-        None
-    """
-    # Generar archivo Excel
-    excel_filename = generateExcelAdvancePayment(solicitation)
-
-    # Enviar correo electrónico con el archivo Excel adjunto
-    email = EmailMessage(
-        'Solicitud de gastos de viaje',
-        'Adjunto se encuentra la solicitud de anticipo para gastos de viaje en formato Excel.\n Universidad Icesi Nit. 890.316.745-5.',
-        settings.DEFAULT_FROM_EMAIL,
-        to=["pinedapablo6718@gmail.com"]
-    )
-    email.attach_file(excel_filename)
-    
-
-    try:
-        email.send()
-        messages.success(request, 'La solicitud de anticipo para gastos de viaje se envió correctamente.')
-    except Exception as e:
-        messages.error(request, 'Error al enviar la solicitud de anticipo para gastos de viaje.')
         
         
