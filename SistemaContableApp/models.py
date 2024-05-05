@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, Permission, Group
 from django.contrib.contenttypes.models import ContentType
+from django.utils import timezone
 
 #Create your models here.
 
@@ -136,6 +137,8 @@ class State(models.Model):
     
     state = models.CharField(max_length = 30,choices = ESTADOS, primary_key = True)
     color = models.CharField(max_length = 10,choices = COLORES)
+    state_history = models.ManyToManyField('State', through='StateChange', related_name='following_state_history')
+
 
     def __str__(self):
         return self.state
@@ -180,10 +183,23 @@ class Following(models.Model):
     currentState = models.ForeignKey(State, on_delete = models.PROTECT)
     closeDate = models.DateField()
 
+    state_history = models.ManyToManyField(State, through='StateChange', related_name='followings')
+
+
     def __str__(self):
         return self.type + ' - ' + self.cenco
 
+class StateChange(models.Model):
+    """
+    Model representing the history of state changes for a following.
+    """
+    following = models.ForeignKey(Following, on_delete=models.CASCADE)
+    state = models.ForeignKey(State, on_delete=models.CASCADE)
+    date_changed = models.DateTimeField(default=timezone.now) 
 
+    def __str__(self):
+        return f"{self.following} - {self.state} - {self.date_changed}"
+    
 class AttachedDocument(models.Model):
 
     """

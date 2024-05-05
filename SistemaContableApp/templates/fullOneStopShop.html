@@ -9,12 +9,13 @@
         <meta charset="UTF-8">
         <title >Ventanilla unica</title>
         <link rel="stylesheet" href= "{% static '/styles/oneStopShopStyle.css' %}" >
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     </head>
 </html>
 
 <body>
     <div class="heading">
-        <h1><span style="font-size: 40px;">Ventanilla unica </span></h1>
+        <h1><span style="font-size: 40px;"> CCSA </span></h1>
     </div>
     <div>
             <div class = "outer-wrapper">
@@ -91,16 +92,16 @@
                                 Fecha de Revision
                             </th>
                             <th>
-                                Estado de aprovacion
+                                Estado de aprobación
                             </th>
                             <th>
-                                Aprobacion
+                                Aprobación
                             </th>
                             <th>
-                                Fecha de aprovacion
+                                Fecha de aprobación
                             </th>
                             <th>
-                                Comentarios de aprovacion
+                                Comentarios de aprobación
                             </th>
                             <th>
                                 Recibido area contable
@@ -122,6 +123,9 @@
                             </th>
                             <th>
                                 Fecha de cierre
+                            </th>
+                            <th>
+                                Historial
                             </th>
                         </tr>
                         {% for following in followingData %}
@@ -157,9 +161,28 @@
                             <td>
                                 {{following.manager}}
                             </td>
-                            <td bgcolor = {{following.currentState.color}}>
-                                {{following.currentState.state}}
-                            </td>
+
+                            <td bgcolor="{{ following.currentState.color }}">
+                                <span id="state_{{ following.id }}">{{ following.currentState.state }}</span>
+                                <button id="edit-btn_{{ following.id }}" class="edit-btn" onclick="openPop('{{ following.id }}')"></button>
+                                <div id="popup_{{ following.id }}" class="popup">
+                                    <div class="popup-content">
+                                        <span class="close" onclick="closePop('{{ following.id }}')">&times;</span>
+                                        <form id="editStateForm_{{ following.id }}" method="post" action="{% url 'update_state' following.id %}">
+                                            {% csrf_token %}
+                                            <div class="form-group row">
+                                                <label for="estadoEdit">Estados:</label>
+                                                <select id="estados_{{ following.id }}" name="estadoEdit" required>
+                                                    {% for estado in states %}
+                                                    <option value="{{ estado.state }}">{{ estado.state }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <button class="btn btn-primary" type="submit">Actualizar Estado</button>
+                                            </div>
+                                        </form>                                        
+                                    </div>
+                                </div>
+                            </td>                                                          
                             <td>
                                 {{following.acceptor}}
                             </td>
@@ -235,12 +258,19 @@
                             <td>
                                 {{following.closeDate}}
                             </td>
+                            <td>
+                                <button class="button-with-icon" onclick="showHistory('{{ following.pk }}')"></button>                    
+                            </td>                                                    
                         </tr>
                         {% endfor %}
                     </table>
                 </div>
             </div>
     </div>
+    
+    <script src="{% static '/js/popup.js' %}"></script>
+    <script src="{% static '/js/showHistory.js' %}"></script>
+
 </body>
 {% endblock %}
 
