@@ -8,7 +8,9 @@ from django.core.mail import  EmailMessage
 from django.contrib import messages
 import weasyprint
 from weasyprint import  CSS
+from django.contrib.auth.decorators import login_required
 
+from SistemaContableApp.permissions import user_in_group
 
 
 
@@ -98,7 +100,11 @@ def isLateRequest(request_date):
         return True
     return False
 
+allowed_groups1 = ['Administrador', 'Líder', 'Gestor','Solicitante']
+excluded_group1 = 'Contable'
 
+@login_required(login_url='', redirect_field_name='next')
+@user_in_group(allowed_groups1, excluded_group1)
 def createExteriorPaymentForm(request):
     """
     View that displays the form to create an exterior payment request.
@@ -121,6 +127,8 @@ def createExteriorPaymentForm(request):
         createExteriorPaymentForm
     )
 
+@login_required(login_url='', redirect_field_name='next')
+@user_in_group(allowed_groups1, excluded_group1)
 def createChargeAccountForm(request):
     """
     View that displays the form to create a charge account request.
@@ -143,6 +151,8 @@ def createChargeAccountForm(request):
         createChargeAccountForm
     )
     
+@login_required(login_url='', redirect_field_name='next')  
+@user_in_group(allowed_groups1, excluded_group1) 
 def createRequisitionForm(request):
     """
     View that displays the form to create a requisition request.
