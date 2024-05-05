@@ -2,6 +2,7 @@ from django import forms
 from ftplib import MAXLINE
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.http import HttpResponseForbidden
 from .models import *
         
 
@@ -71,7 +72,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget= forms.PasswordInput)
 
 class CustomUserCreationForm(UserCreationForm):
-    first_name = forms.CharField(label = "Nombre",max_length=30, required=True)
+    name = forms.CharField(label = "Nombre",max_length=30, required=True)
     last_name = forms.CharField(label ="Apellidos",max_length=30, required=True)
     email = forms.EmailField(label = "Correo Electrónico",max_length=254, help_text='Required. Inform a valid email address.')
     password1 = forms.CharField(label="Contraseña", strip=False, widget=forms.PasswordInput)
@@ -79,7 +80,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email', 'password1', 'password2', )
+        fields = ('name', 'last_name', 'email', 'password1', 'password2', 'rol')
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -218,6 +219,7 @@ class OneStopShopForm(forms.ModelForm):
                   "observations",
                   "currentState",
                   "closeDate"]
+        
 
 class AttachedDocumentForm(forms.ModelForm):    
     
