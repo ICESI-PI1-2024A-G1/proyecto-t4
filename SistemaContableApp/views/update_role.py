@@ -7,6 +7,16 @@ from django.contrib.auth.models import User
 @require_POST
 @csrf_exempt
 def update_role(request):
+    
+    """
+    View to update the role (manager, acceptor, or reviewer) of a user for a specific following.
+
+    Args:
+        request (HttpRequest): The received HTTP request.
+
+    Returns:
+        JsonResponse: A JSON response with a success status and a message.
+    """
     try:
         following_id = request.POST.get('following_id')
         user_id = request.POST.get('user_id')
