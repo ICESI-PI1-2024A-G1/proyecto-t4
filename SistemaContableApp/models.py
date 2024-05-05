@@ -195,10 +195,13 @@ class StateChange(models.Model):
     """
     following = models.ForeignKey(Following, on_delete=models.CASCADE)
     state = models.ForeignKey(State, on_delete=models.CASCADE)
-    date_changed = models.DateTimeField(default=timezone.now) 
+    date_changed = models.DateTimeField(default=timezone.now)
+    description = models.TextField(blank=True) 
+    
+
 
     def __str__(self):
-        return f"{self.following} - {self.state} - {self.date_changed}"
+        return f"{self.following} - {self.state} - {self.date_changed} - {self.description}"
     
 class AttachedDocument(models.Model):
 

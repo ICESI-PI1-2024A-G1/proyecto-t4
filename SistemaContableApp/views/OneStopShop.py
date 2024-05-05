@@ -41,15 +41,15 @@ def summaryOneStopShopView(request):
     fecha_cierre_inicio = request.GET.get('fecha_cierre_inicio')
     fecha_cierre_fin = request.GET.get('fecha_cierre_fin')
     
+
     if query:
         queryset = queryset.filter(
-            Q(type = query) | Q(currentState = query) 
+            Q(type__icontains=query) | Q(currentState__state__icontains=query) 
         )
     if estado:
-        queryset = queryset.filter(currentState = estado)
-        
+        queryset = queryset.filter(currentState__state=estado)        
     if tipo:
-        queryset = queryset.filter(type = tipo)
+        queryset = queryset.filter(type__icontains=tipo)
     
     if ordenar_por:
         queryset = queryset.order_by(ordenar_por)
@@ -135,10 +135,12 @@ def oneStopShopFormView(request):
             attachedDocument = attachedDocumentForm.save(commit=False)
             attachedDocument.associatedFollowing = following 
             attachedDocument.save()
+            messages.success(request, 'Formulario enviado con éxito.')
             return redirect('OneStopShopForm')  
         else:
             oneStopShopForm = OneStopShopForm()
             attachedDocumentForm = AttachedDocumentForm()
+            messages.error(request, 'Error al enviar el formulario.')
             return render(request, 'oneStopShopForm.html', {'oneStopShopForm': oneStopShopForm, 'attachedDocumentForm': attachedDocumentForm})
     else:
         oneStopShopForm = OneStopShopForm()
@@ -149,6 +151,7 @@ def oneStopShopFormView(request):
 def updateState(request, following_id):
     # Obtener el objeto Following que deseas actualizar
     following = get_object_or_404(Following, id=following_id)
+    description = request.POST.get('description')
 
     if request.method == 'POST':
         # Obtener el nuevo estado del formulario
@@ -161,8 +164,9 @@ def updateState(request, following_id):
                 # Actualizar el campo currentState del objeto Following
                 following.currentState = new_state
                 # Guardar los cambios en la base de datos
+
                 following.save()
-                state_change = StateChange(following=following, state=new_state)
+                state_change = StateChange(following=following, state=new_state, description=description)
                 state_change.save()
                 messages.success(request, 'Estado actualizado con éxito.')
             except State.DoesNotExist:
@@ -180,3 +184,20 @@ def changeHistory(request, following_id):
     state_changes = StateChange.objects.filter(following=following)
 
     return render(request, 'changeHistory.html', {'following': following, 'state_changes': state_changes})
+
+# Función para guardar comentarios en un objeto Following, "comentario de aprovación"
+def approval_comment(request, following_id):
+    if request.method == 'POST':
+        following = get_object_or_404(Following, pk=following_id)
+        approval_comment_text = request.POST.get('approval_comment', '')
+        following.approvalComments = approval_comment_text
+        following.save()
+    return redirect('fullOneStopShop')
+
+def accounting_comment(request, following_id):
+    if request.method == 'POST':
+        following = get_object_or_404(Following, pk=following_id)
+        accounting_comment_text = request.POST.get('accounting_comment', '')
+        following.accountingComments = accounting_comment_text
+        following.save()
+    return redirect('fullOneStopShop')
