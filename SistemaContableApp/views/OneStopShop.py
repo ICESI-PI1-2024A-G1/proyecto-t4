@@ -5,14 +5,19 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.db.models import Q  
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.contrib.auth.decorators import login_required
+
+from SistemaContableApp.permissions import user_in_group
 
 
+allowed_groups1 = ['Administrador', 'Líder', 'Gestor', 'Ventanilla única','Contable']
+excluded_group1 = 'Solicitante'
 
  
- 
 
 
-
+@login_required(login_url='', redirect_field_name='next')
+@user_in_group(allowed_groups1, excluded_group1)
 def summaryOneStopShopView(request):
 
     """
@@ -85,7 +90,8 @@ def summaryOneStopShopView(request):
     
     return render(request, 'summaryOneStopShop.html', context)
 
-
+@login_required(login_url='', redirect_field_name='next')
+@user_in_group(allowed_groups1, excluded_group1)
 def fullOneStopShopView(request):
 
     """
@@ -104,7 +110,8 @@ def fullOneStopShopView(request):
 
     return render(request, 'fullOneStopShop.html', {'followingData': followingData, 'files': attachedDocuments, 'states': states})
 
-
+@login_required(login_url='', redirect_field_name='next')
+@user_in_group(['Ventanilla única'], excluded_group1)
 def oneStopShopFormView(request):
 
     """
