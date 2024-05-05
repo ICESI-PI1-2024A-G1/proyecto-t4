@@ -182,3 +182,16 @@ tr:hover{
     float: right;
 }
 
+/* Estilos para el botón de editar estados*/
+.estado-btn{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background-image: url('/static/images/editestado.png');
+    background-size: cover;
+    background-position: center;
+    background-color: transparent;
+    border: none;  
+    float: right;
+}
+
