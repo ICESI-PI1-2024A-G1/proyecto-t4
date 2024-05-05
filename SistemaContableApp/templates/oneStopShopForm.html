@@ -8,6 +8,7 @@
         <meta charset="UTF-8">
         <title >Agregar a ventanilla unica</title>
         <link rel="stylesheet" href= "{% static '/styles/oneStopShopFormStyle.css' %}" >
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     </head>
 </html>
 
@@ -16,9 +17,25 @@
     <div class="form-group">
         <p>
             <label for="id_creationDate">Fecha de creación:</label>
-            <input type="text" name="creationDate" required="" id="id_creationDate">
+            <input type="text" name="creationDate" required id="id_creationDate">
         </p>
-
+        
+        <!-- Incluye la biblioteca de jQuery y jQuery UI -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        
+        <!-- Script para inicializar el datepicker -->
+        <script>
+            $(function() {
+                $("#id_creationDate").datepicker({
+                    dateFormat: 'yy-mm-dd', // Formato de fecha
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: '1900:+0' // Rango de años permitidos, desde 1900 hasta el año actual
+                });
+            });
+        </script>
+        
         <p>
             <label for="id_creator">Creador:</label>
             <input type="text" name="creator" maxlength="40" required="" id="id_creator">
@@ -61,12 +78,13 @@
 
         <p>
             <label for="id_amount">Cantidad:</label>
-            <input type="text" name="amount" required="" id="id_amount">
+            <input type="text" name="amount" required pattern="[0-9]*\.?[0-9]+" title="Ingrese solo números">
+
         </p>
 
         <p>
             <label for="id_cenco">CENCO:</label>
-            <input type="text" name="cenco" maxlength="40" required="" id="id_cenco">
+            <input type="text" name="cenco" maxlength="40" required pattern="\d+" title="Ingrese solo números enteros">
         </p>
 
         <p>
@@ -97,7 +115,16 @@
             <label for="id_closeDate">Fecha de cierre:</label>
             <input type="text" name="closeDate" required="" id="id_closeDate">                                           
         </p>
-        <!-- Otros campos del formulario -->
+        <script>
+            $(function() {
+                $("#id_closeDate").datepicker({
+                    dateFormat: 'yy-mm-dd', // Formato de fecha
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: '1900:+0' // Rango de años permitidos, desde 1900 hasta el año actual
+                });
+            });
+        </script>
 
     </div>
     <div class="form-group">

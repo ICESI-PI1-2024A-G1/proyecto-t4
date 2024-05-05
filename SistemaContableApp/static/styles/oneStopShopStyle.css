@@ -117,6 +117,7 @@ tr:hover{
     background-position: center;
     background-color: transparent;
     border: none;  
+    float: right;
 }
 
 .popup {
@@ -180,3 +181,4 @@ tr:hover{
     border: none;  
     float: right;
 }
+
