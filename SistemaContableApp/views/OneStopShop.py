@@ -194,10 +194,38 @@ def approval_comment(request, following_id):
         following.save()
     return redirect('fullOneStopShop')
 
+# Función para guardar comentarios en un objeto Following, "comentario de contabilidad"
 def accounting_comment(request, following_id):
     if request.method == 'POST':
         following = get_object_or_404(Following, pk=following_id)
         accounting_comment_text = request.POST.get('accounting_comment', '')
         following.accountingComments = accounting_comment_text
+        following.save()
+    return redirect('fullOneStopShop')
+
+# Función para editar y guardar el estado de aceptación en un objeto Following
+def acceptance_state(request, following_id):
+    if request.method == 'POST':
+        following = get_object_or_404(Following, pk=following_id)
+        acceptance_state_text = request.POST.get('acceptance_state', '')
+        following.acceptanceState = acceptance_state_text  # Debería ser following.acceptanceState
+        following.save()
+    return redirect('fullOneStopShop')
+
+# Función para editar y guardar el estado de revisión en un objeto Following
+def revision_state(request, following_id):
+    if request.method == 'POST':
+        following = get_object_or_404(Following, pk=following_id)
+        revision_state_text = request.POST.get('revision_state', '')
+        following.revisionState = revision_state_text  # Debería ser following.acceptanceState
+        following.save()
+    return redirect('fullOneStopShop')
+
+# Función para editar y guardar el estado de aprobación en un objeto Following
+def approval_state(request, following_id):
+    if request.method == 'POST':
+        following = get_object_or_404(Following, pk=following_id)
+        approval_state_text = request.POST.get('approval_state', '')
+        following.approvalState = approval_state_text  # Debería ser following.acceptanceState
         following.save()
     return redirect('fullOneStopShop')
