@@ -1,20 +1,22 @@
 {% extends 'layouts/base.html' %}
-
-
 {% block content %}
 {% load static %}
+{% include 'partials/error_modal.html' %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title >Ventanilla unica</title>
         <link rel="stylesheet" href= "{% static '/styles/oneStopShopStyle.css' %}" >
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <link rel="stylesheet" type='text/css' href="{% static '/styles/error_modal.css' %}">
     </head>
 </html>
+  
 
 <body>
     <div class="heading">
-        <h1><span style="font-size: 40px;">Ventanilla unica </span></h1>
+        <h1><span style="font-size: 40px;"> CCSA </span></h1>
     </div>
     <div>
             <div class = "outer-wrapper">
@@ -91,16 +93,16 @@
                                 Fecha de Revision
                             </th>
                             <th>
-                                Estado de aprovacion
+                                Estado de aprobación
                             </th>
                             <th>
-                                Aprobacion
+                                Aprobación
                             </th>
                             <th>
-                                Fecha de aprovacion
+                                Fecha de aprobación
                             </th>
                             <th>
-                                Comentarios de aprovacion
+                                Comentarios de aprobación
                             </th>
                             <th>
                                 Recibido area contable
@@ -122,6 +124,9 @@
                             </th>
                             <th>
                                 Fecha de cierre
+                            </th>
+                            <th>
+                                Historial
                             </th>
                         </tr>
                         {% for following in followingData %}
@@ -157,24 +162,85 @@
                             <td>
                                 {{following.manager}}
                             </td>
-                            <td bgcolor = {{following.currentState.color}}>
-                                {{following.currentState.state}}
-                            </td>
+
+                            <td bgcolor="{{ following.currentState.color }}">
+                                <span id="state_{{ following.id }}">{{ following.currentState.state }}</span>
+                                <button id="edit-btn_{{ following.id }}" class="edit-btn" onclick="openPop('{{ following.id }}')"></button>
+                                                            
+                                <div id="popup_{{ following.id }}" class="popup">
+                                    <div class="popup-content">
+                                        <span class="close" onclick="closePop('{{ following.id }}')">&times;</span>
+                                        <form id="editStateForm_{{ following.id }}" method="post" action="{% url 'update_state' following.id %}">
+                                            {% csrf_token %}
+                                            <div class="form-group row">
+                                                <label for="estadoEdit">Estados:</label>
+                                                <select id="state_{{ following.id }}" name="estadoEdit" required>
+                                                    {% for estado in states %}
+                                                    <option value="{{ estado.state }}" {% if estado.state == following.currentState.state %} selected {% endif %}>{{ estado.state }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="description">Descripción:</label>
+                                                <textarea id="description_{{ following.id }}" name="description" required></textarea>
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Actualizar Estado</button>
+                                        </form>                                        
+                                    </div>
+                                </div>                                
+                            </td> 
+
                             <td>
                                 {{following.acceptor}}
                             </td>
                             <td>
                                 {{following.revisor}}
                             </td>
-                            <td>
-                                {{following.acceptanceState}}
+
+                            <td {{following.acceptanceState}}>
+                                <span id="following_{{ following.id }}">{{ following.acceptanceState }}</span>
+                                <button class="estado-btn" onclick="openCommentModal('{{ following.id }}', 'acceptance')"></button>
+                                
+                                <div id="commentModal_acceptance_{{ following.id }}" class="popup">
+                                    <div class="popup-content">
+                                        <span class="close" onclick="closeCommentModal('{{ following.id }}', 'acceptance')">&times;</span>
+                                        <form id="commentForm_acceptance_{{ following.id }}" method="post" action="{% url 'acceptance_state' following.id %}">
+                                            {% csrf_token %}
+                                            <div class="form-group row">
+                                                <label for="acceptance_state_{{ following.id }}">Comentario para el estado de Aceptación:</label>
+                                                <textarea id="acceptance_state_{{ following.id }}" name="acceptance_state" maxlength="10" required></textarea>                                                
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Guardar comentario</button>
+                                        </form>    
+                                    </div>
+                                </div>
                             </td>
+                            
+                            
                             <td>
                                 {{following.acceptanceDate}}
                             </td>
-                            <td>
-                                {{following.revisionState}}
+
+                            <td {{following.revisionState}}>
+                                <span id="following{{ following.id }}">{{ following.revisionState }}</span>
+                                <button class="estado-btn" onclick="openCommentModal('{{ following.id }}', 'revision')"></button>
+                                
+                                <div id="commentModal_revision_{{ following.id }}" class="popup">
+                                    <div class="popup-content">
+                                        <span class="close" onclick="closeCommentModal('{{ following.id }}', 'revision')">&times;</span>
+                                        <form id="commentForm_revision_{{ following.id }}" method="post" action="{% url 'revision_state' following.id %}">
+                                            {% csrf_token %}
+                                            <div class="form-group row">
+                                                <label for="revision_state_{{ following.id }}">Comentario para el estado de Revisión:</label>
+                                                <textarea id="revision_state_{{ following.id }}" name="revision_state" maxlength="10" required></textarea>                                                
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Guardar comentario</button>
+                                        </form>    
+                                    </div>
+                                </div>
                             </td>
+                            
+
                             <td>
                                 {{following.revision}}
                             </td>
@@ -202,24 +268,77 @@
                             <td>
                                 {{following.revisionDate}}
                             </td>
-                            <td>
-                                {{following.approvalState}}
+
+                            <td {{following.approvalState}}>
+                                <span id="approval_{{ following.id }}">{{ following.approvalState }}</span>
+                                <button class="estado-btn" onclick="openCommentModal('{{ following.id }}', 'approval')"></button>
+                                
+                                <div id="commentModal_approval_{{ following.id }}" class="popup">
+                                    <div class="popup-content">
+                                        <span class="close" onclick="closeCommentModal('{{ following.id }}', 'approval')">&times;</span>
+                                        <form id="commentForm_approval_{{ following.id }}" method="post" action="{% url 'approval_state' following.id %}">
+                                            {% csrf_token %}
+                                            <div class="form-group row">
+                                                <label for="approval_state_{{ following.id }}">Comentario para el estado de Aprobación:</label>
+                                                <textarea id="approval_state_{{ following.id }}" name="approval_state" maxlength="10" required></textarea>                                                
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Guardar comentario</button>
+                                        </form>    
+                                    </div>
+                                </div>
                             </td>
+                            
+                            
                             <td>
                                 {{following.approval}}
                             </td>
                             <td>
                                 {{following.approvalDate}}
+                            </td>     
+
+                            <td {{ following.approvalComments }}>
+                                <span id="following_{{ following.id }}">{{ following.approvalComments }}</span>
+                                <button class="comentar-btn" onclick="openCommentModal('{{ following.id }}', 'approval')"></button>
+                                
+                                <div id="commentModal_approval_{{ following.id }}" class="popup">
+                                    <div class="popup-content">
+                                        <span class="close" onclick="closeCommentModal('{{ following.id }}', 'approval')">&times;</span>
+                                        <form id="commentForm_approval_{{ following.id }}" method="post" action="{% url 'approval_comment' following.id %}">
+                                            {% csrf_token %}
+                                            <div class="form-group row">
+                                                <label for="approval_comment_{{ following.id }}">Comentario de Aprobación:</label>
+                                                <textarea id="approval_comment_{{ following.id }}" name="approval_comment" required></textarea>                                                
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Guardar comentario</button>
+                                        </form>    
+                                    </div>
+                                </div>    
                             </td>
+                            
                             <td>
-                                {{following.approvalComments}}
+                                {{ following.accountingReception }}
                             </td>
-                            <td>
-                                {{following.accountingReception}}
+                            
+                            <td {{ following.accountingComments }}>
+                                <span id="following_accounting_{{ following.id }}">{{ following.accountingComments }}</span>
+                                <button class="comentar-btn" onclick="openCommentModal('{{ following.id }}', 'accounting')"></button>
+                                
+                                <div id="commentModal_accounting_{{ following.id }}" class="popup">
+                                    <div class="popup-content">
+                                        <span class="close" onclick="closeCommentModal('{{ following.id }}', 'accounting')">&times;</span>
+                                        <form id="commentForm_accounting_{{ following.id }}" method="post" action="{% url 'accounting_comment' following.id %}">
+                                            {% csrf_token %}
+                                            <div class="form-group row">
+                                                <label for="accounting_comment_{{ following.id }}">Comentario de Contabilidad:</label>
+                                                <textarea id="accounting_comment_{{ following.id }}" name="accounting_comment" required></textarea>                                                
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Guardar comentario</button>
+                                        </form>    
+                                    </div>
+                                </div>    
                             </td>
-                            <td>
-                                {{following.accountingComments}}
-                            </td>
+                            
+
                             <td>
                                 {{following.accountingDate}}
                             </td>
@@ -235,12 +354,20 @@
                             <td>
                                 {{following.closeDate}}
                             </td>
+                            <td>
+                                <button class="button-with-icon" onclick="showHistory('{{ following.pk }}')"></button>                    
+                            </td>                                                    
                         </tr>
                         {% endfor %}
                     </table>
                 </div>
             </div>
     </div>
+    
+    <script src="{% static '/js/popup.js' %}"></script>
+    <script src="{% static '/js/showHistory.js' %}"></script>
+    <script src="{% static '/js/toggleCommentForm.js' %}"></script>
+
 </body>
 {% endblock %}
 

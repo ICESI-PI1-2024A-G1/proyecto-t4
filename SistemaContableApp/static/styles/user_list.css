@@ -1,0 +1,74 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+main {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px; 
+}
+
+
+h1 {
+    text-align: center; 
+}
+
+.user-list {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%; 
+}
+
+
+.user-list table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.user-list th, .user-list td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.user-list th {
+    background-color:  #008CBA;
+}
+
+.user-list tr:nth-child(even) {
+    background-color: rgba(166, 210, 252, 0.5);
+}
+
+.user-list tr:hover {
+    background-color: #e6fbfd;
+}
+
+/* Estilos para los botones */
+.user-list .btn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.user-list .btn-edit {
+    background-color: #008CBA;
+}
+
+.user-list .btn-delete {
+    background-color: #f44336;
+}
+

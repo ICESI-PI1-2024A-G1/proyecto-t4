@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, Permission, Group
+from django.contrib.contenttypes.models import ContentType
+from django.utils import timezone
 
 class Charge_account(models.Model):
     """
@@ -236,6 +239,8 @@ class State(models.Model):
     
     state = models.CharField(max_length = 30,choices = ESTADOS, primary_key = True)
     color = models.CharField(max_length = 10,choices = COLORES)
+    state_history = models.ManyToManyField('State', through='StateChange', related_name='following_state_history')
+
 
     def __str__(self):
         return self.state
@@ -280,10 +285,26 @@ class Following(models.Model):
     currentState = models.ForeignKey(State, on_delete = models.PROTECT)
     closeDate = models.DateField()
 
+    state_history = models.ManyToManyField(State, through='StateChange', related_name='followings')
+
+
     def __str__(self):
         return self.type + ' - ' + self.cenco
 
+class StateChange(models.Model):
+    """
+    Model representing the history of state changes for a following.
+    """
+    following = models.ForeignKey(Following, on_delete=models.CASCADE)
+    state = models.ForeignKey(State, on_delete=models.CASCADE)
+    date_changed = models.DateTimeField(default=timezone.now)
+    description = models.TextField(blank=True) 
+    
 
+
+    def __str__(self):
+        return f"{self.following} - {self.state} - {self.date_changed} - {self.description}"
+    
 class AttachedDocument(models.Model):
 
     """
@@ -295,3 +316,119 @@ class AttachedDocument(models.Model):
     
     def __str__(self):
         return self.file.name
+
+
+class Rol(models.Model):
+    """"
+    Model definition for Rol
+    """
+    id= models.AutoField(primary_key= True)
+    rol= models.CharField('Rol', max_length=50, unique= True)
+    
+    class Meta:
+        """"
+        Meta definition for Rol
+        """
+        verbose_name= 'Rol'
+        verbose_name_plural= 'Rols'
+        
+    def _str_(self):
+        """"
+        Unicode representation of Rol
+        """
+        return f'{self.rol.rol}'
+    
+    
+    def save(self, *args, **kwargs):
+        default_permissions= ['add', 'change', 'delete', 'views']
+        
+        if not self.id: 
+            new_group, creado= Group.objects.get_or_create(name= f'{self.rol}')
+            for permission_temp in default_permissions:
+                permission, created= Permission.objects.update_or_create(
+                    name = f'Can {permission_temp} {self.rol}', 
+                    content_type= ContentType.objects.get_for_model(Rol),
+                    codename= f'{permission_temp}_{self.rol}'
+                )
+                if new_group:
+                    new_group.permissions.add(permission.id)
+            
+            super().save(*args, **kwargs)
+            
+        else:
+            ancient_role= Rol.objects.filter(id = self.id).values('rol').first()
+            if ancient_role['rol'] == self.rol:
+                super().save(*args, **kwargs)
+            else:
+                Group.objects.filter(name = ancient_role['rol']).update(name= f'{self.rol}')
+                for permission_temp in default_permissions:
+                    Permission.objects.filter(codename = f"{permission_temp}_{ancient_role['rol']}").update(
+                        codename= f'{permission_temp}_{self.rol}',
+                        name= f'Can {permission_temp} {self.rol}'
+                    )
+                super().save(*args, **kwargs)
+   
+class UserManager(BaseUserManager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
+
+    def _create_user(self, username, email, name, password, is_staff, is_superuser, **extra_fields):
+        user = self.model(
+            username=username,
+            email=email,
+            name=name,
+            is_staff=is_staff,
+            is_superuser=is_superuser,
+            **extra_fields
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, username, email, name, password=None, **extra_fields):
+        return self._create_user(username, email, name, password, False, False, **extra_fields)
+
+    def create_superuser(self, username, email, name, password=None, **extra_fields):
+        return self._create_user(username, email, name, password, True, True, **extra_fields) 
+       
+class User(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField('Nombre de usuario', unique=True, max_length=100)
+    email = models.EmailField('Correo Electrónico', unique=True, max_length=254)
+    name = models.CharField('Nombre', max_length=200, blank=True, null=True)
+    last_name = models.CharField('Apellidos', max_length=200, blank=True, null=True)
+    rol= models.ForeignKey(Rol, on_delete=models.PROTECT, blank= True, null=True)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email', 'name']
+
+    objects = UserManager()
+
+    def __str__(self):
+        return f'{self.name}, {self.last_name}'
+    
+    def save(self, *args,**kwargs):
+        if not self.id:
+            super().save(*args,**kwargs)
+            if self.rol is not None:
+                group= Group.objects.filter(name= self.rol.rol).first()
+                if group:
+                    self.groups.add(group)
+                super().save(*args,**kwargs)
+        else:
+            if self.rol is not None:
+                ancient_group= User.objects.filter(id= self.id).values('rol__rol').first()
+                if ancient_group['rol__rol'] == self.rol.rol:
+                    super().save(*args,**kwargs)
+                else:
+                    previous_group= Group.objects.filter(name= ancient_group['rol__rol']).first()
+                    if previous_group:
+                        self.groups.remove(previous_group)  
+                    new_group= Group.objects.filter(name = self.rol.rol).first()
+                    if new_group:
+                        self.groups.add(new_group)
+                    super().save(*args,**kwargs) 
+                
+            
+    

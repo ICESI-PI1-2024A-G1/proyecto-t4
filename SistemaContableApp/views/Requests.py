@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from django.conf import settings 
 from SistemaContableApp.models import  *
 from SistemaContableApp.forms import * 
@@ -6,13 +7,27 @@ from django.core.mail import  EmailMessage
 from django.contrib import messages
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment, Border, Side, PatternFill
+from django.contrib.auth.decorators import login_required
+from SistemaContableApp.permissions import user_in_group
 
 
 
 email = "pinedapablo6718@gmail.com"
 email2 = "daniela32156@hotmail.com"
 
-    
+def isLateRequest(request_date):
+    today = date.today()
+    if request_date.day > 20 and request_date.month == today.month:
+        return True
+    return False
+
+
+
+allowed_groups1 = ['Administrador', 'Líder', 'Gestor','Solicitante']
+excluded_group1 = 'Contable'
+
+@login_required(login_url='', redirect_field_name='next')
+@user_in_group(allowed_groups1, excluded_group1)
 def createChargeAccountForm(request):
     """
     View function to create a charge account form.
@@ -29,6 +44,12 @@ def createChargeAccountForm(request):
         if form.is_valid():
             chargeAccount = form.save()
             sendChargeAccountFormAsExcel(request, chargeAccount)
+            
+            request_date = datetime.now()
+            
+            if isLateRequest(request_date):
+                messages.success(request, 'Su solicitud se ha programado para el siguiente mes, ya que se recibió después del día 20 del mes.')
+                
             return redirect('viewChargeAccountForm')
     else:
         form = ChargeAccountForm()
@@ -36,7 +57,8 @@ def createChargeAccountForm(request):
     return render(request, 'chargeAccountForm.html', {'form': form})
 
 
-
+@login_required(login_url='', redirect_field_name='next')
+@user_in_group(allowed_groups1, excluded_group1)
 def createRequisitionForm(request):
     """
     View function to create a requisition form.
@@ -53,6 +75,12 @@ def createRequisitionForm(request):
         if form.is_valid():
             requisition = form.save()
             sendRequisitionFormAsExcel(request, requisition)
+            
+            request_date = datetime.now()
+            
+            if isLateRequest(request_date):
+                messages.success(request, 'Su solicitud se ha programado para el siguiente mes, ya que se recibió después del día 20 del mes.')
+                
             return redirect('viewRequisitionForm')
     else:
         form = RequisitionForm()
@@ -60,6 +88,8 @@ def createRequisitionForm(request):
     return render(request, 'requisitionForm.html', {'form': form})
 
 
+@login_required(login_url='', redirect_field_name='next')  
+@user_in_group(allowed_groups1, excluded_group1) 
 def createExteriorPaymentForm(request):
     """
     View function to create an exterior payment form.
@@ -76,6 +106,13 @@ def createExteriorPaymentForm(request):
         if form.is_valid():
             exteriorPayment = form.save()
             sendExteriorPaymentFormAsExcel(request, exteriorPayment)
+            
+            request_date = datetime.now()
+            
+            if isLateRequest(request_date):
+                messages.success(request, 'Su solicitud se ha programado para el siguiente mes, ya que se recibió después del día 20 del mes.')
+                
+            
             return redirect('viewExteriorPaymentForm')
     else:
         form = ExteriorPaymentForm()
@@ -83,7 +120,8 @@ def createExteriorPaymentForm(request):
     return render(request, 'exteriorPaymentForm.html', {'form': form})
 
 
-
+@login_required(login_url='', redirect_field_name='next')  
+@user_in_group(allowed_groups1, excluded_group1) 
 def createLegalizationForm(request):
     """
     View function to create a legalization form.
@@ -114,6 +152,12 @@ def createLegalizationForm(request):
 
             # Enviar el archivo Excel al correo
             sendLegalizationFormAsExcel(request, solicitation)
+            
+            request_date = datetime.now()
+            
+            if isLateRequest(request_date):
+                messages.success(request, 'Su solicitud se ha programado para el siguiente mes, ya que se recibió después del día 20 del mes.')
+                
 
             return redirect('viewLegalizationForm')
     else:
@@ -126,6 +170,8 @@ def createLegalizationForm(request):
     })
     
 
+@login_required(login_url='', redirect_field_name='next')  
+@user_in_group(allowed_groups1, excluded_group1) 
 def createAdvancePaymentForm(request):
     """
     View function to create an advance payment form.
@@ -156,6 +202,13 @@ def createAdvancePaymentForm(request):
 
             # Enviar el archivo Excel al correo
             sendAdvancePaymentFormAsExcel(request, solicitation)
+            
+            
+            request_date = datetime.now()
+            
+            if isLateRequest(request_date):
+                messages.success(request, 'Su solicitud se ha programado para el siguiente mes, ya que se recibió después del día 20 del mes.')
+                
 
             return redirect('viewAdvancePaymentForm')
     else:

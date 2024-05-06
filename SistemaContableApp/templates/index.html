@@ -1,10 +1,17 @@
-//{% extends 'layouts/base.html' %}
-
-
+{% extends 'layouts/base.html' %}
+{% load static %}
 {% block content %}
-<main class="container">
-<h1>{{title}} <span style="font-size: 40px;">🙌</span></h1>
-<p>Por favor, haz clic en la ventana titulada "🖹Solicitud" para hacer  el proceso de creación de la solicitud. Una vez que hayas hecho clic en la ventana adecuada, podrás proceder con la creación de la solicitud. Si necesitas ayuda adicional, no dudes en preguntar.</p> 
-</main>
+{% include 'partials/error_modal.html' %}
+<html>
+    <head>
+        <link rel="stylesheet" type='text/css' href="{% static '/styles/error_modal.css' %}">
+    </head>
+    <body>
+    <main class="container">
+        <h1>{{title}} <span style="font-size: 40px;">🙌</span></h1>
+        <p>Por favor, haz clic en la ventana titulada "🖹Solicitud" para hacer  el proceso de creación de la solicitud. Una vez que hayas hecho clic en la ventana adecuada, podrás proceder con la creación de la solicitud. Si necesitas ayuda adicional, no dudes en preguntar.</p> 
+    </main>
+    </body>
+</html>
 
 {% endblock %}

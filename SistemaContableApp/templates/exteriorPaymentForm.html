@@ -3,12 +3,14 @@
 {% load my_filters %}
 {% block content %}
 {% include 'partials/messages.html' %}
+{% include 'partials/error_modal.html' %}
 <!DOCTYPE html>
 <html>
 
 <head>
   <link rel='stylesheet' type='text/css' href="{% static '/styles/exteriorPaymentForm.css' %}">
   <link rel="stylesheet" type='text/css' href="{% static '/styles/messages.css' %}">
+  <link rel="stylesheet" type='text/css' href="{% static '/styles/error_modal.css' %}">
 </head>
 
 <body>

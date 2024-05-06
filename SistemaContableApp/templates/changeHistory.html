@@ -1,0 +1,41 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+{% load static %}
+{% include 'partials/error_modal.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title >Historial</title>
+    <link rel="stylesheet" href="{% static 'styles/oneStopShopStyle.css' %}">
+    <link rel="stylesheet" type='text/css' href="{% static '/styles/error_modal.css' %}">
+</head>
+
+<body>
+    <h1>Historial de Estado para {{ following.id }}</h1>
+    <table>
+        <thead>
+            <tr>                
+                <th>Estado</th>
+                <th>Fecha de Cambio</th>
+                <th>Descripción del Cambio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for state_change in state_changes %}
+            <tr>
+                <td>{{ state_change.state }}</td>                
+                <td>{{ state_change.date_changed }}</td>
+                <td>{{ state_change.description }}</td>  
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No hay cambios de estado registrados para este seguimiento.</td>
+            </tr>
+            {% endfor %}            
+        </tbody>
+    </table>
+</body>
+</html>
+{% endblock %}

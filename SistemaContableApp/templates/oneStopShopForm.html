@@ -1,26 +1,141 @@
 {% extends 'layouts/base.html' %}
+{% load static %}
 
 {% block content %}  
-{% load static %}
+{% include 'partials/error_modal.html' %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title >Agregar a ventanilla unica</title>
         <link rel="stylesheet" href= "{% static '/styles/oneStopShopFormStyle.css' %}" >
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     </head>
 </html>
-
 
 <form method="post" enctype="multipart/form-data" class="following-form">
     {% csrf_token %}
     <div class="form-group">
-        {{ oneStopShopForm.as_p }}
+        <p>
+            <label for="id_creationDate">Fecha de creación:</label>
+            <input type="text" name="creationDate" required id="id_creationDate">
+        </p>
+        
+        <!-- Incluye la biblioteca de jQuery y jQuery UI -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        
+        <!-- Script para inicializar el datepicker -->
+        <script>
+            $(function() {
+                $("#id_creationDate").datepicker({
+                    dateFormat: 'yy-mm-dd', // Formato de fecha
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: '1900:+0' // Rango de años permitidos, desde 1900 hasta el año actual
+                });
+            });
+        </script>
+        
+        <p>
+            <label for="id_creator">Creador:</label>
+            <input type="text" name="creator" maxlength="40" required="" id="id_creator">
+        </p>
+
+        <p> 
+            <label for="id_type">Tipo:</label>
+            <input type="text" name="type" maxlength="40" required="" id="id_type">
+        </p>
+
+        <p>
+            <label for="id_supplier">Proveedor:</label> 
+            <input type="text" name="supplier" maxlength="40" required="" id="id_supplier">
+        </p>
+
+        <p>
+            <label for = "id_supplierId">ID del proveedor:</label>
+            <input type="text" name="supplierId" maxlength="40" required="" id="id_supplierId">
+        </p>
+
+        <p>
+            <label for="id_documentNumber">Número de documento:</label>
+            <input type="text" name="documentNumber" maxlength="40" required="" id="id_documentNumber">
+        </p>
+
+        <p>
+            <label for="id_concept">Concepto:</label>
+            <input type="text" name="concept" maxlength="40" required="" id="id_concept">
+        </p>
+
+        <p>
+            <label for="id_supplierEmail">Email:</label>
+            <input type="email" name="supplierEmail" maxlength="40" required="" id="id_supplierEmail">
+        </p>
+
+        <p>
+            <label for="id_moneyType">Tipo de moneda:</label>
+            <input type="text" name="moneyType" maxlength="40" required="" id="id_moneyType">
+        </p>
+
+        <p>
+            <label for="id_amount">Cantidad:</label>
+            <input type="text" name="amount" required pattern="[0-9]*\.?[0-9]+" title="Ingrese solo números">
+
+        </p>
+
+        <p>
+            <label for="id_cenco">CENCO:</label>
+            <input type="text" name="cenco" maxlength="40" required pattern="\d+" title="Ingrese solo números enteros">
+        </p>
+
+        <p>
+            <label for="id_cexNumber">CexNúmero</label>
+            <input type="text" name="cexNumber" maxlength="40" required="" id="id_cexNumber">
+        </p>
+
+        <p>
+            <label for="id_observations">Observaciones:</label>
+            <input type="text" name="observations" maxlength="40" required="" id="id_observations">
+        </p>
+
+        <p>
+            <label for="id_currentState">Estado:</label>
+            <select name="currentState" required="" id="id_currentState">
+            <option value="" selected="">---------</option>
+            
+            <option value="pendiente de aceptación">Pendiente de aceptación</option>            
+            <option value="en revisión">En revisión</option>            
+            <option value="revisado">Revisado</option>            
+            <option value="aprobado">Aprobado</option>
+            <option value="aceptado">Aceptado</option>            
+            <option value="Rechazado por contabilidad">Rechazado por contabilidad</option>            
+            </select>                        
+        </p>
+
+        <p>
+            <label for="id_closeDate">Fecha de cierre:</label>
+            <input type="text" name="closeDate" required="" id="id_closeDate">                                           
+        </p>
+        <script>
+            $(function() {
+                $("#id_closeDate").datepicker({
+                    dateFormat: 'yy-mm-dd', // Formato de fecha
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: '1900:+0' // Rango de años permitidos, desde 1900 hasta el año actual
+                });
+            });
+        </script>
+
     </div>
     <div class="form-group">
-        {{ attachedDocumentForm.as_p }}
+        <p>
+            <label for="id_file">Archivo:</label>
+            <input type="file" name="file" required="" id="id_file">
+        </p>
     </div>
     <button type="submit" class="btn btn-primary">Guardar</button>
 </form>
+
 
 {% endblock %}

@@ -2,6 +2,7 @@ from django import forms
 from ftplib import MAXLINE
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.http import HttpResponseForbidden
 from .models import *
 from django.forms import inlineformset_factory
 from django.forms import BaseInlineFormSet
@@ -17,7 +18,7 @@ class DateInput(forms.DateInput):
     
     input_type = 'date'    
 
-
+     
 class ChargeAccountForm(forms.ModelForm):
     """
     Form to create a charge account request.
@@ -315,17 +316,23 @@ TravelAdvanceExpenseFormSet = inlineformset_factory(
 class AdvanceExpenseInlineFormSet(BaseInlineFormSet):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fk = AdvanceExpense._meta.get_field('solicitation')
-
-
-
+        self.fk = AdvanceExpense._meta.get_field('solicitation')    
+     
+     
+     
+     
+     
+     
+     
+     
+              
 
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget= forms.PasswordInput)
 
 class CustomUserCreationForm(UserCreationForm):
-    first_name = forms.CharField(label = "Nombre",max_length=30, required=True)
+    name = forms.CharField(label = "Nombre",max_length=30, required=True)
     last_name = forms.CharField(label ="Apellidos",max_length=30, required=True)
     email = forms.EmailField(label = "Correo Electrónico",max_length=254, help_text='Required. Inform a valid email address.')
     password1 = forms.CharField(label="Contraseña", strip=False, widget=forms.PasswordInput)
@@ -333,7 +340,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email', 'password1', 'password2', )
+        fields = ('name', 'last_name', 'email', 'password1', 'password2', 'rol')
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -341,6 +348,17 @@ class CustomUserCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField(required=True)
+    name = forms.CharField(max_length=200)
+    last_name = forms.CharField(max_length=200)
+    rol = forms.ModelChoiceField(queryset=Rol.objects.all(), required=False)
+
+    class Meta:
+        model = User
+        fields = ['email', 'name', 'last_name', 'rol']
 
 
 
@@ -376,6 +394,7 @@ class OneStopShopForm(forms.ModelForm):
                   "observations",
                   "currentState",
                   "closeDate"]
+        
 
 class AttachedDocumentForm(forms.ModelForm):    
     
