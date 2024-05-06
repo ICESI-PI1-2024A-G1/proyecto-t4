@@ -186,6 +186,7 @@ def changeHistory(request, following_id):
     return render(request, 'changeHistory.html', {'following': following, 'state_changes': state_changes})
 
 # Función para guardar comentarios en un objeto Following, "comentario de aprovación"
+@user_in_group(['Administrador', 'Gestor'], excluded_group1)
 def approval_comment(request, following_id):
     if request.method == 'POST':
         following = get_object_or_404(Following, pk=following_id)
@@ -195,6 +196,7 @@ def approval_comment(request, following_id):
     return redirect('fullOneStopShop')
 
 # Función para guardar comentarios en un objeto Following, "comentario de contabilidad"
+@user_in_group(['Administrador', 'Gestor','Contable'], excluded_group1)
 def accounting_comment(request, following_id):
     if request.method == 'POST':
         following = get_object_or_404(Following, pk=following_id)
@@ -204,6 +206,7 @@ def accounting_comment(request, following_id):
     return redirect('fullOneStopShop')
 
 # Función para editar y guardar el estado de aceptación en un objeto Following
+@user_in_group(['Administrador', 'Gestor'], excluded_group1)
 def acceptance_state(request, following_id):
     if request.method == 'POST':
         following = get_object_or_404(Following, pk=following_id)
@@ -213,6 +216,7 @@ def acceptance_state(request, following_id):
     return redirect('fullOneStopShop')
 
 # Función para editar y guardar el estado de revisión en un objeto Following
+@user_in_group(['Administrador', 'Gestor'], excluded_group1)
 def revision_state(request, following_id):
     if request.method == 'POST':
         following = get_object_or_404(Following, pk=following_id)
@@ -222,6 +226,7 @@ def revision_state(request, following_id):
     return redirect('fullOneStopShop')
 
 # Función para editar y guardar el estado de aprobación en un objeto Following
+@user_in_group(['Administrador', 'Gestor'], excluded_group1)
 def approval_state(request, following_id):
     if request.method == 'POST':
         following = get_object_or_404(Following, pk=following_id)
