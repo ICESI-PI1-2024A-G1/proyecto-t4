@@ -28,3 +28,11 @@ def edit_user(request, user_id):
         form = UserUpdateForm(instance=user)
     return render(request, 'update_user.html', {'form': form})
 
+@login_required(login_url='', redirect_field_name='next')
+@user_in_group(allowed_groups1, excluded_group1)
+def delete_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    if request.method == 'POST':
+        user.delete()
+        return redirect('user_list')
+    return render(request, 'confirm_delete_user.html', {'user': user})

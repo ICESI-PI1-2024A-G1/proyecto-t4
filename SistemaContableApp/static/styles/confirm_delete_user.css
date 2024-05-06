@@ -1,0 +1,60 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+p {
+    color: #555;
+}
+
+form {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+button[type="submit"],
+a {
+    margin: 0 10px;
+    vertical-align: middle;
+}
+
+button[type="submit"] {
+    background-color: #4e8fff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #3380ff;
+}
+
+a {
+    color: #4e8fff;
+    text-decoration: none;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 10px; /* Ajusta el margen superior para alinear con el texto del botón eliminar */
+}
+
+a:hover {
+    text-decoration: underline;
+}

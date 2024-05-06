@@ -33,7 +33,7 @@
                 <td>{{ user.rol.rol }}</td>
                 <td>
                     <a href="{% url 'edit_user' user.id %}" class="btn btn-edit">Editar</a>
-                    <a href="#" class="btn btn-delete">Eliminar</a>
+                    <a href="{% url 'delete_user' user.id %}" class="btn btn-delete">Eliminar</a>
                 </td>
                 </tr>
             {% endfor %}
