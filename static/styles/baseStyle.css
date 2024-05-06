@@ -1,0 +1,48 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid{
+    display: flex;
+    background: #ffffff;
+    box-shadow: 0px 2px 0px rgba(166, 210, 252, 0.5);
+}
+
+.navbar-brand{
+    color:black;
+    font-weight: 500;
+    font-size: 30px;
+    cursor: default;
+}
+
+body {
+    padding-top: 56px; 
+  }
+
+.profile-details{
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+}
+
+.profile-details .profile-content{
+    display: flex;
+    align-items: center;
+
+    margin: 20;
+}
+
+.profile-details .nav-item{
+    margin-left: 120;
+}
+
+.profile-details .profile_name{
+    color: black;
+    font-size: 18px;
+    font-weight: 500;
+    
+}

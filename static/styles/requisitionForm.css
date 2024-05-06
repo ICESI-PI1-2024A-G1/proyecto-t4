@@ -1,0 +1,220 @@
+.requisition-form {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.requisition-form .div {
+    background-color: #ffffff;
+    width: 1280px;
+    height: 1024px;
+    position: relative;
+}
+
+.requisition-form .title {
+    position: absolute;
+    width: 1280px;
+    height: 57px;
+    top: 51px;
+    left: 0;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 25px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.requisition-form .field-date {
+    top: 152px;
+    left: 287px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.requisition-form .text-fields {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.requisition-form .boxes {
+    position: relative;
+    width: 300px;
+    height: 30px;
+    background-color: #e2edfa;
+}
+
+.requisition-form .field-beneficiary {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 221px;
+    left: 287px;
+}
+
+.requisition-form .field-id {
+    top: 290px;
+    left: 287px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.requisition-form .field-charge {
+    top: 359px;
+    left: 287px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.requisition-form .field-dependency {
+    top: 427px;
+    left: 287px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.requisition-form .field-cenco {
+    top: 497px;
+    left: 287px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.requisition-form .field-value {
+    top: 566px;
+    left: 287px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.requisition-form .field-concept {
+    top: 635px;
+    left: 287px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.requisition-form .field-description {
+    top: 152px;
+    left: 692px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.requisition-form .box-descripcion {
+    height: 90px;
+    position: relative;
+    width: 300px;
+    background-color: #e2edfa;
+}
+
+.requisition-form .field-radicate {
+    top: 290px;
+    left: 692px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.requisition-form .field-payment-code {
+    top: 359px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    left: 692px;
+}
+
+.requisition-form .field-payment-method {
+    top: 428px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    left: 692px;
+}
+
+.requisition-form .field-account-type {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 497px;
+    left: 692px;
+}
+
+.requisition-form .field-account {
+    top: 566px;
+    left: 692px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.requisition-form .field-author-name {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 635px;
+    left: 692px;
+}
+
+.requisition-form .button-enviar {
+    display: flex;
+    width: 250px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 8px 16px;
+    position: relative;
+    top: 735px;
+    left: 515px;
+    background-color: #0059a1;
+    font-weight: bold;
+}
