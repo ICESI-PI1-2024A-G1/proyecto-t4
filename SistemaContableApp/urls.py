@@ -25,6 +25,13 @@ urlpatterns = [
     path('users/', views.user_list, name='user_list'),
     path('users/<int:user_id>/edit/', views.edit_user, name='edit_user'),
     path('users/<int:user_id>/delete/', views.delete_user, name='delete_user'),
+    path('approval_comment/<int:following_id>/', views.approval_comment, name='approval_comment'),
+    path('accounting_comment/<int:following_id>/', views.accounting_comment, name='accounting_comment'),
+    path('acceptance_state/<int:following_id>/', views.acceptance_state, name='acceptance_state'),
+    path('revision_state/<int:following_id>/', views.revision_state, name='revision_state'),
+    path('approval_state/<int:following_id>/', views.approval_state, name='approval_state'),
+    
+
 ]
 
 urlpatterns += [ 

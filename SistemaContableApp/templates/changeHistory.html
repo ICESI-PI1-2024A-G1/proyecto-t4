@@ -19,6 +19,7 @@
             <tr>                
                 <th>Estado</th>
                 <th>Fecha de Cambio</th>
+                <th>Descripción del Cambio</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
             <tr>
                 <td>{{ state_change.state }}</td>                
                 <td>{{ state_change.date_changed }}</td>
+                <td>{{ state_change.description }}</td>  
             </tr>
             {% empty %}
             <tr>
