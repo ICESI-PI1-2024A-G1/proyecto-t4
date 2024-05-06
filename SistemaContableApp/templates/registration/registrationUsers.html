@@ -16,9 +16,9 @@
     <form method="post">
         {% csrf_token %}
         <div class="input-box">
-            {{ form.first_name.label_tag }}{{ form.first_name }}
-            {% if form.first_name.errors %}
-                <div class="error">{{ form.first_name.errors.as_text }}</div>
+            {{ form.name.label_tag }}{{ form.name }}
+            {% if form.name.errors %}
+                <div class="error">{{ form.name.errors.as_text }}</div>
             {% endif %}
         </div>
 
@@ -33,6 +33,13 @@
             {{ form.email.label_tag }}{{ form.email }}
             {% if form.email.errors %}
                 <div class="error">{{ form.email.errors.as_text }}</div>
+            {% endif %}
+        </div>
+
+        <div class="input-box">
+            {{ form.rol.label_tag }}{{ form.rol }}
+            {% if form.rol.errors %}
+                <div class="error">{{ form.rol.errors.as_text }}</div>
             {% endif %}
         </div>
 

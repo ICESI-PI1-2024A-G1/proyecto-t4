@@ -81,3 +81,59 @@ The objective of these tests is to verify that the forms of the application func
 | FormTestCase| testAttachedDocumentInvalidForm| - | Verify that the AttachedDocumentForm form is invalid when provided with incorrect file data.                |
 
                                                                                                                                                                                                
+## Scenario Configuration
+
+### ModifyStateTestCase
+| Name                          | Class                | Stage                                                                                                                                                                                                          |
+|-------------------------------|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| setUp                         | ModifyStateTestCase  | Crea un usuario de prueba, inicia sesión y crea instancias de State y Following para ser utilizadas en las pruebas.                                                                          |
+| test_update_state_view        | ModifyStateTestCase  | Prueba la actualización del estado de un Following.<br>1. Crea un nuevo estado.<br>2. Obtiene la URL para la vista `update_state` con el ID del Following.<br>3. Envía una solicitud POST a la vista con el nuevo estado.<br>4. Verifica que la vista redirija correctamente después de la actualización.<br>5. Actualiza el estado del Following en la base de datos.<br>6. Verifica que el estado se actualizó correctamente.                                                                                    |
+| test_update_state_view_invalid_state | ModifyStateTestCase  | Prueba la actualización del estado de un Following con un estado inválido.<br>1. Obtiene la URL para la vista `update_state` con el ID del Following.<br>2. Envía una solicitud POST a la vista con un estado inválido.<br>3. Verifica que la vista redirija a la página correcta.<br>4. Verifica que el estado del Following no ha cambiado. |
+
+### Propósito de las pruebas
+
+El propósito de estas pruebas es verificar que la función de actualización del estado de un Following funciona correctamente. La primera prueba (`test_update_state_view`) verifica que el estado se actualiza correctamente cuando se proporciona un estado válido. La segunda prueba (`test_update_state_view_invalid_state`) verifica que el estado no se actualiza cuando se proporciona un estado inválido.
+
+### Casos de prueba
+
+| Clase                | Método                               | Etapa                                                                                                                                                                                                          | Valores de entrada                                                                | Resultado esperado                                                                                                                                        |
+|-----------------------|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ModifyStateTestCase   | setUp                                | Crea un usuario de prueba, inicia sesión y crea instancias de State y Following para ser utilizadas en las pruebas.                                                                                        | -                                                                                  | Se espera que se cree un usuario de prueba, se inicie sesión y se creen instancias de State y Following.                                               |
+| ModifyStateTestCase   | test_update_state_view               | Prueba la actualización del estado de un Following con un estado válido.                                                                                                                                     | Nuevo estado: "Nuevo Estado", color: "blue"                                      | Se espera que la vista redirija correctamente después de la actualización y que el estado del Following se actualice al nuevo estado proporcionado.   |
+| ModifyStateTestCase   | test_update_state_view_invalid_state | Prueba la actualización del estado de un Following con un estado inválido.                                                                                                                                  | Estado inválido: "Estado Inválido"                                                | Se espera que la vista redirija a la página correcta y que el estado del Following no cambie.                                                         |
+
+## Scenario Configuration
+### HistoryStateTestCase
+
+### Configuración
+
+| Nombre | Clase | Etapa |
+|--------|-------|-------|
+| setUp | HistoryStateTestCase | - Crea un usuario de prueba con nombre de usuario 'testuser' y contraseña 'password123'.<br>- Inicia sesión con el usuario de prueba.<br>- Crea dos estados: 'Pendiente de aceptación' (color gris) y 'En revisión' (color naranja).<br>- Crea un objeto Following con datos específicos, incluyendo el estado inicial 'Pendiente de aceptación'. |
+
+### Casos de Prueba
+
+| Método | Etapa | Entrada | Resultado Esperado |
+|--------|-------|---------|---------------------|
+| test_initial_state | Verifica el estado inicial | - | El estado inicial del objeto Following debe ser 'Pendiente de aceptación'. |
+| test_state_change | Verifica el cambio de estado | - | El estado del objeto Following debe cambiar correctamente a 'En revisión'. |
+
+### Detalles del Caso de Prueba
+
+#### test_initial_state
+
+- **Objetivo:** Verificar que el estado inicial del objeto `Following` sea `'Pendiente de aceptación'`.
+- **Pasos:**
+  1. Se compara el `currentState` del objeto `Following` con el estado `'Pendiente de aceptación'`.
+- **Resultado esperado:** El estado inicial del objeto `Following` debe ser `'Pendiente de aceptación'`.
+
+#### test_state_change
+
+- **Objetivo:** Verificar que el estado del objeto `Following` cambia correctamente de `'Pendiente de aceptación'` a `'En revisión'`.
+- **Pasos:**
+  1. Se cambia el `currentState` del objeto `Following` al estado `'En revisión'`.
+  2. Se guarda el objeto `Following` actualizado.
+  3. Se compara el `currentState` del objeto `Following` con el estado `'En revisión'`.
+- **Resultado esperado:** El estado del objeto `Following` debe cambiar correctamente a `'En revisión'`.
+
+Estos casos de prueba ayudan a garantizar que el flujo de cambio de estado de un objeto `Following` funciona correctamente en el sistema contable.
