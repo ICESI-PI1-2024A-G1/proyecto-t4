@@ -1,0 +1,45 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title >Lista usuarios</title>
+    <link rel='stylesheet' type='text/css' href="{% static '/styles/user_list.css' %}"> 
+</head>
+<body>
+    <main class="container">
+        <h1>Lista de usuarios</h1>
+        <table class="user-list">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo Electrónico</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.rol.rol }}</td>
+                <td>
+                    <a href="{% url 'edit_user' user.id %}" class="btn btn-edit">Editar</a>
+                    <a href="#" class="btn btn-delete">Eliminar</a>
+                </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
+{% endblock %}

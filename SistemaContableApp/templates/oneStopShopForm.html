@@ -2,12 +2,14 @@
 
 {% block content %}  
 {% load static %}
+{% include 'partials/error_modal.html' %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title >Agregar a ventanilla unica</title>
         <link rel="stylesheet" href= "{% static '/styles/oneStopShopFormStyle.css' %}" >
+        <link rel="stylesheet" type='text/css' href="{% static '/styles/error_modal.css' %}">
     </head>
 </html>
 

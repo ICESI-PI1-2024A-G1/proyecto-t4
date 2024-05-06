@@ -231,7 +231,7 @@ class Rol(models.Model):
         """"
         Unicode representation of Rol
         """
-        return f'{self.rol}'
+        return f'{self.rol.rol}'
     
     
     def save(self, *args, **kwargs):

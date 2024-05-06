@@ -17,12 +17,13 @@ urlpatterns = [
     path('exteriorPaymentForm/', views.createExteriorPaymentForm, name = "viewExteriorPaymentForm"),
     path('chargeAccountForm/', views.createChargeAccountForm, name = "viewChargeAccountForm"),
     path('requisitionForm/', views.createRequisitionForm, name = "viewRequisitionForm"),
-    path('Ventanilla unica resumida/', views.summaryOneStopShopView,name = "summaryOneStopShop"),
+    path('Ventanilla única resumida/', views.summaryOneStopShopView,name = "summaryOneStopShop"),
     path('Ventanilla unica/', views.fullOneStopShopView,name = "fullOneStopShop"),
-    path('Agregar a ventanilla unica/', views.oneStopShopFormView,name = "OneStopShopForm"),
+    path('Agregar a ventanilla única/', views.oneStopShopFormView,name = "OneStopShopForm"),
     path('update_state/edit/<int:following_id>', views.updateState, name='update_state'),   
     path('historial/<int:following_id>/', views.changeHistory, name='changeHistory'),
-
+    path('users/', views.user_list, name='user_list'),
+    path('users/<int:user_id>/edit/', views.edit_user, name='edit_user'),
 ]
 
 urlpatterns += [ 

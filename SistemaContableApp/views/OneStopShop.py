@@ -145,7 +145,7 @@ def oneStopShopFormView(request):
         attachedDocumentForm = AttachedDocumentForm()
         return render(request, 'oneStopShopForm.html', {'oneStopShopForm': oneStopShopForm, 'attachedDocumentForm': attachedDocumentForm})
 
-
+@user_in_group(['Administrador', 'Gestor'], excluded_group1)
 def updateState(request, following_id):
     # Obtener el objeto Following que deseas actualizar
     following = get_object_or_404(Following, id=following_id)

@@ -3,6 +3,7 @@
 
 {% block content %}
 {% load static %}
+{% include 'partials/error_modal.html' %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,6 +11,7 @@
         <title >Ventanilla unica</title>
         <link rel="stylesheet" href= "{% static '/styles/oneStopShopStyle.css' %}" >
         <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <link rel="stylesheet" type='text/css' href="{% static '/styles/error_modal.css' %}">
     </head>
 </html>
 
