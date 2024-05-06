@@ -3,39 +3,33 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
 
-#Create your models here.
+class Charge_account(models.Model):
+    """
+    Model representing a charge account request.
+    """
 
-class Exterior_payment(models.Model):
-    """
-    Model representing a exterior payment request.
-    """
-    
     BANK_ACCOUNT_TYPE =[
-        ('Ahorros','Ahorros'),
+        ('De ahorros','De ahorros'),
         ('Corriente','Corriente')
     ]
-    
-    IBAN_ABA_CODE_TYPE =[
-        ('IBAN','IBAN'),
-        ('ABA','ABA')
-    ]
 
-    beneficiary_name = models.CharField(max_length = 20)
-    beneficiary_last_name = models.CharField(max_length = 20)
-    beneficiary_document_type = models.CharField(max_length = 10)
-    beneficiary_document_no = models.CharField(max_length = 20)
-    passport_number = models.CharField(max_length = 20)
-    passport_expedition_city = models.CharField(max_length = 20)
-    address = models.TextField()
-    bank_name = models.CharField(max_length = 20)
-    account_type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
-    swift_code = models.CharField(max_length = 10)
-    iban_aba_code_type = models.CharField(max_length = 10, choices= IBAN_ABA_CODE_TYPE)
-    iban_aba_code = models.CharField(max_length = 10)
-    account_name = models.CharField(max_length = 30)
+    name = models.CharField(max_length = 40,default = "")
+    identification = models.CharField(max_length = 10,default = "")
+    phone = models.CharField(max_length = 13,default = "")
+    city = models.CharField(max_length = 20)
+    addres = models.CharField(max_length = 50)
+    date = models.DateField()
+    value_letters = models.CharField(max_length = 60)
+    value_numbers = models.CharField(max_length = 15)
+    concept = models.TextField()
+    bank = models.CharField(max_length = 20)
+    type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
     account_number = models.CharField(max_length = 20)
-    bank_address = models.TextField()
-
+    cex = models.CharField(max_length = 20)
+    retentions = models.BooleanField(default=False)
+    declarant = models.BooleanField(default=False)
+    colombian_resident = models.BooleanField(default=False)
+    supports = models.FileField()
 
 
 class Requisition(models.Model):
@@ -82,33 +76,141 @@ class Requisition(models.Model):
         return self.radicate
 
 
-
-class Charge_account(models.Model):
+class Exterior_payment(models.Model):
     """
-    Model representing a charge account request.
+    Model representing a exterior payment request.
     """
+    
+    BANK_ACCOUNT_TYPE =[
+        ('Ahorros','Ahorros'),
+        ('Corriente','Corriente')
+    ]
+    
+    IBAN_ABA_CODE_TYPE =[
+        ('IBAN','IBAN'),
+        ('ABA','ABA')
+    ]
 
+    beneficiary_name = models.CharField(max_length = 20)
+    beneficiary_last_name = models.CharField(max_length = 20)
+    beneficiary_document_type = models.CharField(max_length = 10)
+    beneficiary_document_no = models.CharField(max_length = 20)
+    passport_number = models.CharField(max_length = 20)
+    passport_expedition_city = models.CharField(max_length = 20)
+    address = models.TextField()
+    bank_name = models.CharField(max_length = 20)
+    account_type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
+    swift_code = models.CharField(max_length = 10)
+    iban_aba_code_type = models.CharField(max_length = 10, choices= IBAN_ABA_CODE_TYPE)
+    iban_aba_code = models.CharField(max_length = 10)
+    account_name = models.CharField(max_length = 30)
+    account_number = models.CharField(max_length = 20)
+    bank_address = models.TextField()
+    
+    
+class Legalization(models.Model):
+    """
+    Model representing a legalization request.
+    """
+    
     BANK_ACCOUNT_TYPE =[
         ('De ahorros','De ahorros'),
         ('Corriente','Corriente')
     ]
+    
+    MONEY_TYPE =[
+        ('PESOS COLOMBIANOS','PESOS COLOMBIANOS'),
+        ('DOLARES','DOLARES'),
+        ('EUROS','EUROS')
+    ]
 
-    name = models.CharField(max_length = 40,default = "")
+    legalization_date = models.DateField()
+    traveler_name = models.CharField(max_length=50)
     identification = models.CharField(max_length = 10,default = "")
-    phone = models.CharField(max_length = 13,default = "")
-    city = models.CharField(max_length = 20)
-    addres = models.CharField(max_length = 50)
-    date = models.DateField()
-    value_letters = models.CharField(max_length = 60)
-    value_numbers = models.CharField(max_length = 15)
-    concept = models.TextField()
+    cost_center = models.CharField(max_length = 30)
+    dependency = models.CharField(max_length = 30)
+    destiny_city = models.CharField(max_length = 20)
+    travel_date = models.DateField()
+    return_date = models.DateField()
+    motive = models.TextField()
     bank = models.CharField(max_length = 20)
-    type = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
+    type_account = models.CharField(max_length = 10,choices = BANK_ACCOUNT_TYPE)
     account_number = models.CharField(max_length = 20)
-    cex = models.CharField(max_length = 20)
-    retentions = models.BooleanField(default=False)
-    declarant = models.BooleanField(default=False)
-    colombian_resident = models.BooleanField(default=False)
+    orderer_name = models.CharField(max_length = 50)
+    elaborator_name = models.CharField(max_length = 50)
+    descount_in_one_quote = models.BooleanField()
+    advance_payment_value = models.DecimalField(max_digits=10, decimal_places=2)
+    currency_type_of_advance_value = models.CharField(max_length = 20,choices = MONEY_TYPE)
+    
+    def __str__(self):
+        return self.id
+    
+class LegalizationExpense(models.Model):
+    """
+    Model representing a legalization expense request.
+    """
+    
+    MONEY_TYPE =[
+        ('PESOS COLOMBIANOS','PESOS COLOMBIANOS'),
+        ('DOLARES','DOLARES'),
+        ('EUROS','EUROS')
+    ]
+    solicitation = models.ForeignKey(Legalization, on_delete=models.CASCADE, related_name='expenses')
+    category = models.CharField(max_length=100)
+    support = models.FileField(upload_to='')
+    support_no = models.CharField(max_length=20)
+    third_person_name = models.CharField(max_length=100)
+    third_person_nit = models.CharField(max_length=20)
+    concept = models.TextField()
+    money_type = models.CharField(max_length = 20,choices = MONEY_TYPE)
+    money_value = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    
+class AdvancePayment(models.Model):
+    """
+    Model representing a advance payment request.
+    """
+    
+    MONEY_TYPE =[
+        ('PESOS COLOMBIANOS','PESOS COLOMBIANOS'),
+        ('DOLARES','DOLARES'),
+        ('EUROS','EUROS')
+    ]
+    
+    radicate = models.CharField(max_length = 20)
+    payment_order_code = models.CharField(max_length = 20)
+    request_date = models.DateField()
+    traveler_name = models.CharField(max_length=50)
+    traveler_id = models.CharField(max_length = 10,default = "")  
+    cost_center = models.CharField(max_length = 30)
+    dependency = models.CharField(max_length = 30)
+    destiny_city = models.CharField(max_length = 20)
+    travel_date = models.DateField()
+    return_date = models.DateField()
+    motive = models.TextField()
+    currency_type_of_advance_value = models.CharField(max_length = 20,choices = MONEY_TYPE)
+    last_day_in_icesi = models.DateField()
+    descount_in_one_quote = models.BooleanField()
+    orderer_name = models.CharField(max_length = 50)
+    elaborator_name = models.CharField(max_length = 50)
+    
+    
+    def __str__(self):
+        return self.id
+    
+class AdvanceExpense(models.Model):
+    """
+    Model representing a advance payment expense request.
+    """
+
+    solicitation = models.ForeignKey(AdvancePayment, on_delete=models.CASCADE, related_name='expenses')
+    category = models.CharField(max_length=100)
+    money_value = models.DecimalField(max_digits=10, decimal_places=2)
+
+
+
+
+
 
 class State(models.Model):
 
@@ -234,7 +336,7 @@ class Rol(models.Model):
         """"
         Unicode representation of Rol
         """
-        return f'{self.rol}'
+        return f'{self.rol.rol}'
     
     
     def save(self, *args, **kwargs):

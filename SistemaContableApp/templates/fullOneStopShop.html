@@ -1,7 +1,8 @@
-{% extends 'layouts/base.html' %}
 {% load static %}
 
 {% block content %}
+{% load static %}
+{% include 'partials/error_modal.html' %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,13 +10,12 @@
         <title >Ventanilla unica</title>
         <link rel="stylesheet" href= "{% static '/styles/oneStopShopStyle.css' %}" >
         <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <link rel="stylesheet" type='text/css' href="{% static '/styles/error_modal.css' %}">
     </head>
-</html>
-  
 
-<body>
+  <body>
     <div class="heading">
-        <h1><span style="font-size: 40px;"> CCSA </span></h1>
+        <h1><span style="font-size: 40px;"> Centro de compatido de servicios </span></h1>
     </div>
     <div>
             <div class = "outer-wrapper">
@@ -129,7 +129,7 @@
                             </th>
                         </tr>
                         {% for following in followingData %}
-                        <tr>
+                        <tr data-following-id="{{ following.id }}">
                             <td>
                                 {{following.creationDate}}
                             </td>
@@ -160,6 +160,7 @@
                             </td>
                             <td>
                                 {{following.manager}}
+                                <button onclick="mostrarLista('gestor', event, this)">Seleccionar</button>
                             </td>
 
                             <td bgcolor="{{ following.currentState.color }}">
@@ -191,9 +192,11 @@
 
                             <td>
                                 {{following.acceptor}}
+                                <button onclick="mostrarLista('aprobador', event, this)">Seleccionar</button>
                             </td>
                             <td>
                                 {{following.revisor}}
+                                <button onclick="mostrarLista('revisor', event, this)">Seleccionar</button>
                             </td>
 
                             <td {{following.acceptanceState}}>
@@ -212,6 +215,18 @@
                                             <button class="btn btn-primary" type="submit">Guardar comentario</button>
                                         </form>    
                                     </div>
+                                </div>
+                                <div id="listaUsuarios" style="display: none; position: absolute; background-color: white; border: 1px solid black; padding: 10px;">
+                                    <h3>Selecciona un usuario:</h3>
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <ul>
+                                            {% for usuario in usuarios %}
+                                                <li><input type="radio" name="usuario" value="{{ usuario.id }}"> {{ usuario.first_name }} {{ usuario.last_name }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        <button type="submit">Seleccionar</button>
+                                    </form>
                                 </div>
                             </td>
                             
@@ -362,11 +377,125 @@
                 </div>
             </div>
     </div>
-    
+    <script>
+
+        var gestorSeleccionado = null;
+        var aprobadorSeleccionado = null;
+        var revisorSeleccionado = null;
+        var celdaActual = null;
+        
+        function mostrarLista(tipo, event, boton) {
+            const endpoint = '/api/get-users/';
+            const exclusions = {
+                gestor: gestorSeleccionado
+            };
+        
+            if (tipo === 'gestor') {
+                exclusions.aprobador = aprobadorSeleccionado;
+                exclusions.revisor = revisorSeleccionado;
+            }
+        
+            const parametros = new URLSearchParams({
+                exclude: JSON.stringify(exclusions)
+            });
+        
+            
+        
+            fetch(endpoint + '?' + parametros.toString())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(users => {
+    const listaUsuarios = document.getElementById("listaUsuarios");
+    let content = `<h3>Selecciona un usuario:</h3><form method="post">{% csrf_token %}<ul>`;
+    users.forEach(user => {
+        let fullName = user.name + ' ' + user.last_name; // Asegúrate de que estos campos existen en el objeto user
+        content += `<li><input type="radio" name="usuario" value="${user.id}" onclick="seleccionarUsuario(${user.id}, '${fullName}', '${tipo}')"> ${fullName}</li>`;
+    });
+    content += '</ul><button type="submit">Seleccionar</button></form>';
+    listaUsuarios.innerHTML = content;
+    listaUsuarios.style.display = 'block';
+    listaUsuarios.style.left = `${event.clientX}px`;
+    listaUsuarios.style.top = `${event.clientY}px`;
+    celdaActual = boton.parentElement;
+})
+.catch(error => {
+    console.error('Error loading the users:', error);
+    alert('Error loading the users: ' + error.message);
+});
+
+        }
+        
+        function actualizarListaUsuarios(users, tipo, event, boton) {
+            const listaUsuarios = document.getElementById("listaUsuarios");
+            let content = `<h3>Selecciona un usuario:</h3><form method="post">{% csrf_token %}<ul>`;
+            users.forEach(user => {
+                content += `<li><input type="radio" name="usuario" value="${user.id}" onclick="seleccionarUsuario('${user.id}', '${user.first_name} ${user.last_name}', '${tipo}')"> ${user.first_name} ${user.last_name}</li>`;
+            });
+            content += '</ul><button type="submit">Seleccionar</button></form>';
+            listaUsuarios.innerHTML = content;
+            listaUsuarios.style.display = 'block';
+            listaUsuarios.style.left = `${event.clientX}px`;
+            listaUsuarios.style.top = `${event.clientY}px`;
+            celdaActual = boton.parentElement;
+        }
+        
+        function seleccionarUsuario(id, nombre, tipo) {
+            const fila = celdaActual.closest('tr');
+            const followingId = fila.dataset.followingId;  // Obtener el ID del seguimiento de la fila
+
+            if (!followingId) {
+                alert('No se pudo encontrar el ID del seguimiento');
+                return;
+            }
+
+            celdaActual.innerHTML = `${nombre} <button onclick="mostrarLista('${tipo}', event, this)">Seleccionar</button>`;
+            document.getElementById("listaUsuarios").style.display = 'none';
+            alert(`Has asignado a ${nombre} como ${tipo}.`);
+
+            // Envía la actualización al backend
+            const url = '/api/update-role/';  // Verifica que la URL es correcta
+            const data = `following_id=${followingId}&user_id=${id}&role_type=${tipo}`;
+
+            fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: data
+            })
+            .then(response => response.json())
+            .then(data => {
+            if (data.success) {
+                console.log(data.message);
+            } else {
+                console.error(data.message);
+            }
+        })
+        .catch(error => console.error('Error updating the user:', error));
+
+    // Actualiza los IDs seleccionados basados en el tipo
+        if (tipo === 'gestor') {
+            gestorSeleccionado = id;
+            aprobadorSeleccionado = null;
+            revisorSeleccionado = null;
+        } else if (tipo === 'aprobador') {
+            aprobadorSeleccionado = id;
+        } else if (tipo === 'revisor') {
+            revisorSeleccionado = id;
+        }
+}
+
+        
+        </script>
+        
     <script src="{% static '/js/popup.js' %}"></script>
     <script src="{% static '/js/showHistory.js' %}"></script>
     <script src="{% static '/js/toggleCommentForm.js' %}"></script>
 
 </body>
 {% endblock %}
+
+
 

@@ -1,18 +1,16 @@
-from datetime import datetime, timedelta
-from unittest.mock import MagicMock, patch
-from django.template import RequestContext
-from django.test import RequestFactory, TestCase, Client
+from django.test import TestCase, Client
 from django.urls import reverse
-from django.contrib import messages
-from SistemaContableApp.forms import ExteriorPaymentForm
-from SistemaContableApp.views import createForm, isLateRequest
-from django.contrib.messages import get_messages
-from django.contrib.messages.storage.fallback import FallbackStorage
+from SistemaContableApp.models import *
+from SistemaContableApp.forms import *
+from django.core.files.uploadedfile import SimpleUploadedFile
 
-from SistemaContableApp.views.Requests import createExteriorPaymentForm
 
 class ChargeAccountFormViewTests(TestCase):
     def setUp(self):
+        
+        file_content = b'This is a test file.'
+        uploaded_file = SimpleUploadedFile('test_file.txt', file_content)
+        
         self.client = Client()
         self.form_data = {
             'name': 'Pablo',
@@ -30,7 +28,8 @@ class ChargeAccountFormViewTests(TestCase):
             'cex': '12345',
             'retentions': True,
             'declarant': True,
-            'colombian_resident': True
+            'colombian_resident': True,
+            'supports': uploaded_file
         }
 
     def test_get_form(self):
@@ -123,77 +122,131 @@ class ExteriorPaymentFormViewTests(TestCase):
         self.assertEqual(response.status_code, 302)  # Redirect after successful form submission
 
 
-class IsLateRequestTestCase(TestCase):
-    
+
+
+class CreateLegalizationFormViewTests(TestCase):
     def setUp(self):
+        file_content = b'This is a test file.'
+        uploaded_file = SimpleUploadedFile('test_file.txt', file_content)
+        
         self.client = Client()
-        self.form_data = {
-            'beneficiary_name': 'Daniela',
-            'beneficiary_last_name': 'Londoño',
-            'beneficiary_document_type': 'DNI',
-            'beneficiary_document_no': '12345678',
-            'passport_number': 'ABC123456',
-            'passport_expedition_city': 'Cali',
-            'address': 'calle 25',
-            'bank_name': 'Bancolombia',
-            'account_type': 'Ahorros',
-            'swift_code': 'BOFAUS3N',
-            'iban_aba_code_type': 'IBAN',
-            'iban_aba_code': '01010101',
-            'account_name': 'Daniela Londoño',
+        self.legalization_data = {
+            'legalization_date': '2023-05-01',
+            'traveler_name': 'Juan Pérez',
+            'identification': '1234567890',
+            'cost_center': '1234',
+            'dependency': 'Departamento de Ventas',
+            'destiny_city': 'Bogotá',
+            'travel_date': '2023-04-15',
+            'return_date': '2023-04-20',
+            'motive': 'Reunión de negocios',
+            'bank': 'Banco de Bogotá',
+            'type_account': 'De ahorros',
             'account_number': '1234567890',
-            'bank_address': 'calle 32'
+            'orderer_name': 'María Rodríguez',
+            'elaborator_name': 'Pedro Gómez',
+            'descount_in_one_quote': True,
+            'advance_payment_value': 1000000.00,
+            'currency_type_of_advance_value': 'PESOS COLOMBIANOS'
+        }
+        self.expense_data = {
+            'category': 'Transporte',
+            'support': uploaded_file,
+            'support_no': '12345',
+            'third_person_name': 'Transportes S.A.',
+            'third_person_nit': '123456789',
+            'concept': 'Taxis y buses',
+            'money_type': 'PESOS COLOMBIANOS',
+            'money_value': 100000.00
         }
 
-    def test_post_form_on_time(self):
-        """
-        Test that verifies that when sending a payment form abroad, 
-        the correct message is displayed depending on whether it is sent before or after the 20th of the month.
-        """
-        url = reverse('viewExteriorPaymentForm')
-        response = self.client.post(url, self.form_data, follow=True)
-        self.assertEqual(response.status_code, 200)  # Redirección después de enviar el formulario
-        if isLateRequest(datetime.now()):
-            expected_message = 'Su solicitud se ha programado para el siguiente mes, ya que se recibió después del día 20 del mes.'
-        else:
-            expected_message = 'La solicitud se ha enviado correctamente.'
-            
-        self.assertContains(response, expected_message)
+    def test_get_form(self):
+        url = reverse('viewLegalizationForm')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'legalizationForm.html')
 
-      
-             
-    def test_late_request(self):
-        """
-        test that simulates a request received after the 20th of the month
-        """
-        late_date = datetime(2023, 4, 25)  # Fecha después del día 20
-        self.assertTrue(isLateRequest(late_date))
-
-    def test_early_request(self):
-        """
-        test that simulates a request received before the 20th of the month
-        """
-        early_date = datetime(2023, 4, 15)  # Fecha antes del día 20
-        self.assertFalse(isLateRequest(early_date))
-
-    def test_different_month(self):
-        """
-        test that simulates a request received on a date in a different month
-        """
-        different_month = datetime(2023, 5, 25)  # Fecha en un mes diferente
-        self.assertFalse(isLateRequest(different_month))
+    def test_post_form(self):
+        url = reverse('viewLegalizationForm')
+        solicitation_form_data = self.legalization_data.copy()
+        expense_formset_data = {
+            'expenses-TOTAL_FORMS': '1',
+            'expenses-INITIAL_FORMS': '0',
+            'expenses-MIN_NUM_FORMS': '0',
+            'expenses-MAX_NUM_FORMS': '1000',
+            'expenses-0-category': self.expense_data['category'],
+            'expenses-0-support' : self.expense_data['support'],
+            'expenses-0-support_no': self.expense_data['support_no'],
+            'expenses-0-third_person_name': self.expense_data['third_person_name'],
+            'expenses-0-third_person_nit': self.expense_data['third_person_nit'],
+            'expenses-0-concept': self.expense_data['concept'],
+            'expenses-0-money_type': self.expense_data['money_type'],
+            'expenses-0-money_value': self.expense_data['money_value']
+        }
+        form_data = {**solicitation_form_data, **expense_formset_data}
+        response = self.client.post(url, form_data)
+        self.assertEqual(response.status_code, 302)
+        legalization = Legalization.objects.first()
+        self.assertIsNotNone(legalization)
+        self.assertEqual(legalization.traveler_name, 'Juan Pérez')
+        expense = LegalizationExpense.objects.first()
+        self.assertIsNotNone(expense)
+        self.assertEqual(expense.category, 'Transporte')
         
-    def test_edge_case(self):
-        """
-        test that simulates a request received in the last minute of the 20th of the month
-        """
-        edge_case_date = datetime(datetime.now().year, datetime.now().month, 20, 23, 59, 59)
-        self.assertFalse(isLateRequest(edge_case_date))
-
-        """
-        test that simulates a request received in the first minute of the 21st of the month
-        """
-        edge_case_date = datetime(datetime.now().year, datetime.now().month, 21, 0, 0, 1)
-        self.assertTrue(isLateRequest(edge_case_date))
+        
+        
         
 
+
+class CreateAdvancePaymentFormViewTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.advance_payment_data = {
+            'radicate': '12345',
+            'payment_order_code': '67890',
+            'request_date': '2023-05-01',
+            'traveler_name': 'Juan Pérez',
+            'traveler_id': '1234567890',
+            'cost_center': '1234',
+            'dependency': 'Departamento de Ventas',
+            'destiny_city': 'Bogotá',
+            'travel_date': '2023-05-15',
+            'return_date': '2023-05-20',
+            'motive': 'Reunión de negocios',
+            'currency_type_of_advance_value': 'PESOS COLOMBIANOS',
+            'last_day_in_icesi': '2023-05-14',
+            'descount_in_one_quote': True,
+            'orderer_name': 'María Rodríguez',
+            'elaborator_name': 'Pedro Gómez'
+        }
+        self.expense_data = {
+            'category': 'Transporte',
+            'money_value': 100000.00
+        }
+
+    def test_get_form(self):
+        url = reverse('viewAdvancePaymentForm')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'advancePaymentForm.html')
+
+    def test_post_form(self):
+        url = reverse('viewAdvancePaymentForm')
+        solicitation_form_data = self.advance_payment_data.copy()
+        expense_formset_data = {
+            'expenses-TOTAL_FORMS': '1',
+            'expenses-INITIAL_FORMS': '0',
+            'expenses-MIN_NUM_FORMS': '0',
+            'expenses-MAX_NUM_FORMS': '1000',
+            'expenses-0-category': self.expense_data['category'],
+            'expenses-0-money_value': self.expense_data['money_value']
+        }
+        form_data = {**solicitation_form_data, **expense_formset_data}
+        response = self.client.post(url, form_data)
+        self.assertEqual(response.status_code, 302)
+        advance_payment = AdvancePayment.objects.first()
+        self.assertIsNotNone(advance_payment)
+        self.assertEqual(advance_payment.traveler_name, 'Juan Pérez')
+        expense = AdvanceExpense.objects.first()
+        self.assertIsNotNone(expense)
+        self.assertEqual(expense.category, 'Transporte')
