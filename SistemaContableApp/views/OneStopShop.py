@@ -188,7 +188,7 @@ def send_state_change_email(following, new_state, description):
     subject = 'Cambio de estado realizado'
     message = f"El estado de {following.id} ha sido actualizado a '{new_state.state}'. Descripción: {description}."
     from_email = settings.EMAIL_HOST_USER
-    to_email = 'nsp1324@gmail.com' # a quien va dirigido el correo
+    to_email = 'pinedapablo6718@gmail.com' # a quien va dirigido el correo
     send_mail(subject, message, from_email, [to_email])
 
 
