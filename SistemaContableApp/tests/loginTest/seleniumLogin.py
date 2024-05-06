@@ -41,7 +41,7 @@ class RegistrationAndLoginTestCase(LiveServerTestCase):
         submit_button.click()
 
         # Espera un poco para que la página se actualice
-        time.sleep(5)
+        time.sleep(3)
 
         # Verifica si se ha registrado correctamente
         self.assertIn('Tu cuenta ha sido creada exitosamente.', self.browser.page_source)
@@ -63,7 +63,7 @@ class RegistrationAndLoginTestCase(LiveServerTestCase):
         submit_button.click()
 
         # Espera un poco para que la página se actualice
-        time.sleep(10)
+        time.sleep(5)
 
         # Verifica si se ha iniciado sesión correctamente
-        self.assertIn('¡Bienvenido de nuevo!', self.browser.page_source)
+        self.assertIn('¡Bienvenidos al Sistema Contable', self.browser.page_source)
