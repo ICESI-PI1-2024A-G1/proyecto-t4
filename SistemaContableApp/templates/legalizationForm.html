@@ -1,0 +1,224 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load my_filters %}
+{% block content %}
+{% include 'partials/messages.html' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel='stylesheet' type='text/css' href="{% static '/styles/legalizationForm.css' %}">
+        <link rel="stylesheet" type='text/css' href="{% static '/styles/messages.css' %}">
+        <link rel='stylesheet' type='text/css' href="{% static '/styles/legalizationExpenseForm.css' %}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <form method="post" enctype="multipart/form-data" autocomplete="off">
+            {% csrf_token %}
+            {{ expense_formset.management_form }}
+            <div class="legalization-form">
+                <div class="div">
+                    <p class="title-legalization">Formulario de legalización de gastos de viaje</p>
+                    <div class="field-date">
+                        <div class="textfields">Fecha de legalización</div>
+                        <div class="boxes">{{ solicitation_form.legalization_date|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="overlap-group">
+                        <div class="field-traveler">
+                            <div class="textfields">Nombre del viajero</div>
+                            <div class="boxes">{{ solicitation_form.traveler_name|add_class:"boxes" }}</div>
+                        </div>
+                        <div class="field-id">
+                            <div class="textfields">No. De identificación</div>
+                            <div class="boxes">{{ solicitation_form.identification|add_class:"boxes" }}</div>
+                        </div>
+                    </div>
+                    <div class="field-cost-center">
+                        <div class="textfields">Centro de costos</div>
+                        <div class="boxes">{{ solicitation_form.cost_center|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-dependency">
+                        <div class="textfields">Dependencia</div>
+                        <div class="boxes">{{ solicitation_form.dependency|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-destiny-city">
+                        <div class="textfields">Ciudad de destino</div>
+                        <div class="boxes">{{ solicitation_form.destiny_city|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-departure-date">
+                        <div class="textfields">Fecha de salida</div>
+                        <div class="boxes">{{ solicitation_form.travel_date|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-arrival-date">
+                        <div class="textfields">Fecha de llegada</div>
+                        <div class="boxes">{{ solicitation_form.return_date|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-travel-reason">
+                        <div class="textfields">Motivo del viaje</div>
+                        <div class="box-motivo-viaje">{{ solicitation_form.motive|add_class:"box-motivo-viaje" }}</div>
+                    </div>
+                    <div class="field-bank">
+                        <div class="textfields">Entidad bancaria</div>
+                        <div class="boxes">{{ solicitation_form.bank|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-account-type">
+                        <div class="textfields">Tipo de cuenta bancaria</div>
+                        <div class="boxes">{{ solicitation_form.type_account|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-account">
+                        <div class="textfields">No. De cuenta</div>
+                        <div class="boxes">{{ solicitation_form.account_number|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-expense">
+                        <div class="textfields">Nombre del ordenador de gasto</div>
+                        <div class="boxes">{{ solicitation_form.orderer_name|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-author-name">
+                        <div class="textfields">Nombre de quien labora la solicitud</div>
+                        <div class="boxes">{{ solicitation_form.elaborator_name|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-authorization">
+                        <p class="text-authorization">
+                            Autorizo que el saldo a favor de la Universidad Icesi, sea descontado en una sola&nbsp;&nbsp;<br />cuota en
+                            el siguiente pago de nómina.
+                        </p>
+                        <div class="box-authorization">{{ solicitation_form.descount_in_one_quote|add_class:"box-authorization" }}</div>
+                    </div>
+                    <div class="field-currency-type-of-advance-value">
+                        <div class="textfields">Tipo de moneda del valor del anticipo</div>
+                        <div class="boxes">{{ solicitation_form.currency_type_of_advance_value|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-advance-payment-value">
+                        <div class="textfields">Valor del anticipo</div>
+                        <div class="boxes">{{ solicitation_form.advance_payment_value|add_class:"boxes" }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="expense-form" id="form-set">
+                {% for solicitation_form in expense_formset %}
+                <div class="div-2">
+                    <div class="title-legalization">Gasto</div>
+                    <div class="field-category">
+                        <div class="text-fields">Categoria</div>
+                        <div class="expenseBoxes">{{ solicitation_form.category|add_class:"expenseBoxes" }}</div>
+                    </div>
+                    <div class="overlap-group">
+                        <div class="field-support">
+                            <div class="text-fields">soporte</div>
+                            <div class="expenseBoxes">{{ solicitation_form.support|add_class:"expenseBoxes" }}</div>
+                        </div>
+                        <div class="field-no-support">
+                            <div class="text-fields"># de soporte</div>
+                            <div class="expenseBoxes">{{ solicitation_form.support_no|add_class:"expenseBoxes" }}</div>
+                        </div>
+                    </div>
+                    <div class="field-third-person">
+                        <p class="text-fields">Nombre del tercero de la factura</p>
+                        <div class="expenseBoxes">{{ solicitation_form.third_person_name|add_class:"expenseBoxes" }}</div>
+                    </div>
+                    <div class="field-third-person-2">
+                        <p class="text-fields">Nit del tercero de la factura</p>
+                        <div class="expenseBoxes">{{ solicitation_form.third_person_nit|add_class:"expenseBoxes" }}</div>
+                    </div>
+                    <div class="field-purchase">
+                        <div class="text-fields">Concepto de la compra</div>
+                        <div class="box-concepto-compra">{{ solicitation_form.concept|add_class:"box-concepto-compra" }}</div>
+                    </div>
+                    <div class="field-currency">
+                        <div class="text-fields">su anticipo fue en:</div>
+                        <div class="expenseBoxes">{{ solicitation_form.money_type|add_class:"expenseBoxes" }}</div>
+                    </div>
+                    <div class="field-purchase-value">
+                        <div class="text-fields">Valor de la compra</div>
+                        <div class="expenseBoxes">{{ solicitation_form.money_value|add_class:"expenseBoxes" }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button id="add-form" class="add-form">Añadir un gasto más</button>
+            <button type="submit" class="button-enviar">Enviar todo</button>
+        </form>
+        <div id="empty-form" style="display:none;">
+            
+            <div class="expense-form">
+                {% for solicitation_form in expense_formset %}
+                <div class="div-2">
+                    <div class="title-legalization">Gasto</div>
+                    <div class="field-category">
+                        <div class="text-fields">Categoria</div>
+                        <div class="expenseBoxes">{{ solicitation_form.category|add_class:"expenseBoxes" }}</div>
+                    </div>
+                    <div class="overlap-group">
+                        <div class="field-support">
+                            <div class="text-fields">soporte</div>
+                            <div class="expenseBoxes">{{ solicitation_form.support|add_class:"expenseBoxes" }}</div>
+                        </div>
+                        <div class="field-no-support">
+                            <div class="text-fields"># de soporte</div>
+                            <div class="expenseBoxes">{{ solicitation_form.support_no|add_class:"expenseBoxes" }}</div>
+                        </div>
+                    </div>
+                    <div class="field-third-person">
+                        <p class="text-fields">Nombre del tercero de la factura</p>
+                        <div class="expenseBoxes">{{ solicitation_form.third_person_name|add_class:"expenseBoxes" }}</div>
+                    </div>
+                    <div class="field-third-person-2">
+                        <p class="text-fields">Nit del tercero de la factura</p>
+                        <div class="expenseBoxes">{{ solicitation_form.third_person_nit|add_class:"expenseBoxes" }}</div>
+                    </div>
+                    <div class="field-purchase">
+                        <div class="text-fields">Concepto de la compra</div>
+                        <div class="box-concepto-compra">{{ solicitation_form.concept|add_class:"box-concepto-compra" }}</div>
+                    </div>
+                    <div class="field-currency">
+                        <div class="text-fields">su anticipo fue en:</div>
+                        <div class="expenseBoxes">{{ solicitation_form.money_type|add_class:"expenseBoxes" }}</div>
+                    </div>
+                    <div class="field-purchase-value">
+                        <div class="text-fields">Valor de la compra</div>
+                        <div class="expenseBoxes">{{ solicitation_form.money_value|add_class:"expenseBoxes" }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <script>
+            $('#add-form').click(function() {
+                var empty_form = $('#empty-form .expense-form').clone();
+                var form_idx = $('#id_expenses-TOTAL_FORMS').val();
+            
+                empty_form.find('.div-2 .field-category .expenseBoxes').html('<input type="text" name="expenses-' + form_idx + '-category" id="id_expenses-' + form_idx + '-category" class="expenseBoxes">');
+                empty_form.find('.div-2 .field-support .expenseBoxes').html('<input type="file" name="expenses-' + form_idx + '-support" id="id_expenses-' + form_idx + '-support" class="expenseBoxes">');
+                empty_form.find('.div-2 .field-no-support .expenseBoxes').html('<input type="text" name="expenses-' + form_idx + '-support_no" id="id_expenses-' + form_idx + '-support_no" class="expenseBoxes">');
+                empty_form.find('.div-2 .field-third-person .expenseBoxes').html('<input type="text" name="expenses-' + form_idx + '-third_person_name" id="id_expenses-' + form_idx + '-third_person_name" class="expenseBoxes">');
+                empty_form.find('.div-2 .field-third-person-2 .expenseBoxes').html('<input type="text" name="expenses-' + form_idx + '-third_person_nit" id="id_expenses-' + form_idx + '-third_person_nit" class="expenseBoxes">');
+                empty_form.find('.div-2 .field-purchase .box-concepto-compra').html('<textarea name="expenses-' + form_idx + '-concept" id="id_expenses-' + form_idx + '-concept" class="box-concepto-compra">');
+                empty_form.find('.div-2 .field-currency .expenseBoxes').html('<select name="expenses-' + form_idx + '-money_type" id="id_expenses-' + form_idx + '-money_type" class="expenseBoxes">');
+                empty_form.find('.div-2 .field-purchase-value .expenseBoxes').html('<input type="text" name="expenses-' + form_idx + '-money_value" id="id_expenses-' + form_idx + '-money_value" class="expenseBoxes">');
+                
+                
+                var moneyTypeOptions = ['---------', 'PESOS COLOMBIANOS', 'DOLARES', 'EUROS'];
+                var moneyTypeSelect = empty_form.find('.div-2 .field-currency .expenseBoxes select');
+            
+                $.each(moneyTypeOptions, function(index, value) {
+                    moneyTypeSelect.append($('<option>', {
+                        value: value,
+                        text: value
+                    }));
+                });
+
+                empty_form.find(':input').each(function() {
+                    var name = $(this).attr('name').replace(/__prefix__/g, form_idx);
+                    $(this).attr('name', name);
+                });
+            
+                $('#form-set').append(empty_form);
+                $('#id_expenses-TOTAL_FORMS').val(parseInt($('#id_expenses-TOTAL_FORMS').val()) + 1);
+                form_idx++;
+                return false;
+            });
+
+        </script>
+    </body>
+</html>
+{% endblock %}

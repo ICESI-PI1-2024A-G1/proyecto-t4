@@ -1,8 +1,17 @@
+import os
 from django.test import TestCase
 from SistemaContableApp.forms import *
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 class ChargeAccountFormTests(TestCase):
+    
+
+    
     def setUp(self):
+        
+        file_content = b'This is a test file.'
+        uploaded_file = SimpleUploadedFile('test_file.txt', file_content)
+        
         self.form_data = {
             'name': 'Pablo',
             'identification': '1234567890',
@@ -19,8 +28,11 @@ class ChargeAccountFormTests(TestCase):
             'cex': '12345',
             'retentions': True,
             'declarant': True,
-            'colombian_resident': True
+            'colombian_resident': True,
+            'supports': uploaded_file
         }
+        
+        
         self.form_data_empty = {
             'name': '',
             'identification': '',
@@ -37,12 +49,13 @@ class ChargeAccountFormTests(TestCase):
             'cex': '',
             'retentions': False,
             'declarant': False,
-            'colombian_resident': False
+            'colombian_resident': False,
+            'supports' : None
         }
 
     def test_valid_form(self):
         """ Test that the form is valid with valid input data. """
-        form = ChargeAccountForm(data=self.form_data)
+        form = ChargeAccountForm(data=self.form_data, files=self.form_data)
         self.assertTrue(form.is_valid())
 
     def test_blank_fields(self):
@@ -166,4 +179,76 @@ class ExteriorPaymentFormTests(TestCase):
         Test that the form does not validate with invalid data.
         """      
         form = ExteriorPaymentForm(data=self.form_data_invalid)
+        self.assertFalse(form.is_valid())
+        
+        
+
+
+class TravelExpensesSolicitationFormTests(TestCase):
+    def setUp(self):
+        self.form_data = {
+            'legalization_date': '2023-05-01',
+            'traveler_name': 'Juan Pérez',
+            'identification': '1234567890',
+            'cost_center': '1234',
+            'dependency': 'Departamento de Ventas',
+            'destiny_city': 'Bogotá',
+            'travel_date': '2023-04-15',
+            'return_date': '2023-04-20',
+            'motive': 'Reunión de negocios',
+            'bank': 'Banco de Bogotá',
+            'type_account': 'De ahorros',
+            'account_number': '1234567890',
+            'orderer_name': 'María Rodríguez',
+            'elaborator_name': 'Pedro Gómez',
+            'descount_in_one_quote': True,
+            'advance_payment_value': 1000000.00,
+            'currency_type_of_advance_value': 'PESOS COLOMBIANOS'
+        }
+
+    def test_valid_form(self):
+        form = TravelExpensesSolicitationForm(data=self.form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_blank_fields(self):
+        form_data = {
+            field: '' for field in self.form_data.keys()
+        }
+        form = TravelExpensesSolicitationForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        
+        
+        
+
+
+class TravelAdvanceSolicitationFormTests(TestCase):
+    def setUp(self):
+        self.form_data = {
+            'radicate': '12345',
+            'payment_order_code': '67890',
+            'request_date': '2023-05-01',
+            'traveler_name': 'Juan Pérez',
+            'traveler_id': '1234567890',
+            'cost_center': '1234',
+            'dependency': 'Departamento de Ventas',
+            'destiny_city': 'Bogotá',
+            'travel_date': '2023-05-15',
+            'return_date': '2023-05-20',
+            'motive': 'Reunión de negocios',
+            'currency_type_of_advance_value': 'PESOS COLOMBIANOS',
+            'last_day_in_icesi': '2023-05-14',
+            'descount_in_one_quote': True,
+            'orderer_name': 'María Rodríguez',
+            'elaborator_name': 'Pedro Gómez'
+        }
+
+    def test_valid_form(self):
+        form = TravelAdvanceSolicitationForm(data=self.form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_blank_fields(self):
+        form_data = {
+            field: '' for field in self.form_data.keys()
+        }
+        form = TravelAdvanceSolicitationForm(data=form_data)
         self.assertFalse(form.is_valid())
