@@ -1,0 +1,157 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load my_filters %}
+{% block content %}
+{% include 'partials/messages.html' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel='stylesheet' type='text/css' href="{% static '/styles/advancePaymentForm.css' %}">
+        <link rel="stylesheet" type='text/css' href="{% static '/styles/messages.css' %}">
+        <link rel='stylesheet' type='text/css' href="{% static '/styles/advanceExpenseForm.css' %}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <form method="post" autocomplete="off">
+            {% csrf_token %}
+            {{ expense_formset.management_form }}
+            <div class="advance-payment-form">
+                <div class="div">
+                    <p class="title-advance">Formulario de Solicitud de anticipo para gastos de viaje</p>
+                    <div class="field-radicate">
+                        <div class="textfields">No. de Radicado</div>
+                        <div class="boxes">{{ solicitation_form.radicate|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="overlap-group">
+                        <div class="field-order-code">
+                            <div class="textfields">codigo de Orden de pago</div>
+                            <div class="boxes">{{ solicitation_form.payment_order_code|add_class:"boxes" }}</div>
+                        </div>
+                        <div class="field-request-date">
+                            <div class="textfields">Fecha de solicitud</div>
+                            <div class="boxes">{{ solicitation_form.request_date|add_class:"boxes" }}</div>
+                        </div>
+                    </div>
+                    <div class="field-traveler-name">
+                        <div class="textfields">Nombre del viajero</div>
+                        <div class="boxes">{{ solicitation_form.traveler_name|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-id-traveler">
+                        <div class="textfields">No. de identificación del viajero</div>
+                        <div class="boxes">{{ solicitation_form.traveler_id|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-cost-center">
+                        <div class="textfields">Centro de costos</div>
+                        <div class="boxes">{{ solicitation_form.cost_center|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-dependency">
+                        <div class="textfields">Dependencia</div>
+                        <div class="boxes">{{ solicitation_form.dependency|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-destiny-city">
+                        <div class="textfields">Ciudad de destino</div>
+                        <div class="boxes">{{ solicitation_form.destiny_city|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-departure-date">
+                        <div class="textfields">Fecha de salida</div>
+                        <div class="boxes">{{ solicitation_form.travel_date|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-arrival-date">
+                        <div class="textfields">Fecha de regreso</div>
+                        <div class="boxes">{{ solicitation_form.return_date|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-travel-reason">
+                        <div class="textfields">Motivo del viaje</div>
+                        <div class="box-motivo-viaje">{{ solicitation_form.motive|add_class:"box-motivo-viaje" }}</div>
+                    </div>
+                    <div class="field-currency-type-of-advance-value">
+                        <div class="textfields">Tipo de moneda del valor del anticipo</div>
+                        <div class="boxes">{{ solicitation_form.currency_type_of_advance_value|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-last-day-in-icesi">
+                        <div class="textfields">último dia que estará en icesi antes de su viaje</div>
+                        <div class="boxes">{{ solicitation_form.last_day_in_icesi|add_class:"boxes" }}</div>
+                    </div>
+
+                    <div class="field-expense-order-name">
+                        <div class="textfields">Nombre del ordenador de gasto</div>
+                        <div class="boxes">{{ solicitation_form.orderer_name|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-author-name">
+                        <div class="textfields">Nombre de quien labora la solicitud</div>
+                        <div class="boxes">{{ solicitation_form.elaborator_name|add_class:"boxes" }}</div>
+                    </div>
+                    <div class="field-authorization">
+                        <p class="text-authorization">
+                            Autorización de descuento : Si pasados 15 días después de finalizar el viaje no he legalizado
+                            este anticipo; autorizo que su valor me sea descontado por nómina en 
+                            el mes más próximo.
+                        </p>
+                        <div class="box-authorization">{{ solicitation_form.descount_in_one_quote|add_class:"box-authorization" }}</div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="advance-expense-form" id="form-set">
+                {% for solicitation_form in expense_formset %}
+                <div class="div-2">
+                    <div class="title-advance-expense">Gasto</div>
+                    <div class="field-category">
+                        <div class="text-fields">Categoria</div>
+                        <div class="expenseBoxes">{{ solicitation_form.category|add_class:"expenseBoxes" }}</div>
+                    </div>
+                    <div class="field-expense-value">
+                        <div class="text-fields">Valor del gasto</div>
+                        <div class="expenseBoxes">{{ solicitation_form.money_value|add_class:"expenseBoxes" }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button id="add-form" class="add-form">Añadir un gasto más</button>
+            <button type="submit" class="button-enviar">Enviar todo</button>
+        </form>
+
+        <div id="empty-form" style="display:none;">
+            
+            <div class="advance-expense-form">
+                {% for solicitation_form in expense_formset %}
+                <div class="div-2">
+                    <div class="title-advance-expense">Gasto</div>
+                    <div class="field-category">
+                        <div class="text-fields">Categoria</div>
+                        <div class="expenseBoxes">{{ solicitation_form.category|add_class:"expenseBoxes" }}</div>
+                    </div>
+                    <div class="field-expense-value">
+                        <div class="text-fields">Valor del gasto</div>
+                        <div class="expenseBoxes">{{ solicitation_form.money_value|add_class:"expenseBoxes" }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <script>
+            $('#add-form').click(function() {
+                var empty_form = $('#empty-form .advance-expense-form').clone();
+                var form_idx = $('#id_expenses-TOTAL_FORMS').val();
+            
+                empty_form.find('.div-2 .field-category .expenseBoxes').html('<input type="text" name="expenses-' + form_idx + '-category" id="id_expenses-' + form_idx + '-category" class="expenseBoxes">');
+                empty_form.find('.div-2 .field-expense-value .expenseBoxes').html('<input type="text" name="expenses-' + form_idx + '-money_value" id="id_expenses-' + form_idx + '-money_value" class="expenseBoxes">');
+                
+                
+
+                empty_form.find(':input').each(function() {
+                    var name = $(this).attr('name').replace(/__prefix__/g, form_idx);
+                    $(this).attr('name', name);
+                });
+            
+                $('#form-set').append(empty_form);
+                $('#id_expenses-TOTAL_FORMS').val(parseInt($('#id_expenses-TOTAL_FORMS').val()) + 1);
+                form_idx++;
+                return false;
+            });
+
+        </script>
+    </body>
+</html>
+{% endblock %}

@@ -30,6 +30,8 @@ urlpatterns = [
     path('acceptance_state/<int:following_id>/', views.acceptance_state, name='acceptance_state'),
     path('revision_state/<int:following_id>/', views.revision_state, name='revision_state'),
     path('approval_state/<int:following_id>/', views.approval_state, name='approval_state'),
+    path('legalizationForm/', views.createLegalizationForm, name='viewLegalizationForm'),
+    path('advancePaymentForm/', views.createAdvancePaymentForm, name='viewAdvancePaymentForm'),
     
 
 ]
