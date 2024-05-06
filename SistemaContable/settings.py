@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +30,7 @@ DEBUG = True
 if DEBUG:
     os.environ['wsgi.url_scheme'] = 'http'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -81,11 +82,18 @@ WSGI_APPLICATION = 'SistemaContable.wsgi.application'
 # Database
 # https://docs.djangop  roject.com/en/5.0/ref/settings/#databases
 
+'''
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+   'default': {
+       'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
+'''
+
+
+DATABASES = {
+   'default': dj_database_url.parse('postgres://databasepi1_user:HKgrAC6UA2h2ZFnX7PkRBM4z3wceEGgs@dpg-cos9gei1hbls73fghvmg-a.oregon-postgres.render.com/databasepi1')
 }
 
 AUTH_USER_MODEL = 'SistemaContableApp.User'
