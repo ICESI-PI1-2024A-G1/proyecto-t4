@@ -3,9 +3,18 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from SistemaContableApp.models import Following
 from SistemaContableApp.models import User
+from SistemaContableApp.permissions import user_in_group
+from django.contrib.auth.decorators import login_required
+
+allowed_groups1 = ['Administrador', 'Líder', 'Gestor']
+excluded_group1 = 'Solicitante'
+
+ 
 
 @require_POST
 @csrf_exempt
+@login_required(login_url='', redirect_field_name='next')
+@user_in_group(allowed_groups1, excluded_group1)
 def update_role(request):
     
     """
@@ -35,4 +44,4 @@ def update_role(request):
         following.save()
         return JsonResponse({"success": True, "message": "Usuario asignado correctamente."})
     except Exception as e:
-        return JsonResponse({"success": False, "message": str(e)})
+        pass
