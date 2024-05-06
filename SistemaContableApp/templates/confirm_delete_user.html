@@ -1,0 +1,24 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title >Lista usuarios</title>
+    <link rel='stylesheet' type='text/css' href="{% static '/styles/confirm_delete_user.css' %}"> 
+</head>
+<body>
+    <main class="container">
+        <h2>Confirmar eliminación</h2>
+        <p>¿Estás seguro de que quieres eliminar al usuario "{{ user.username }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Sí, eliminar</button>
+            <a href="{% url 'user_list' %}">Cancelar</a>
+        </form>
+    </main>
+</body>
+</html>
+{% endblock %}

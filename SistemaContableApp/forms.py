@@ -90,6 +90,20 @@ class CustomUserCreationForm(UserCreationForm):
         return user
 
 
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField(required=True)
+    name = forms.CharField(max_length=200)
+    last_name = forms.CharField(max_length=200)
+    rol = forms.ModelChoiceField(queryset=Rol.objects.all(), required=False)
+
+    class Meta:
+        model = User
+        fields = ['email', 'name', 'last_name', 'rol']
+
+
+from django import forms
+from .models import User
+
   
 class ChargeAccountForm(forms.ModelForm):
     """

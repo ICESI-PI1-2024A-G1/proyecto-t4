@@ -1,14 +1,11 @@
-from audioop import reverse
 from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 
 def user_in_group(allowed_groups, excluded_group):
     """
-    Decorator for views that checks if the user is in one of the specified allowed groups,
-    but not in the excluded group.
+    Decorator for views that checks if the user is in one of the specified allowed groups, but not in the excluded group.
     If the user is authenticated and meets the group requirements, the view is executed.
-    If the user is authenticated but does not meet the group requirements, a Django message is displayed.
+    If the user is authenticated but does not meet the group requirements, a Django message is displayed, and the user remains on the same page.
     """
     def decorator(view_func):
         def _wrapped_view(request, *args, **kwargs):
@@ -18,7 +15,7 @@ def user_in_group(allowed_groups, excluded_group):
             ):
                 return view_func(request, *args, **kwargs)
             else:
-                messages.error(request, 'No tienes permiso para acceder a esta vista.')
-                return redirect('home')
+                messages.error(request, 'No tienes los permisos requeridos')
+                return redirect(request.META.get('HTTP_REFERER', 'home'))
         return _wrapped_view
     return decorator
