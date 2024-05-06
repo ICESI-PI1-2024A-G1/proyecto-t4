@@ -127,3 +127,88 @@ class ExteriorPaymentModelTests(TestCase):
         iban_aba_code_type_choices = [choice for choice in Exterior_payment.IBAN_ABA_CODE_TYPE]
         expected_iban_aba_code_type_choices = [('IBAN', 'IBAN'), ('ABA', 'ABA')]
         self.assertCountEqual(iban_aba_code_type_choices, expected_iban_aba_code_type_choices)
+        
+        
+        
+class LegalizationModelTests(TestCase):
+    def setUp(self):
+        self.legalization_data = {
+            'legalization_date': '2023-05-01',
+            'traveler_name': 'Juan Pérez',
+            'identification': '1234567890',
+            'cost_center': '1234',
+            'dependency': 'Departamento de Ventas',
+            'destiny_city': 'Bogotá',
+            'travel_date': '2023-04-15',
+            'return_date': '2023-04-20',
+            'motive': 'Reunión de negocios',
+            'bank': 'Banco de Bogotá',
+            'type_account': 'De ahorros',
+            'account_number': '1234567890',
+            'orderer_name': 'María Rodríguez',
+            'elaborator_name': 'Pedro Gómez',
+            'descount_in_one_quote': True,
+            'advance_payment_value': 1000000.00,
+            'currency_type_of_advance_value': 'PESOS COLOMBIANOS'
+        }
+        
+        
+    def test_create_legalization(self):
+        """
+        Test creating a new Legalization instance with valid data.
+        """
+        legalization = Legalization.objects.create(**self.legalization_data)
+        self.assertIsInstance(legalization, Legalization)
+
+
+    def test_fields_legalization(self):
+        """
+        Test that the legalization model has the expected field value.
+        """ 
+        legalization = Legalization.objects.create(**self.legalization_data)
+        self.assertIsInstance(legalization, Legalization)
+        self.assertEqual(legalization.traveler_name, 'Juan Pérez')
+        self.assertEqual(legalization.currency_type_of_advance_value, 'PESOS COLOMBIANOS')
+
+        
+        
+
+class AdvancePaymentModelTests(TestCase):
+    def setUp(self):
+        self.advance_payment_data = {
+            'radicate': '12345',
+            'payment_order_code': '67890',
+            'request_date': '2023-05-01',
+            'traveler_name': 'Juan Pérez',
+            'traveler_id': '1234567890',
+            'cost_center': '1234',
+            'dependency': 'Departamento de Ventas',
+            'destiny_city': 'Bogotá',
+            'travel_date': '2023-05-15',
+            'return_date': '2023-05-20',
+            'motive': 'Reunión de negocios',
+            'currency_type_of_advance_value': 'PESOS COLOMBIANOS',
+            'last_day_in_icesi': '2023-05-14',
+            'descount_in_one_quote': True,
+            'orderer_name': 'María Rodríguez',
+            'elaborator_name': 'Pedro Gómez'
+        }
+
+
+    def test_create_advance_payment(self):
+        """
+        Test creating a new AdvancePayment instance with valid data.
+        """
+        advance = AdvancePayment.objects.create(**self.advance_payment_data)
+        self.assertIsInstance(advance, AdvancePayment)
+        
+        
+        
+    def test_fields_advance_payment(self):
+        """
+        Test that the advance payment model has the expected field value.
+        """
+        advance_payment = AdvancePayment.objects.create(**self.advance_payment_data)
+        self.assertIsInstance(advance_payment, AdvancePayment)
+        self.assertEqual(advance_payment.traveler_name, 'Juan Pérez')
+        self.assertEqual(advance_payment.currency_type_of_advance_value, 'PESOS COLOMBIANOS')

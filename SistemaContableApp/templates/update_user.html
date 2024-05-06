@@ -1,0 +1,23 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title >Editar usuario</title>
+    <link rel='stylesheet' type='text/css' href="{% static '/styles/update_user.css' %}"> 
+</head>
+<body>   
+    <main class="container">
+        <h1>Editar usuario</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Guardar cambios</button>
+        </form>
+    </main>
+</body>
+</html>
+{% endblock %}
