@@ -12,10 +12,17 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+import sys
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+from django_selenium_test.settings import make_chrome_driver
+
+SELENIUM_WEBDRIVERS = {
+    "default": make_chrome_driver([], {}),
+}
 
 
 # Quick-start development settings - unsuitable for production
@@ -99,6 +106,12 @@ DATABASES = {
    'default': dj_database_url.parse('postgres://databasepi1_user:HKgrAC6UA2h2ZFnX7PkRBM4z3wceEGgs@dpg-cos9gei1hbls73fghvmg-a.oregon-postgres.render.com/databasepi1')
 }
 
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'test_db.sqlite3',
+    }
+    
 AUTH_USER_MODEL = 'SistemaContableApp.User'
 
 # Password validation
