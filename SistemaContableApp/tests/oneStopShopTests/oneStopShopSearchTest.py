@@ -80,7 +80,7 @@ class SearchTestCase(TestCase):
             closeDate='2025-07-12'
         )
 
-    def testFiltrarSolicitudPorEstado(self):
+    def test_filtrarSolicitud_estado(self):
         """
         Prueba unitaria para verificar el filtrado por estado de las solicitudes.
 
@@ -177,7 +177,7 @@ class SearchTestCase(TestCase):
         response = summaryOneStopShopView(request)
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, b'adelanto')
+        self.assertContains(response, b'adelanto')  
     
     def test_filtrar_solicitud_por_fecha(self):
         """
