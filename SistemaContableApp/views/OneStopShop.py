@@ -177,9 +177,7 @@ def updateState(request, following_id):
             except State.DoesNotExist:
                 messages.error(request, 'El estado proporcionado no existe.')
         else:
-            messages.error(request, 'No se proporcionó ningún estado.')
-
-    
+            messages.error(request, 'No se proporcionó ningún estado.')    
 
     return redirect('fullOneStopShop')  # Redirigir a la página principal
 
