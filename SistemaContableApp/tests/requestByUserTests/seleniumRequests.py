@@ -1,3 +1,4 @@
+import os
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
@@ -279,9 +280,9 @@ class RequestsTestCase(StaticLiveServerTestCase):
         self.type_text(value_numbers_field,'100000')
         concept_field = self.browser.find_element(By.ID, 'id_concept')
         self.type_text(concept_field,'Servicios de consultoría')
-        supports_field = self.browser.find_element(By.ID, 'id_supports')
-        supports_file_path = r"C:/Users/Pablo/OneDrive - Universidad Icesi (@icesi.edu.co)/Escritorio/a.docx"
-        supports_field.send_keys(supports_file_path)
+        file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'static', 'mediaTest', 'A.docx'))
+        file_field = self.browser.find_element(By.ID, 'id_supports')  # Define el campo del archivo
+        file_field.send_keys(file_path)  # Envía la ruta del archivo al campo del archivo
         bank_field = self.browser.find_element(By.ID, 'id_bank')
         self.type_text(bank_field,'Bancolombia')
         type_field = self.browser.find_element(By.ID, 'id_type')
@@ -491,9 +492,9 @@ class RequestsTestCase(StaticLiveServerTestCase):
         category_field = self.browser.find_element(By.ID, 'id_expenses-0-category')
         self.type_text(category_field,'Transporte')
         
-        support_field = self.browser.find_element(By.ID, 'id_expenses-0-support')
-        support_field_path=r"C:/Users/Pablo/OneDrive - Universidad Icesi (@icesi.edu.co)/Escritorio/a.docx"
-        support_field.send_keys(support_field_path)
+        file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'static', 'mediaTest', 'A.docx'))
+        file_field = self.browser.find_element(By.ID, 'id_expenses-0-support')  # Define el campo del archivo
+        file_field.send_keys(file_path)  # Envía la ruta del archivo al campo del archivo
 
         support_no_field = self.browser.find_element(By.ID, 'id_expenses-0-support_no')
         self.type_text(support_no_field, '12345')
