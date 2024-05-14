@@ -12,6 +12,19 @@ from django.http import QueryDict
 class SearchTestCase(TestCase):
 
     def setUp(self):
+        """
+        Set up the necessary objects and data for the test case.
+
+        This method is called before each individual test method is run.
+        It creates a user with the role 'Ventanilla única' and saves it to the database.
+        It also initializes a RequestFactory object for creating mock requests.
+
+        Args:
+            self: The current instance of the test case.
+
+        Returns:
+            None
+        """
         User = get_user_model()
         self.rol_ventanilla_unica = Rol.objects.create(rol='Ventanilla única')
         self.user_Ventanilla_unica = User.objects.create_user(
