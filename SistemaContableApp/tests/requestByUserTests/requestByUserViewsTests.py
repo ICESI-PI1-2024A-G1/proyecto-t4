@@ -56,7 +56,7 @@ def client():
 
     return c
 
-class ViewsTestCase(TestCase):
+class ViewsTestCaseRequests(TestCase):
     def setUp(self):
         self.client = client()
         

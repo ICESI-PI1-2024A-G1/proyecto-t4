@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User, Group
 from SistemaContableApp.models import  *
 from SistemaContableApp.views import  *
-class OneStopShopViewTestCase(TestCase):    
+class OneStopShopViewTestCasePermission(TestCase):    
     def setUp(self):
 
         # Crear roles y grupos necesarios

@@ -6,7 +6,7 @@ from SistemaContableApp.views import  *
 from datetime import datetime, date
 
 
-class FormCreationViewTestCase(TestCase):
+class FormCreationViewTestCaseP(TestCase):
 
     def setUp(self):
    
