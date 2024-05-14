@@ -13,6 +13,20 @@
     margin-bottom: 15px; /* Espacio entre grupos de campos */
 }
 
+.heading{
+    
+    position: sticky;
+   
+}
+
+h1 {
+    text-align: center;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    background: transparent;
+    padding: 7px; 
+}
+
 .following-form input[type="text"],
 .following-form input[type="email"],
 .following-form textarea {

@@ -12,9 +12,17 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+import sys
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+from django_selenium_test.settings import make_chrome_driver
+
+SELENIUM_WEBDRIVERS = {
+    "default": make_chrome_driver([], {}),
+}
 
 
 # Quick-start development settings - unsuitable for production
@@ -29,12 +37,13 @@ DEBUG = True
 if DEBUG:
     os.environ['wsgi.url_scheme'] = 'http'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "whitenoise.runserver_nostatic",
     'SistemaContableApp.apps.SistemacontableappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,12 +53,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_renderpdf',
     'multiupload',
-    
+    'openpyxl',
+    'django_selenium_test',
     
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -82,13 +93,27 @@ WSGI_APPLICATION = 'SistemaContable.wsgi.application'
 # Database
 # https://docs.djangop  roject.com/en/5.0/ref/settings/#databases
 
+'''
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+   'default': {
+       'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+'''
 
+
+DATABASES = {
+   'default': dj_database_url.parse('postgres://databasepi1_user:HKgrAC6UA2h2ZFnX7PkRBM4z3wceEGgs@dpg-cos9gei1hbls73fghvmg-a.oregon-postgres.render.com/databasepi1')
+}
+
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'test_db.sqlite3',
+    }
+    
+AUTH_USER_MODEL = 'SistemaContableApp.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -124,8 +149,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = (os.path.join(BASE_DIR, 'SistemaContableApp/static'),)
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+if not DEBUG:
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -141,7 +172,7 @@ EMAIL_HOST_PASSWORD = 'ombg qdvq ssqm rnaj'
 
 SECURE_SSL_REDIRECT = False
 EMAIL_HOST = 'smtp.office365.com' 
-DEFAULT_FROM_EMAIL = 'UsuarioSolicitante0@outlook.com'
+DEFAULT_FROM_EMAIL = 'UsuarioSolicitante1@outlook.com'
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
 EMAIL_HOST_PASSWORD = 'Pindy000' 
 EMAIL_PORT = 587 

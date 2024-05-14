@@ -1,0 +1,273 @@
+.advance-payment-form {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.advance-payment-form .div {
+    background-color: #ffffff;
+    width: 1280px;
+    height: 850px;
+    position: relative;
+}
+
+.advance-payment-form .title-advance {
+    position: absolute;
+    width: 1280px;
+    height: 57px;
+    top: 51px;
+    left: 0;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 25px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+
+.advance-payment-form .textfields {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+    color: #000000;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.advance-payment-form .boxes {
+    position: relative;
+    width: 300px;
+    height: 30px;
+    background-color: #e2edfa;
+}
+
+.advance-payment-form .overlap-group {
+    position: absolute;
+    width: 308px;
+    height: 137px;
+    top: 221px;
+    left: 287px;
+}
+
+.advance-payment-form .field-radicate {
+    display: inline-flex;
+    top: 152px;
+    left: 287px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.advance-payment-form .field-order-code {
+    display: inline-flex;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.advance-payment-form .field-request-date {
+    display: inline-flex;
+    top: 68px;
+    left: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.advance-payment-form .field-traveler-name {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 359px;
+    left: 287px;
+}
+
+.advance-payment-form .field-id-traveler {
+    display: inline-flex;
+    top: 428px;
+    left: 287px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.advance-payment-form .field-cost-center {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 497px;
+    left: 287px;
+}
+
+.advance-payment-form .field-dependency {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 566px;
+    left: 287px;
+}
+
+.advance-payment-form .field-destiny-city {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 635px;
+    left: 287px;
+}
+
+.advance-payment-form .field-departure-date {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 704px;
+    left: 287px;
+}
+
+
+
+.advance-payment-form .field-arrival-date {
+    display: inline-flex;
+    top: 152px;
+    left: 692px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.advance-payment-form .box-motivo-viaje {
+    position: relative;
+    width: 300px;
+    height: 90px;
+    background-color: #e2edfa;
+}
+
+.advance-payment-form .field-travel-reason {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 221px;
+    left: 692px;
+}
+
+
+.advance-payment-form .field-currency-type-of-advance-value {
+    display: inline-flex;
+    top: 359px;
+    left: 692px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+.advance-payment-form .field-last-day-in-icesi {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 428px;
+    left: 692px;
+}
+
+.advance-payment-form .field-expense-order-name {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+    top: 497px;
+    left: 692px;
+}
+
+
+.advance-payment-form .field-author-name {
+    display: flex;
+    width: 308px;
+    height: 69px;
+    top: 566px;
+    left: 692px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+
+.advance-payment-form .field-authorization {
+    display: flex;
+    width: 308px;
+    height: 69px;
+    top: 635px;
+    left: 692px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 9px 4px;
+    position: absolute;
+}
+
+
+.advance-payment-form .text-authorization {
+    width: 253px;
+    font-family: "Poppins-Light", Helvetica;
+    font-weight: 300;
+    font-size: 11px;
+    position: relative;
+    margin-top: -1px;
+    color: #000000;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.advance-payment-form .box-authorization {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 10px;
+    left: 135px;
+    background-color: #ffffff00;
+}
+
+
+
+
+.general-form .button-enviar {
+    display: flex;
+    width: 323px;
+    height: 54px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 8px 16px;
+    position: relative;
+    top: 10px;
+    left: 60px;
+    background-color: #0059a1;
+    font-weight: bold;
+}

@@ -1,113 +1,544 @@
-## Scenario Configuration
+# Pruebas Unitarias sobre el modulo de Requests
 
-### ChargeAccountFormTests
+## Descripción de tests unitarios
 
-| Name | Class                  | Stage                                                                                                                                                                                                                                                                                                                                                                    |
-| ------ | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| setUp1 | ChargeAccountFormTests | name: 'Pablo', identification: '1234567890', phone: '1234567890', city: 'Bogota', addres: 'Calle 123', date: '2023-04-01', value_letters: 'Cien mil pesos', value_numbers: '100000', concept: 'Concepto de prueba', bank: 'Banco de Prueba', type: 'De ahorros', account_number: '1234567890', cex: '12345', retentions: True, declarant: True, colombian_resident: True |
-| setUp2 | ChargeAccountFormTests | name: '', identification: '', phone: '', city: '', addres: '', date: '', value_letters: '', value_numbers: '', concept: '', bank: '', type: '', account_number: '', cex: '', retentions: False, declarant: False, colombian_resident: False                                                                                                                              |
+### IsLateRequestTestCase
 
-### RequisitionFormTests
+Esta clase contiene pruebas para la función `isLateRequest` que determina si una fecha de solicitud es posterior al día 20 del mes actual.
 
-| Name | Class                | Stage                                                                                                                                                                                                                                                                                                                                                                                         |
-| ------ | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| setUp3 | RequisitionFormTests | date: '2023-04-01', beneficiaryName: 'Pablo', idNumber: '1234567890', charge: 'Developer', dependency: 'IT Department', cenco: '1234', value: '100000.50', concept: 'Reintegro colaboradores', description: 'Descripción de prueba', radicate: '12345', payment_order_code: '67890', paymentMethod: 'Nomina', typeAccount: 'De ahorros', account_number: '1234567890', authorName: 'Fernando' |
-| setUp4 | RequisitionFormTests | date: '', beneficiaryName: '', idNumber: '', charge: '', dependency: '', cenco: '', value: '', concept: '', description: '', radicate: '', payment_order_code: '', paymentMethod: '', typeAccount: '', account_number: '', authorName: ''                                                                                                                                                     |
+#### test_is_late_request_true
+- **Descripción**: Verifica que `isLateRequest` retorna `True` cuando la fecha de solicitud es posterior al día 20 del mes actual.
+- **Valores de Entrada**: `request_date = datetime(2024, 5, 21)`
+- **Resultado Esperado**: `True`
 
-### ExteriorPaymentFormTests
+#### test_is_late_request_false  
+- **Descripción**: Verifica que `isLateRequest` retorna `False` cuando la fecha de solicitud es anterior al día 20 del mes actual.
+- **Valores de Entrada**: `request_date = datetime(2024, 5, 15)`  
+- **Resultado Esperado**: `False`
 
-| Name | Class                    | Stage                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| ------ | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| setUp5 | ExteriorPaymentFormTests | beneficiary_name: 'Daniela', beneficiary_last_name: 'Londoño', beneficiary_document_type: 'DNI', beneficiary_document_no: '12345678', passport_number: 'ABC123456', passport_expedition_city: 'Cali', address: 'calle 25', bank_name: 'Bancolombia', account_type: 'Ahorros', swift_code: 'BOFAUS3N', iban_aba_code_type: 'IBAN', iban_aba_code: '01010101', account_name: 'Daniela Londoño', account_number: '1234567890', bank_address: 'calle 32' |
-| setUp6 | ExteriorPaymentFormTests | beneficiary_name: '', beneficiary_last_name: '', beneficiary_document_type: '', beneficiary_document_no: '', passport_number: '', passport_expedition_city: '', address: 'calle 25', bank_name: 'Bancolombia', account_type: 'Ahorros', swift_code: '111111111111', iban_aba_code_type: 'IBAN', iban_aba_code: '', account_name: 'Daniela Londoño', account_number: '1234567890', bank_address: 'calle 32'                                           |
+#### test_is_late_request_same_month
+- **Descripción**: Verifica que `isLateRequest` retorna `False` cuando la fecha de solicitud es el día 20 del mes actual.
+- **Valores de Entrada**: `request_date = datetime(today.year, today.month, 20)`
+- **Resultado Esperado**: `False`
 
-### Test Objective
+### ViewsTestCase
 
-The objective of these tests is to verify the correct functioning of the collection, requisition and foreign payment account forms, ensuring that the mandatory fields are correctly validated and that the forms are valid when correct data is entered.
+Esta clase contiene pruebas para las vistas relacionadas con los formularios de cuenta de recaudo, requisición, pago al exterior, legalización y solicitud de anticipo.
 
-### Test cases
+#### test_get_charge_account_form
+- **Descripción**: Verifica que el formulario de cuenta de recaudo se renderiza correctamente en una solicitud GET.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El código de estado de la respuesta es 200 y se utiliza la plantilla 'chargeAccountForm.html'.
 
-| Class                    | Método                 | Stage  | Valores de Entrada | Expected results                                              |
-| ------------------------ | ---------------------- | ------ | ------------------ | --------------------------------------------------------------- |
-| ChargeAccountFormTests   | test_valid_form        | setUp1 | Valid data      | Invalid data                                   |
-| ChargeAccountFormTests   | test_blank_fields      | setUp2 | empty fields      | The form must be invalid                                 |
-| RequisitionFormTests     | test_valid_form        | setUp3 | Valid data      | Invalid data                                   |
-| RequisitionFormTests     | test_blank_fields      | setUp4 | empty fields      | The form must be invalid                                 |
-| ExteriorPaymentFormTests | test_form_fields       | -      | -                  | Verify that the form contains all the expected fields |
-| ExteriorPaymentFormTests | test_form_valid_data   | setUp5 | Valid data      | Invalid data                                   |
-| ExteriorPaymentFormTests | test_form_invalid_data | setUp6 | Invalid data    | The form must be invalid                                 |
+#### test_create_charge_account_form
+- **Descripción**: Verifica que una cuenta de recaudo se crea correctamente en una solicitud POST con datos de formulario válidos.
+- **Valores de Entrada**: Datos de formulario válidos
+- **Resultado Esperado**: El código de estado de la respuesta es 302 y se crea una instancia de `Charge_account` con los datos proporcionados.
+
+#### test_get_exterior_payment_form
+- **Descripción**: Verifica que el formulario de pago al exterior se renderiza correctamente en una solicitud GET.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El código de estado de la respuesta es 200 y se utiliza la plantilla 'exteriorPaymentForm.html'.
+
+#### test_create_exterior_payment_form
+- **Descripción**: Verifica que un pago al exterior se crea correctamente en una solicitud POST con datos de formulario válidos.
+- **Valores de Entrada**: Datos de formulario válidos
+- **Resultado Esperado**: El código de estado de la respuesta es 302 y se crea una instancia de `Exterior_payment` con los datos proporcionados.
+
+#### test_get_requisition_form
+- **Descripción**: Verifica que el formulario de requisición se renderiza correctamente en una solicitud GET.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El código de estado de la respuesta es 200 y se utiliza la plantilla 'requisitionForm.html'.
+
+#### test_create_requisition_form
+- **Descripción**: Verifica que una requisición se crea correctamente en una solicitud POST con datos de formulario válidos.
+- **Valores de Entrada**: Datos de formulario válidos
+- **Resultado Esperado**: El código de estado de la respuesta es 302 y se crea una instancia de `Requisition` con los datos proporcionados.
+
+#### test_get_legalization_form
+- **Descripción**: Verifica que el formulario de legalización se renderiza correctamente en una solicitud GET.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El código de estado de la respuesta es 200 y se utiliza la plantilla 'legalizationForm.html'.
+
+#### test_create_legalization_form
+- **Descripción**: Verifica que una legalización se crea correctamente en una solicitud POST con datos de formulario válidos.
+- **Valores de Entrada**: Datos de formulario válidos
+- **Resultado Esperado**: El código de estado de la respuesta es 302 y se crea una instancia de `Legalization` con los datos proporcionados, incluyendo los gastos asociados.
+
+#### test_get_advance_solicitation_form  
+- **Descripción**: Verifica que el formulario de solicitud de anticipo se renderiza correctamente en una solicitud GET.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El código de estado de la respuesta es 200 y se utiliza la plantilla 'advancePaymentForm.html'.
+
+#### test_create_travel_advance_solicitation_form
+- **Descripción**: Verifica que una solicitud de anticipo de viaje se crea correctamente en una solicitud POST con datos de formulario válidos.
+- **Valores de Entrada**: Datos de formulario válidos
+- **Resultado Esperado**: El código de estado de la respuesta es 302 y se crea una instancia de `AdvancePayment` con los datos proporcionados, incluyendo los gastos asociados.
+
+### ExcelGenerationTestCase
+
+Esta clase contiene pruebas para la generación de archivos Excel a partir de los objetos del sistema.
+
+#### test_generate_excel_charge_account
+- **Descripción**: Verifica que un archivo Excel se genera correctamente a partir de un objeto `Charge_account`.
+- **Valores de Entrada**: Instancia de `Charge_account`
+- **Resultado Esperado**: Se genera un archivo Excel con la extensión `.xlsx`.
+
+#### test_generate_excel_exterior_payment
+- **Descripción**: Verifica que un archivo Excel se genera correctamente a partir de un objeto `Exterior_payment`.
+- **Valores de Entrada**: Instancia de `Exterior_payment`
+- **Resultado Esperado**: Se genera un archivo Excel con la extensión `.xlsx`.
+
+#### test_generate_excel_requisition
+- **Descripción**: Verifica que un archivo Excel se genera correctamente a partir de un objeto `Requisition`.
+- **Valores de Entrada**: Instancia de `Requisition`
+- **Resultado Esperado**: Se genera un archivo Excel con la extensión `.xlsx`.
+
+#### test_generate_excel_legalization
+- **Descripción**: Verifica que un archivo Excel se genera correctamente a partir de un objeto `Legalization`.
+- **Valores de Entrada**: Instancia de `Legalization`  
+- **Resultado Esperado**: Se genera un archivo Excel con la extensión `.xlsx`.
+
+#### test_generate_excel_advance_payment
+- **Descripción**: Verifica que un archivo Excel se genera correctamente a partir de un objeto `AdvancePayment`.
+- **Valores de Entrada**: Instancia de `AdvancePayment`
+- **Resultado Esperado**: Se genera un archivo Excel con la extensión `.xlsx`.
+
+### FormCreationViewTestCase
+
+Esta clase contiene pruebas para verificar el acceso a los formularios según los roles de usuario.
+
+#### test_createChargeAccountForm_allowed
+- **Descripción**: Verifica que un usuario con el rol de 'Solicitante' puede acceder al formulario de cuenta de recaudo.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El código de estado de la respuesta es 200 y se renderiza el formulario `ChargeAccountForm`.
+
+#### test_createChargeAccountForm_not_allowed
+- **Descripción**: Verifica que un usuario con el rol de 'Contable' no puede acceder al formulario de cuenta de recaudo.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El código de estado de la respuesta es 302 (redirección).
+
+#### test_createRequisitionForm_allowed
+- **Descripción**: Verifica que un usuario con el rol de 'Solicitante' puede acceder al formulario de requisición.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El código de estado de la respuesta es 200 y se renderiza el formulario `RequisitionForm`.
+
+#### test_createRequisitionForm_not_allowed
+- **Descripción**: Verifica que un usuario con el rol de 'Contable' no puede acceder al formulario de requisición.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El código de estado de la respuesta es 302 (redirección).
+
+#### test_createExteriorPaymentForm_allowed
+- **Descripción**: Verifica que un usuario con el rol de 'Solicitante' puede acceder al formulario de pago al exterior.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El código de estado de la respuesta es 200 y se renderiza el formulario `ExteriorPaymentForm`.
+
+#### test_createExteriorPaymentForm_not_allowed
+- **Descripción**: Verifica que un usuario con el rol de 'Contable' no puede acceder al formulario de pago al exterior.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El código de estado de la respuesta es 302 (redirección).
+
+#### test_createLegalizationForm_allowed
+- **Descripción**: Verifica que un usuario con el rol de 'Solicitante' puede acceder al formulario de legalización.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El código de estado de la respuesta es 200 y se renderiza el formulario `TravelExpensesSolicitationForm`.
+
+#### test_createLegalizationForm_not_allowed
+- **Descripción**: Verifica que un usuario con el rol de 'Contable' no puede acceder al formulario de legalización.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El código de estado de la respuesta es 302 (redirección).
+
+#### test_createAdvancePaymentForm_allowed
+- **Descripción**: Verifica que un usuario con el rol de 'Solicitante' puede acceder al formulario de solicitud de anticipo.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El código de estado de la respuesta es 200 y se renderiza el formulario `TravelAdvanceSolicitationForm`.
+
+#### test_createAdvancePaymentForm_not_allowed
+- **Descripción**: Verifica que un usuario con el rol de 'Contable' no puede acceder al formulario de solicitud de anticipo.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El código de estado de la respuesta es 302 (redirección).
+
+### ModelTests
+
+Esta sección contiene pruebas unitarias para verificar el correcto funcionamiento de los modelos de datos utilizados en la aplicación. Estas pruebas comprueban la creación de instancias de los modelos con datos válidos, la integridad de los campos y las opciones de selección (choices) para los campos correspondientes.
+
+#### ChargeAccountModelTests
+
+##### test_create_charge_account
+- **Descripción**: Verifica que se puede crear una instancia de `Charge_account` con datos válidos.
+- **Valores de Entrada**: Datos válidos para crear una instancia de `Charge_account`
+- **Resultado Esperado**: Se crea una instancia de `Charge_account` con los datos proporcionados.
+
+#### RequisitionModelTests  
+
+##### test_create_requisition
+- **Descripción**: Verifica que se puede crear una instancia de `Requisition` con datos válidos.
+- **Valores de Entrada**: Datos válidos para crear una instancia de `Requisition`
+- **Resultado Esperado**: Se crea una instancia de `Requisition` con los datos proporcionados.
+
+#### ExteriorPaymentModelTests
+
+##### test_create_exterior_payment
+- **Descripción**: Verifica que se puede crear una instancia de `Exterior_payment` con datos válidos.
+- **Valores de Entrada**: Datos válidos para crear una instancia de `Exterior_payment`
+- **Resultado Esperado**: Se crea una instancia de `Exterior_payment` con los datos proporcionados.
+
+##### test_exterior_payment_fields
+- **Descripción**: Verifica que el modelo `Exterior_payment` tiene los campos esperados.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: Los campos del modelo `Exterior_payment` coinciden con los campos esperados.
+
+##### test_exterior_payment_choices
+- **Descripción**: Verifica que el modelo `Exterior_payment` tiene las opciones correctas para los campos `account_type` e `iban_aba_code_type`.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: Las opciones de los campos `account_type` e `iban_aba_code_type` coinciden con las esperadas.
+
+#### LegalizationModelTests
+
+##### test_create_legalization
+- **Descripción**: Verifica que se puede crear una instancia de `Legalization` con datos válidos.
+- **Valores de Entrada**: Datos válidos para crear una instancia de `Legalization`
+- **Resultado Esperado**: Se crea una instancia de `Legalization` con los datos proporcionados.
+
+##### test_fields_legalization
+- **Descripción**: Verifica que los campos de una instancia de `Legalization` tienen los valores esperados.
+- **Valores de Entrada**: Datos válidos para crear una instancia de `Legalization`
+- **Resultado Esperado**: Los valores de los campos `traveler_name` y `currency_type_of_advance_value` coinciden con los valores esperados.
+
+#### AdvancePaymentModelTests  
+
+##### test_create_advance_payment
+- **Descripción**: Verifica que se puede crear una instancia de `AdvancePayment` con datos válidos.
+- **Valores de Entrada**: Datos válidos para crear una instancia de `AdvancePayment`
+- **Resultado Esperado**: Se crea una instancia de `AdvancePayment` con los datos proporcionados.
+
+##### test_fields_advance_payment
+- **Descripción**: Verifica que los campos de una instancia de `AdvancePayment` tienen los valores esperados.
+- **Valores de Entrada**: Datos válidos para crear una instancia de `AdvancePayment`
+- **Resultado Esperado**: Los valores de los campos `traveler_name` y `currency_type_of_advance_value` coinciden con los valores esperados.
+
+### FormTests
+
+Esta sección contiene pruebas unitarias para verificar el correcto funcionamiento de los formularios utilizados en la aplicación. Estas pruebas aseguran que los formularios validen correctamente los datos de entrada y que cumplan con las reglas de negocio establecidas.
+
+#### ChargeAccountFormTests
+
+##### test_valid_form
+- **Descripción**: Verifica que el formulario `ChargeAccountForm` es válido con datos de entrada válidos.
+- **Valores de Entrada**: Datos válidos para el formulario `ChargeAccountForm`
+- **Resultado Esperado**: El formulario es válido.
+
+##### test_blank_fields
+- **Descripción**: Verifica que el formulario `ChargeAccountForm` es inválido si se dejan campos obligatorios en blanco.
+- **Valores de Entrada**: Campos obligatorios en blanco
+- **Resultado Esperado**: El formulario es inválido.
+
+#### RequisitionFormTests
+
+##### test_valid_form
+- **Descripción**: Verifica que el formulario `RequisitionForm` es válido con datos de entrada válidos.
+- **Valores de Entrada**: Datos válidos para el formulario `RequisitionForm`
+- **Resultado Esperado**: El formulario es válido.
+
+##### test_blank_fields
+- **Descripción**: Verifica que el formulario `RequisitionForm` es inválido si se dejan campos obligatorios en blanco.
+- **Valores de Entrada**: Campos obligatorios en blanco
+- **Resultado Esperado**: El formulario es inválido.
+
+#### ExteriorPaymentFormTests
+
+##### test_form_fields
+- **Descripción**: Verifica que el formulario `ExteriorPaymentForm` contiene todos los campos esperados.
+- **Valores de Entrada**: Ninguno
+- **Resultado Esperado**: El formulario contiene los campos esperados.
+
+##### test_form_valid_data
+- **Descripción**: Verifica que el formulario `ExteriorPaymentForm` es válido con datos de entrada válidos.
+- **Valores de Entrada**: Datos válidos para el formulario `ExteriorPaymentForm`
+- **Resultado Esperado**: El formulario es válido.
+
+##### test_form_invalid_data
+- **Descripción**: Verifica que el formulario `ExteriorPaymentForm` es inválido con datos de entrada inválidos.
+- **Valores de Entrada**: Datos inválidos para el formulario `ExteriorPaymentForm`
+- **Resultado Esperado**: El formulario es inválido.
+
+#### TravelExpensesSolicitationFormTests
+
+##### test_valid_form
+- **Descripción**: Verifica que el formulario `TravelExpensesSolicitationForm` es válido con datos de entrada válidos.
+- **Valores de Entrada**: Datos válidos para el formulario `TravelExpensesSolicitationForm`
+- **Resultado Esperado**: El formulario es válido.
+
+##### test_blank_fields
+- **Descripción**: Verifica que el formulario `TravelExpensesSolicitationForm` es inválido si se dejan campos obligatorios en blanco.
+- **Valores de Entrada**: Campos obligatorios en blanco
+- **Resultado Esperado**: El formulario es inválido.
+
+#### TravelAdvanceSolicitationFormTests
+
+##### test_valid_form
+- **Descripción**: Verifica que el formulario `TravelAdvanceSolicitationForm` es válido con datos de entrada válidos.
+- **Valores de Entrada**: Datos válidos para el formulario `TravelAdvanceSolicitationForm`
+- **Resultado Esperado**: El formulario es válido.
+
+##### test_blank_fields
+- **Descripción**: Verifica que el formulario `TravelAdvanceSolicitationForm` es inválido si se dejan campos obligatorios en blanco.
+- **Valores de Entrada**: Campos obligatorios en blanco
+- **Resultado Esperado**: El formulario es inválido.
 
 
+## Tests unitarios totales
+
+### Cuenta de Cobro (Charge Account):
+#### Total: 13 tests
+
+### Requisición (Requisition):  
+#### Total: 8 tests
+
+### Pago al Exterior (Exterior Payment):
+#### Total: 11 tests
+
+### Legalización (Legalization):
+#### Total: 7 tests
+
+### Solicitud de Anticipo (Advance Payment):
+#### Total: 9 tests
+
+### Total Final: 48 tests
 
 
+## Descripción de tests E2E
 
-## Scenario Configuration
+### RequestsTestCase
 
-### ChargeAccountModelTests
+Esta clase contiene pruebas de extremo a extremo (e2e) para los formularios de solicitud de la aplicación.
 
-| Name | Class                   | Stage                                                                                                                                                                                                                                                                                                                                                                    |
-| ------ | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| setUp1 | ChargeAccountModelTests | name: 'Pablo', identification: '1234567890', phone: '1234567890', city: 'Bogota', addres: 'Calle 123', date: '2023-04-01', value_letters: 'Cien mil pesos', value_numbers: '100000', concept: 'Concepto de prueba', bank: 'Banco de Prueba', type: 'De ahorros', account_number: '1234567890', cex: '12345', retentions: True, declarant: True, colombian_resident: True |
+#### setup_data
+- **Descripción**: Configura los datos iniciales requeridos para las pruebas, incluyendo la creación de los roles en la base de datos si no existen.
+- **Valores de Entrada**: Ninguno.
+- **Resultado Esperado**: Los roles necesarios están creados en la base de datos.
 
-### RequisitionModelTests
+#### register_user
+- **Descripción**: Simula el registro de un nuevo usuario en la aplicación.
+- **Valores de Entrada**: Nombre, apellido, correo electrónico, rol y contraseña del usuario.
+- **Resultado Esperado**: El usuario se registra correctamente, y se muestran los mensajes de éxito correspondientes en la página.
 
-| Name | Class                 | Stage                                                                                                                                                                                                                                                                                                                                                                                         |
-| ------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| setUp2 | RequisitionModelTests | date: '2023-04-01', beneficiaryName: 'Pablo', idNumber: '1234567890', charge: 'Developer', dependency: 'IT Department', cenco: '1234', value: '100000.50', concept: 'Reintegro colaboradores', description: 'Descripción de prueba', radicate: '12345', payment_order_code: '67890', paymentMethod: 'Nomina', typeAccount: 'De ahorros', account_number: '1234567890', authorName: 'Fernando' |
+#### login_as_admin
+- **Descripción**: Inicia sesión en la aplicación como un usuario administrador.
+- **Valores de Entrada**: Credenciales de inicio de sesión del administrador (correo electrónico y contraseña).
+- **Resultado Esperado**: El usuario administrador inicia sesión correctamente.
 
-### ExteriorPaymentModelTests
+#### test_charge_account_form
+- **Descripción**: Prueba el formulario de solicitud de cuenta de recaudo.
+- **Pasos**:
+  1. Registra un usuario administrador.
+  2. Inicia sesión como administrador.
+  3. Navega al formulario de solicitud de cuenta de recaudo.
+  4. Completa todos los campos requeridos del formulario.
+  5. Envía el formulario.
+- **Resultado Esperado**: El formulario se envía correctamente, y se muestra un mensaje de éxito.
 
-| Name | Class                     | Stage                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| ------ | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| setUp3 | ExteriorPaymentModelTests | beneficiary_name: 'Daniela', beneficiary_last_name: 'Londoño', beneficiary_document_type: 'DNI', beneficiary_document_no: '12345678', passport_number: 'ABC123456', passport_expedition_city: 'Cali', address: 'calle 25', bank_name: 'Bancolombia', account_type: 'Ahorros', swift_code: 'BOFAUS3N', iban_aba_code_type: 'IBAN', iban_aba_code: '01010101', account_name: 'Daniela Londoño', account_number: '1234567890', bank_address: 'calle 32' |
+#### test_exterior_payment_form
+- **Descripción**: Prueba el formulario de solicitud de pago al exterior.
+- **Pasos**:
+  1. Registra un usuario administrador.
+  2. Inicia sesión como administrador.
+  3. Navega al formulario de solicitud de pago al exterior.
+  4. Completa todos los campos requeridos del formulario.
+  5. Envía el formulario.
+- **Resultado Esperado**: El formulario se envía correctamente, y se muestra un mensaje de éxito.
 
-### Test Objective of models
+#### test_requisition_form
+- **Descripción**: Prueba el formulario de solicitud de requisición.
+- **Pasos**:
+  1. Registra un usuario administrador.
+  2. Inicia sesión como administrador.
+  3. Navega al formulario de solicitud de requisición.
+  4. Completa todos los campos requeridos del formulario.
+  5. Envía el formulario.
+- **Resultado Esperado**: El formulario se envía correctamente, y se muestra un mensaje de éxito.
 
-The goal of these tests is to verify that the application models are working correctly, including the creation of instances with valid data, the integrity of the fields, and the selection options (choices) for the corresponding fields.
+#### test_legalization_form
+- **Descripción**: Prueba el formulario de solicitud de legalización.
+- **Pasos**:
+  1. Registra un usuario administrador.
+  2. Inicia sesión como administrador.
+  3. Navega al formulario de solicitud de legalización.
+  4. Completa todos los campos requeridos del formulario.
+  5. Envía el formulario.
+- **Resultado Esperado**: El formulario se envía correctamente, y se muestra un mensaje de éxito.
 
-### Test cases of models
+#### test_advance_payment_form
+- **Descripción**: Prueba el formulario de solicitud de anticipo.
+- **Pasos**:
+  1. Registra un usuario administrador.
+  2. Inicia sesión como administrador.
+  3. Navega al formulario de solicitud de anticipo.
+  4. Completa todos los campos requeridos del formulario.
+  5. Envía el formulario.
+- **Resultado Esperado**: El formulario se envía correctamente, y se muestra un mensaje de éxito.
 
-| Class                     | Método                        | Stage  | Expected results                                                                                           |
-| ------------------------- | ----------------------------- | ------ | ------------------------------------------------------------------------------------------------------------ |
-| ChargeAccountModelTests   | test_create_charge_account    | setUp1 | Create a Charge_account instance with the data proporcionados                                           |
-| RequisitionModelTests     | test_create_requisition       | setUp2 | Create a Requisition instance with the provided data                                              |
-| ExteriorPaymentModelTests | test_create_exterior_payment  | setUp3 | Create an instance of Exterior_payment with the provided data                                         |
-| ExteriorPaymentModelTests | test_exterior_payment_fields  | -      | Verify that the Exterior_payment model has the expected fields                                          |
-| ExteriorPaymentModelTests | test_exterior_payment_choices | -      | Verify that the Exterior_payment model has the correct options for account_type and iba_aba_code_type |
+Estas pruebas 2E2 simulan la interacción de un usuario con la aplicación web, incluyendo el registro, inicio de sesión, navegación a los formularios de solicitud, llenado de campos y envío de los formularios. Cada prueba verifica que el formulario correspondiente se envía correctamente y se muestra un mensaje de éxito después de enviar el formulario.
 
+## RequestsPermissionTestCase
 
+### Method: setUp
 
-## Scenario Configuration
+**Description**: Set up the test environment before running the tests.
+   - Initializes the web browser (Chrome) and sets up the initial data by calling the `setup_data()` method.
 
-### ChargeAccountFormViewTests
+### Method: tearDown
 
-| Name | Class                      | Stage                                                                                                                                                                                                                                                                                                                                                                    |
-| ------ | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| setUp1 | ChargeAccountFormViewTests | name: 'Pablo', identification: '1234567890', phone: '1234567890', city: 'Bogota', addres: 'Calle 123', date: '2023-04-01', value_letters: 'Cien mil pesos', value_numbers: '100000', concept: 'Concepto de prueba', bank: 'Banco de Prueba', type: 'De ahorros', account_number: '1234567890', cex: '12345', retentions: True, declarant: True, colombian_resident: True |
+**Description**: Clean up the test environment after running the tests.
+   - Closes the web browser.
 
-### RequisitionFormViewTests
+### Method: type_text
 
-| Name | Class                    | Stage                                                                                                                                                                                                                                                                                                                                                                                         |
-| ------ | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| setUp2 | RequisitionFormViewTests | date: '2023-04-01', beneficiaryName: 'Pablo', idNumber: '1234567890', charge: 'Developer', dependency: 'IT Department', cenco: '1234', value: '100000.50', concept: 'Reintegro colaboradores', description: 'Descripción de prueba', radicate: '12345', payment_order_code: '67890', paymentMethod: 'Nomina', typeAccount: 'De ahorros', account_number: '1234567890', authorName: 'Fernando' |
+**Description**: Simulate typing text into an input field.
 
-### ExteriorPaymentFormViewTests
+### Method: setup_data
 
-| Name | Class                        | Stage                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| ------ | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| setUp3 | ExteriorPaymentFormViewTests | beneficiary_name: 'Daniela', beneficiary_last_name: 'Londoño', beneficiary_document_type: 'DNI', beneficiary_document_no: '12345678', passport_number: 'ABC123456', passport_expedition_city: 'Cali', address: 'calle 25', bank_name: 'Bancolombia', account_type: 'Ahorros', swift_code: 'BOFAUS3N', iban_aba_code_type: 'IBAN', iban_aba_code: '01010101', account_name: 'Daniela Londoño', account_number: '1234567890', bank_address: 'calle 32' |
+**Description**: Set up the initial data required for the tests.
+   - Creates the roles in the database if they don't exist.
 
-### Test Objective of views
+### Method: setup_roles
 
-The objective of these tests is to verify the correct functioning of the views associated with the collection, requisition and foreign payment account forms, ensuring that the forms are rendered correctly in a GET request and that the data sent through a POST request are processed correctly.
+**Description**: Create the roles in the database if they don't exist.
 
-### Test cases of views
+### Method: register_user
 
-| Class                        | Método         | Stage  | Valores de Entrada | Expected results                                                 |
-| ---------------------------- | -------------- | ------ | ------------------ | ------------------------------------------------------------------ |
-| ChargeAccountFormViewTests   | test_get_form  | setUp1 | -                  | The form must render correctly in a GET request |
-| ChargeAccountFormViewTests   | test_post_form | setUp1 | Valid data      | The form must be processed successfully in a POST request |
-| RequisitionFormViewTests     | test_get_form  | setUp2 | -                  | The form must render correctly in a GET request |
-| RequisitionFormViewTests     | test_post_form | setUp2 | Valid data      | The form must be processed successfully in a POST request |
-| ExteriorPaymentFormViewTests | test_get_form  | setUp3 | -                  | The form must render correctly in a GET request |
-| ExteriorPaymentFormViewTests | test_post_form | setUp3 | Valid data      | The form must be processed successfully in a POST request |
+**Description**: Simulate the registration of a new user in the application.
+   - Opens the registration page.
+   - Fills in the registration form with provided user data.
+   - Submits the registration form.
+   - Verifies successful registration.
+
+### Method: login
+
+**Description**: Log in as a user with the specified credentials.
+   - Opens the login page.
+   - Fills in the login form with provided credentials.
+   - Submits the login form.
+
+### Method: test_solicitante_can_access_create_charge_account_form
+
+**Description**: Test that a user with the 'Solicitante' role can access the 'createChargeAccountForm' view.
+   - Registers a user with the role 'Solicitante'.
+   - Logs in as the user 'Solicitante'.
+   - Accesses the 'createChargeAccountForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_admin_can_access_create_charge_account_form
+
+**Description**: Test that a user with the 'Administrador' role can access the 'createChargeAccountForm' view.
+   - Registers a user with the role 'Administrador'.
+   - Logs in as the user 'Administrador'.
+   - Accesses the 'createChargeAccountForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_contable_cannot_access_create_charge_account_form
+
+**Description**: Test that a user with the 'Contable' role cannot access the 'createChargeAccountForm' view and the appropriate error message is displayed.
+   - Registers a user with the role 'Contable'.
+   - Logs in as the user 'Contable'.
+   - Attempts to access the 'createChargeAccountForm' view.
+   - Verifies the appropriate error message is displayed.
+
+### Method: test_admin_can_access_create_Requisition_Form
+
+**Description**: Test that a user with the 'Admin' role can access the 'createRequisitionForm' view.
+   - Registers a user with the role 'Administrador'.
+   - Logs in as the user 'Solicitante'.
+   - Accesses the 'createRequisitionForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_solicitante_can_access_create_Requisition_Form
+
+**Description**: Test that a user with the 'Solicitante' role can access the 'createRequisitionForm' view.
+   - Registers a user with the role 'Solicitante'.
+   - Logs in as the user 'Solicitante'.
+   - Accesses the 'createRequisitionForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_contable_cannot_access_create_Requisition_Form
+
+**Description**: Test that a user with the 'Contable' role cannot access the 'createRequisitionForm' view and the appropriate error message is displayed.
+   - Registers a user with the role 'Contable'.
+   - Logs in as the user 'Contable'.
+   - Attempts to access the 'createRequisitionForm' view.
+   - Verifies the appropriate error message is displayed.
+
+### Method: test_admin_can_access_create_exterior_paymentForm
+
+**Description**: Test that a user with the 'Admin' role can access the 'createExteriorPaymentForm' view.
+   - Registers a user with the role 'Administrador'.
+   - Logs in as the user 'Administrador'.
+   - Accesses the 'createExteriorPaymentForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_solicitante_can_access_create_exterior_paymentForm
+
+**Description**: Test that a user with the 'Solicitante' role can access the 'createExteriorPaymentForm' view.
+   - Registers a user with the role 'Solicitante'.
+   - Logs in as the user 'Solicitante'.
+   - Accesses the 'createExteriorPaymentForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_contable_cannot_access_create_exterior_paymentForm
+
+**Description**: Test that a user with the 'Contable' role cannot access the 'createExteriorPaymentForm' view and the appropriate error message is displayed.
+   - Registers a user with the role 'Contable'.
+   - Logs in as the user 'Contable'.
+   - Attempts to access the 'createExteriorPaymentForm' view.
+   - Verifies the appropriate error message is displayed.
+
+### Method: test_solicitante_can_access_create_legalization_form
+
+**Description**: Test that a user with the 'Solicitante' role can access the 'createLegalizationForm' view.
+   - Registers a user with the role 'Solicitante'.
+   - Logs in as the user 'Solicitante'.
+   - Accesses the 'createLegalizationForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_admin_can_access_create_legalization_form
+
+**Description**: Test that a user with the 'Administrador' role can access the 'createLegalizationForm' view.
+   - Registers a user with the role 'Administrador'.
+   - Logs in as the user 'Administrador'.
+   - Accesses the 'createLegalizationForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_contable_cannot_access_create_exterior_paymentForm
+
+**Description**: Test that a user with the 'Contable' role cannot access the 'createLegalizationForm' view and the appropriate error message is displayed.
+   - Registers a user with the role 'Contable'.
+   - Logs in as the user 'Contable'.
+   - Attempts to access the 'createLegalizationForm' view.
+   - Verifies the appropriate error message is displayed.
+
+### Method: test_admin_can_access_create_advance_payment_form
+
+**Description**: Test that a user with the 'Administrador' role can access the 'createAdvancePaymentForm' view.
+   - Registers a user with the role 'Administrador'.
+   - Logs in as the user 'Administrador'.
+   - Accesses the 'createAdvancePaymentForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_solicitante_can_access_create_advance_payment_form
+
+**Description**: Test that a user with the 'Solicitante' role can access the 'createAdvancePaymentForm' view.
+   - Registers a user with the role 'Solicitante'.
+   - Logs in as the user 'Solicitante'.
+   - Accesses the 'createAdvancePaymentForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_contable_cannot_access_create_exterior_paymentForm
+
+**Description**: Test that a user with the 'Contable' role cannot access the 'createAdvancePaymentForm' view and the appropriate error message is displayed.
+   - Registers a user with the role 'Contable'.
+   - Logs in as the user 'Contable'.
+   - Attempts to access the 'createAdvancePaymentForm' view.
+   - Verifies the appropriate error message is displayed.
+
+## Tests E2E totales: 
+### 20 tests E2E
