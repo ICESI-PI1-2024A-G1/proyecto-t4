@@ -380,6 +380,165 @@ Esta clase contiene pruebas de extremo a extremo (e2e) para los formularios de s
 
 Estas pruebas 2E2 simulan la interacción de un usuario con la aplicación web, incluyendo el registro, inicio de sesión, navegación a los formularios de solicitud, llenado de campos y envío de los formularios. Cada prueba verifica que el formulario correspondiente se envía correctamente y se muestra un mensaje de éxito después de enviar el formulario.
 
+## RequestsPermissionTestCase
+
+### Method: setUp
+
+**Description**: Set up the test environment before running the tests.
+   - Initializes the web browser (Chrome) and sets up the initial data by calling the `setup_data()` method.
+
+### Method: tearDown
+
+**Description**: Clean up the test environment after running the tests.
+   - Closes the web browser.
+
+### Method: type_text
+
+**Description**: Simulate typing text into an input field.
+
+### Method: setup_data
+
+**Description**: Set up the initial data required for the tests.
+   - Creates the roles in the database if they don't exist.
+
+### Method: setup_roles
+
+**Description**: Create the roles in the database if they don't exist.
+
+### Method: register_user
+
+**Description**: Simulate the registration of a new user in the application.
+   - Opens the registration page.
+   - Fills in the registration form with provided user data.
+   - Submits the registration form.
+   - Verifies successful registration.
+
+### Method: login
+
+**Description**: Log in as a user with the specified credentials.
+   - Opens the login page.
+   - Fills in the login form with provided credentials.
+   - Submits the login form.
+
+### Method: test_solicitante_can_access_create_charge_account_form
+
+**Description**: Test that a user with the 'Solicitante' role can access the 'createChargeAccountForm' view.
+   - Registers a user with the role 'Solicitante'.
+   - Logs in as the user 'Solicitante'.
+   - Accesses the 'createChargeAccountForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_admin_can_access_create_charge_account_form
+
+**Description**: Test that a user with the 'Administrador' role can access the 'createChargeAccountForm' view.
+   - Registers a user with the role 'Administrador'.
+   - Logs in as the user 'Administrador'.
+   - Accesses the 'createChargeAccountForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_contable_cannot_access_create_charge_account_form
+
+**Description**: Test that a user with the 'Contable' role cannot access the 'createChargeAccountForm' view and the appropriate error message is displayed.
+   - Registers a user with the role 'Contable'.
+   - Logs in as the user 'Contable'.
+   - Attempts to access the 'createChargeAccountForm' view.
+   - Verifies the appropriate error message is displayed.
+
+### Method: test_admin_can_access_create_Requisition_Form
+
+**Description**: Test that a user with the 'Admin' role can access the 'createRequisitionForm' view.
+   - Registers a user with the role 'Administrador'.
+   - Logs in as the user 'Solicitante'.
+   - Accesses the 'createRequisitionForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_solicitante_can_access_create_Requisition_Form
+
+**Description**: Test that a user with the 'Solicitante' role can access the 'createRequisitionForm' view.
+   - Registers a user with the role 'Solicitante'.
+   - Logs in as the user 'Solicitante'.
+   - Accesses the 'createRequisitionForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_contable_cannot_access_create_Requisition_Form
+
+**Description**: Test that a user with the 'Contable' role cannot access the 'createRequisitionForm' view and the appropriate error message is displayed.
+   - Registers a user with the role 'Contable'.
+   - Logs in as the user 'Contable'.
+   - Attempts to access the 'createRequisitionForm' view.
+   - Verifies the appropriate error message is displayed.
+
+### Method: test_admin_can_access_create_exterior_paymentForm
+
+**Description**: Test that a user with the 'Admin' role can access the 'createExteriorPaymentForm' view.
+   - Registers a user with the role 'Administrador'.
+   - Logs in as the user 'Administrador'.
+   - Accesses the 'createExteriorPaymentForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_solicitante_can_access_create_exterior_paymentForm
+
+**Description**: Test that a user with the 'Solicitante' role can access the 'createExteriorPaymentForm' view.
+   - Registers a user with the role 'Solicitante'.
+   - Logs in as the user 'Solicitante'.
+   - Accesses the 'createExteriorPaymentForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_contable_cannot_access_create_exterior_paymentForm
+
+**Description**: Test that a user with the 'Contable' role cannot access the 'createExteriorPaymentForm' view and the appropriate error message is displayed.
+   - Registers a user with the role 'Contable'.
+   - Logs in as the user 'Contable'.
+   - Attempts to access the 'createExteriorPaymentForm' view.
+   - Verifies the appropriate error message is displayed.
+
+### Method: test_solicitante_can_access_create_legalization_form
+
+**Description**: Test that a user with the 'Solicitante' role can access the 'createLegalizationForm' view.
+   - Registers a user with the role 'Solicitante'.
+   - Logs in as the user 'Solicitante'.
+   - Accesses the 'createLegalizationForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_admin_can_access_create_legalization_form
+
+**Description**: Test that a user with the 'Administrador' role can access the 'createLegalizationForm' view.
+   - Registers a user with the role 'Administrador'.
+   - Logs in as the user 'Administrador'.
+   - Accesses the 'createLegalizationForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_contable_cannot_access_create_exterior_paymentForm
+
+**Description**: Test that a user with the 'Contable' role cannot access the 'createLegalizationForm' view and the appropriate error message is displayed.
+   - Registers a user with the role 'Contable'.
+   - Logs in as the user 'Contable'.
+   - Attempts to access the 'createLegalizationForm' view.
+   - Verifies the appropriate error message is displayed.
+
+### Method: test_admin_can_access_create_advance_payment_form
+
+**Description**: Test that a user with the 'Administrador' role can access the 'createAdvancePaymentForm' view.
+   - Registers a user with the role 'Administrador'.
+   - Logs in as the user 'Administrador'.
+   - Accesses the 'createAdvancePaymentForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_solicitante_can_access_create_advance_payment_form
+
+**Description**: Test that a user with the 'Solicitante' role can access the 'createAdvancePaymentForm' view.
+   - Registers a user with the role 'Solicitante'.
+   - Logs in as the user 'Solicitante'.
+   - Accesses the 'createAdvancePaymentForm' view.
+   - Verifies the correct page is displayed.
+
+### Method: test_contable_cannot_access_create_exterior_paymentForm
+
+**Description**: Test that a user with the 'Contable' role cannot access the 'createAdvancePaymentForm' view and the appropriate error message is displayed.
+   - Registers a user with the role 'Contable'.
+   - Logs in as the user 'Contable'.
+   - Attempts to access the 'createAdvancePaymentForm' view.
+   - Verifies the appropriate error message is displayed.
 
 ## Tests E2E totales: 
-### 5 tests E2E
+### 20 tests E2E
