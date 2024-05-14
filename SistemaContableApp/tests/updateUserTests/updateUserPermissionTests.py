@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, Group
 from SistemaContableApp.models import  *
 from SistemaContableApp.views import  *
 
-
+a
 class updateUserPermissionTestCase(TestCase):
 
     def setUp(self):
@@ -26,31 +26,61 @@ class updateUserPermissionTestCase(TestCase):
         self.client = Client()
 
     def test_user_list_allowed(self):
+        """
+        Tests if a user with the 'Administrador' role has permission to access the 'user_list' view.
+        Logs in with the administrator user, makes a GET request to the 'user_list' view,
+        and verifies that the HTTP status code is 200 (OK).
+        """
         self.client.login(username='admin', password='password')
         response = self.client.get(reverse('user_list'))
         self.assertEqual(response.status_code, 200)
 
     def test_user_list_not_allowed(self):
+        """
+        Tests if a user with the 'Solicitante' role does not have permission to access the 'user_list' view.
+        Logs in with the applicant user, makes a GET request to the 'user_list' view,
+        and verifies that the HTTP status code is 302 (Redirection).
+        """
         self.client.login(username='solicitante', password='password')
         response = self.client.get(reverse('user_list'))
         self.assertEqual(response.status_code, 302)
 
     def test_edit_user_allowed(self):
+        """
+        Tests if a user with the 'Administrador' role has permission to access the 'edit_user' view.
+        Logs in with the administrator user, makes a GET request to the 'edit_user' view with the administrator user's ID,
+        and verifies that the HTTP status code is 200 (OK).
+        """
         self.client.login(username='admin', password='password')
         response = self.client.get(reverse('edit_user', args=[self.user_administrador.id]))
         self.assertEqual(response.status_code, 200)
 
     def test_edit_user_not_allowed(self):
+        """
+        Tests if a user with the 'Solicitante' role does not have permission to access the 'edit_user' view.
+        Logs in with the applicant user, makes a GET request to the 'edit_user' view with the administrator user's ID,
+        and verifies that the HTTP status code is 302 (Redirection).
+        """
         self.client.login(username='solicitante', password='password')
         response = self.client.get(reverse('edit_user', args=[self.user_administrador.id]))
         self.assertEqual(response.status_code, 302)
 
     def test_delete_user_allowed(self):
+        """
+        Tests if a user with the 'Administrador' role has permission to access the 'delete_user' view.
+        Logs in with the administrator user, makes a GET request to the 'delete_user' view with the administrator user's ID,
+        and verifies that the HTTP status code is 200 (OK).
+        """
         self.client.login(username='admin', password='password')
         response = self.client.get(reverse('delete_user', args=[self.user_administrador.id]))
         self.assertEqual(response.status_code, 200)
 
     def test_delete_user_not_allowed(self):
+        """
+        Tests if a user with the 'Solicitante' role does not have permission to access the 'delete_user' view.
+        Logs in with the applicant user, makes a GET request to the 'delete_user' view with the administrator user's ID,
+        and verifies that the HTTP status code is 302 (Redirection).
+        """
         self.client.login(username='solicitante', password='password')
         response = self.client.get(reverse('delete_user', args=[self.user_administrador.id]))
         self.assertEqual(response.status_code, 302)
