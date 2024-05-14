@@ -181,14 +181,16 @@ def updateState(request, following_id):
 
     return redirect('fullOneStopShop')  # Redirigir a la página principal
 
-# envia correo una vez cambiada la solicitud
 def send_state_change_email(following, new_state, description):
     subject = 'Cambio de estado realizado'
-    message = f"El estado de {following.id} ha sido actualizado a '{new_state.state}'. Descripción: {description}."
+    message = f"El estado de la solicitud número {following.id} ha sido actualizado a '{new_state.state}'. Con la descripción: {description}."
     from_email = settings.EMAIL_HOST_USER
-    to_email = 'pinedapablo6718@gmail.com' # a quien va dirigido el correo
-    send_mail(subject, message, from_email, [to_email])
 
+    # Obtenemos los correos electrónicos de los administradores
+    admin_emails = User.objects.filter(rol__rol='Administrador').values_list('email', flat=True)
+
+    # Enviamos el correo a todos los administradores
+    send_mail(subject, message, from_email, admin_emails)
 
 def changeHistory(request, following_id):
     following = Following.objects.get(pk=following_id)
