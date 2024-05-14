@@ -392,6 +392,38 @@ La clase `ViewTestCase` contiene pruebas para verificar el comportamiento de las
   - **Entrada**: Usuario autenticado como 'Ventanilla única'.
   - **Resultado esperado**: Se espera que la vista redireccione a 'OneStopShopForm' después de enviar el formulario correctamente. Se debe crear una instancia de Following con el creador proporcionado y una instancia de AttachedDocument asociada al Following creado.
 
+## Tests unitarios totales
+
+### Comentario de aprobación area contable:
+#### Total: 10 tests
+
+### modificación estado de aceptación : 2 tests
+### modificación estado de revisión : 2 tests
+### modificación estado de aprobación : 2 tests
+#### Total: 6 tests
+
+### historial de modificación manual del estado:
+#### Total: 3 tests
+
+### Forms test:
+#### Total: 4 tests
+
+### Models test:
+#### Total: 2 tests
+
+### Modify state:
+#### Total: 4 tests
+
+### Search tesT:
+#### Total: 5 tests
+
+### views test:
+#### Total: 4 tests
+
+### Gestión de permisos
+#### Total: 20 tests
+
+### Total Final: 58 tests
 
 ### Descripción de tests E2E
 
@@ -425,3 +457,242 @@ Esta clase contiene pruebas de extremo a extremo (E2E) para los formularios de s
 
   - **Descripción**: Prueba la funcionalidad del formulario de "Agregar a ventanilla única".
   - **Resultado esperado**: Se espera que el formulario se llene correctamente y que el envío sea exitoso, mostrando un mensaje de éxito después del envío.
+
+
+## OneStopShopPermissionTestCase
+
+### Método: setUp
+
+**Descripción**: Configura el entorno de prueba antes de ejecutar las pruebas.
+
+   - Inicializa el navegador web (Chrome) y configura los datos iniciales llamando al método `setup_data()`.
+
+### Método: tearDown
+
+**Descripción**: Limpia el entorno de prueba después de ejecutar las pruebas.
+
+   - Cierra el navegador web.
+
+### Método: type_text
+
+**Descripción**: Simula escribir texto en un campo de entrada.
+
+### Método: setup_data
+
+**Descripción**: Configura los datos iniciales requeridos para las pruebas.
+
+   - Crea los roles en la base de datos si no existen.
+   - Llama al método `setup_state()`.
+
+### Método: setup_state
+
+**Descripción**: Crea el estado "En revisión" en la base de datos si no existe.
+
+### Método: setup_roles
+
+**Descripción**: Crea los roles en la base de datos si no existen.
+
+### Método: register_user
+
+**Descripción**: Simula el registro de un nuevo usuario en la aplicación.
+
+   - Abre la página de registro.
+   - Rellena el formulario de registro con los datos proporcionados.
+   - Envía el formulario de registro.
+   - Verifica el registro exitoso.
+
+### Método: login
+
+**Descripción**: Inicia sesión como usuario con las credenciales especificadas.
+
+   - Abre la página de inicio de sesión.
+   - Rellena el formulario de inicio de sesión con las credenciales proporcionadas.
+   - Envía el formulario de inicio de sesión.
+
+### Método: test_admin_can_access_summary_one_stop_shop_view
+
+**Descripción**: Prueba que un usuario con el rol 'admin' pueda acceder a la vista 'summaryOneStopShopView'.
+
+   - Registra un usuario con el rol 'Administrador'.
+   - Inicia sesión como el usuario 'Administrador'.
+   - Accede a la vista 'summaryOneStopShopView'.
+   - Verifica que se muestre el título adecuado.
+
+
+### Método: test_lider_can_access_summary_one_stop_shop_view
+
+1. **Descripción**: Prueba que un usuario con el rol 'Líder' pueda acceder a la vista 'summaryOneStopShopView'.
+2. **Pasos**:
+    - Registrar un usuario con el rol 'Líder'.
+    - Iniciar sesión como el usuario 'Líder'.
+    - Acceder a la vista 'summaryOneStopShopView'.
+    - Verificar que se muestra el título.
+
+### Método: test_gestor_can_access_summary_one_stop_shop_view
+
+1. **Descripción**: Prueba que un usuario con el rol 'Gestor' pueda acceder a la vista 'summaryOneStopShopView'.
+2. **Pasos**:
+    - Registrar un usuario con el rol 'Gestor'.
+    - Iniciar sesión como el usuario 'Gestor'.
+    - Acceder a la vista 'summaryOneStopShopView'.
+    - Verificar que se muestra el título.
+
+### Método: test_solicitante_cannot_access_summary_one_stop_shop_view
+
+1. **Descripción**: Prueba que un usuario con el rol 'Solicitante' no pueda acceder a la vista 'summaryOneStopShopView' y se muestre el mensaje de error apropiado.
+2. **Pasos**:
+    - Registrar un usuario con el rol 'Solicitante'.
+    - Iniciar sesión como el usuario 'Solicitante'.
+    - Intentar acceder a la vista.
+    - Verificar que se muestra el mensaje de error.
+
+### Método: test_gestor_can_access_full_one_stop_shop_view
+
+1. **Descripción**: Prueba que un usuario con el rol 'Gestor' pueda acceder a la vista 'fullOneStopShopView'.
+2. **Pasos**:
+    - Registrar un usuario con el rol 'Gestor'.
+    - Iniciar sesión como el usuario 'Gestor'.
+    - Acceder a la vista 'fullOneStopShopView'.
+    - Verificar que se muestra el título.
+
+### Método: test_admin_can_access_full_one_stop_shop_view
+
+1. **Descripción**: Prueba que un usuario con el rol 'Administrador' pueda acceder a la vista 'fullOneStopShopView'.
+2. **Pasos**:
+    - Registrar un usuario con el rol 'Administrador'.
+    - Iniciar sesión como el usuario 'Administrador'.
+    - Acceder a la vista 'fullOneStopShopView'.
+    - Verificar que se muestra el título.
+
+### Método: test_solicitante_cannot_access_full_one_stop_shop_view
+
+1. **Descripción**: Prueba que un usuario con el rol 'Solicitante' no pueda acceder a la vista 'fullOneStopShopView' y se muestre el mensaje de error apropiado.
+2. **Pasos**:
+    - Registrar un usuario con el rol 'Solicitante'.
+    - Iniciar sesión como el usuario 'Solicitante'.
+    - Intentar acceder a la vista.
+    - Verificar que se muestra el mensaje de error.
+
+### Método: test_ventanilla_can_access_one_stop_shop_form_view
+
+1. **Descripción**: Prueba que un usuario con el rol 'Ventanilla única' pueda acceder a la vista 'oneStopShopFormView'.
+2. **Pasos**:
+    - Registrar un usuario con el rol 'Ventanilla única'.
+    - Iniciar sesión como el usuario 'Ventanilla única'.
+    - Acceder a la vista 'oneStopShopFormView'.
+    - Verificar que se muestra el título.
+
+### Método: test_admin_cannot_access_access_one_stop_shop_form_view
+
+1. **Descripción**: Prueba que un usuario con el rol 'Administrador' no pueda acceder a la vista 'oneStopShopFormView' y se muestre el mensaje de error apropiado.
+2. **Pasos**:
+    - Registrar un usuario con el rol 'Administrador'.
+    - Iniciar sesión como el usuario 'Administrador'.
+    - Intentar acceder a la vista.
+    - Verificar que se muestra el mensaje de error.
+
+### Método: test_lider_cannot_access_access_one_stop_shop_form_view
+
+1. **Descripción**: Prueba que un usuario con el rol 'Lider' no pueda acceder a la vista 'oneStopShopFormView' y se muestre el mensaje de error apropiado.
+2. **Pasos**:
+    - Registrar un usuario con el rol 'Lider'.
+    - Iniciar sesión como el usuario 'Lider'.
+    - Intentar acceder a la vista.
+    - Verificar que se muestra el mensaje de error.
+
+### Método: test_gestor_cannot_access_access_one_stop_shop_form_view
+
+1. **Descripción**: Prueba que un usuario con el rol 'Gestor' no pueda acceder a la vista 'oneStopShopFormView' y se muestre el mensaje de error apropiado.
+2. **Pasos**:
+    - Registrar un usuario con el rol 'Gestor'.
+    - Iniciar sesión como el usuario 'Gestor'.
+    - Intentar acceder a la vista.
+    - Verificar que se muestra el mensaje de error.
+
+
+### Método: test_update_state_allowed_users
+
+1. **Descripción**: Prueba que un usuario con el rol 'Administrador' o 'Gestor' pueda actualizar el estado correctamente.
+2. **Pasos**:
+    - Registrar un usuario con permisos.
+    - Crear un nuevo objeto Following.
+    - Iniciar sesión como el usuario.
+    - Intentar acceder a la vista.
+    - Cambiar el estado.
+    - Verificar que el estado se haya actualizado correctamente.
+
+### Método: test_update_state_not_allowed_users
+
+1. **Descripción**: Prueba que los usuarios sin el rol 'Administrador' o 'Gestor' no puedan actualizar el estado de un seguimiento y se muestre el mensaje de error apropiado.
+2. **Pasos**:
+    - Registrar un usuario sin permisos.
+    - Crear un nuevo objeto Following.
+    - Iniciar sesión como el usuario sin permisos.
+    - Intentar acceder a la vista.
+    - Cambiar el estado.
+    - Verificar que se muestra el mensaje de error.
+    - Verificar que el estado del seguimiento no haya cambiado.
+
+
+### Método: test_approval_comment_not_allowed_user
+
+1. **Descripción**: Prueba que un usuario sin el rol 'Administrador' o 'Gestor' no puede agregar un comentario de aprobación.
+2. **Pasos**:
+    - Registrar un usuario sin permisos.
+    - Crear un nuevo objeto Following.
+    - Iniciar sesión como el usuario sin permisos.
+    - Acceder a la vista de comentario de aprobación.
+    - Abrir el modal de comentario de aprobación.
+    - Esperar a que el modal se abra.
+    - Ingresar un comentario de aprobación.
+    - Enviar el formulario.
+    - Verificar que se muestra el mensaje de error.
+    - Verificar que el comentario de aprobación no haya cambiado.
+
+### Método: test_acceptance_state_not_allowed_user
+
+1. **Descripción**: Prueba que un usuario sin el rol 'Administrador' o 'Gestor' no puede editar el estado de aceptación.
+2. **Pasos**:
+    - Registrar un usuario sin permisos.
+    - Crear un nuevo objeto Following.
+    - Iniciar sesión como el usuario sin permisos.
+    - Acceder a la vista de comentario de aprobación.
+    - Abrir el modal de comentario de aprobación.
+    - Esperar a que el modal se abra.
+    - Ingresar un comentario de aprobación.
+    - Enviar el formulario.
+    - Verificar que se muestra el mensaje de error.
+    - Verificar que el estado de aceptación no haya cambiado.
+
+### Método: test_revision_state_not_allowed_user
+
+1. **Descripción**: Prueba que un usuario sin el rol 'Administrador' o 'Gestor' no puede editar el estado de revisión.
+2. **Pasos**:
+    - Registrar un usuario sin permisos.
+    - Crear un nuevo objeto Following.
+    - Iniciar sesión como el usuario sin permisos.
+    - Acceder a la vista de comentario de aceptación.
+    - Abrir el modal de comentario de aceptación.
+    - Esperar a que el modal se abra.
+    - Ingresar un comentario de aceptación.
+    - Enviar el formulario.
+    - Verificar que se muestra el mensaje de error.
+    - Verificar que el estado de aceptación no haya cambiado.
+
+### Método: test_approval_state_not_allowed_user
+
+1. **Descripción**: Prueba que un usuario sin el rol 'Administrador' o 'Gestor' no puede editar el estado de aprobación.
+2. **Pasos**:
+    - Registrar un usuario sin permisos.
+    - Crear un nuevo objeto Following.
+    - Iniciar sesión como el usuario sin permisos.
+    - Acceder a la vista de edición de estado de aprobación.
+    - Intentar abrir el modal de comentario de aprobación.
+    - Esperar a que el modal se abra.
+    - Ingresar un comentario de aceptación.
+    - Enviar el formulario.
+    - Verificar que se muestra el mensaje de error.
+    - Verificar que el estado de aprobación no haya cambiado.
+
+## Tests E2E totales: 
+### 18 tests E2E
