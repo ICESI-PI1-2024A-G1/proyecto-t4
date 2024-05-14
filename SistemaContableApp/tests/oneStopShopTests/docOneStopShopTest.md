@@ -391,3 +391,37 @@ La clase `ViewTestCase` contiene pruebas para verificar el comportamiento de las
   - **Descripción**: Prueba de la vista `OneStopShopForm` con una solicitud POST que contiene datos válidos.
   - **Entrada**: Usuario autenticado como 'Ventanilla única'.
   - **Resultado esperado**: Se espera que la vista redireccione a 'OneStopShopForm' después de enviar el formulario correctamente. Se debe crear una instancia de Following con el creador proporcionado y una instancia de AttachedDocument asociada al Following creado.
+
+
+### Descripción de tests E2E
+
+#### FormTestCase
+
+Esta clase contiene pruebas de extremo a extremo (E2E) para los formularios de solicitud de la aplicación.
+
+#### setup_data
+
+  - **Descripción**: Configura los datos necesarios para las pruebas.
+  - **Resultado esperado**: Los roles y estados se configuran correctamente en la base de datos antes de ejecutar las pruebas.
+
+#### type_text
+
+  - **Descripción**: Simula la escritura de texto en un campo de formulario.
+  - **Entrada**: `element` (el elemento del formulario), `text` (el texto a escribir).
+  - **Resultado esperado**: El texto se escribe correctamente en el campo de formulario proporcionado.
+
+#### register_user
+
+  - **Descripción**: Prueba el proceso de registro de un nuevo usuario.
+  - **Entrada**: `name` (nombre del usuario), `last_name` (apellido del usuario), `email` (correo electrónico del usuario), `rol` (rol del usuario), `password` (contraseña del usuario).
+  - **Resultado esperado**: Se espera que el usuario se registre correctamente y se muestre un mensaje de confirmación en la página.
+
+#### login_as_ventanilla
+
+  - **Descripción**: Prueba el proceso de inicio de sesión como usuario de "Ventanilla única".
+  - **Resultado esperado**: Se espera que el usuario inicie sesión correctamente y sea redirigido a la página principal después de iniciar sesión.
+
+#### test_onestopshop_form
+
+  - **Descripción**: Prueba la funcionalidad del formulario de "Agregar a ventanilla única".
+  - **Resultado esperado**: Se espera que el formulario se llene correctamente y que el envío sea exitoso, mostrando un mensaje de éxito después del envío.

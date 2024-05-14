@@ -142,7 +142,21 @@ class ModifyStateTestCase(TestCase):
         self.assertEqual(self.following.currentState, self.state)
     
     def test_update_state_unauthorized_user(self):
-        # Crear un usuario sin el rol de administrador
+        """
+        Test case to verify that an unauthorized user cannot update the state of a following.
+
+        Steps:
+        1. Create a regular user without the administrator role.
+        2. Log in the regular user.
+        3. Create an instance.
+        4. Create a new state.
+        5. Get the URL for the update_state view with the ID of the following.
+        6. Send a POST request to the view with the new state.
+        7. Check the error message in the response.
+        8. Refresh the state of the following from the database.
+        9. Verify that the state of the following has not changed.
+
+        """
         User = get_user_model()
         regular_user = User.objects.create_user(
             username='regular',

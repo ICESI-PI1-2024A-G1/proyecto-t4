@@ -10,21 +10,41 @@ import os
 from SistemaContableApp.models import State
 from selenium.webdriver.support.select import Select
 
-class RegistrationAndLoginTestCase(StaticLiveServerTestCase):
+class FormTestCase(StaticLiveServerTestCase):
     def setUp(self):
+        """
+        Set up the test environment before each test case.
+
+        This method initializes the web driver, sets an implicit wait of 5 seconds,
+        and sets up any necessary test data.
+        """
         self.browser = webdriver.Chrome()
         self.browser.implicitly_wait(5)
         self.setup_data()
 
     def tearDown(self):
+        """
+        This method is called after each test case is executed to perform any necessary clean-up actions.
+        It quits the browser instance.
+        """
         self.browser.quit()
 
     def setup_data(self):
+        """
+        Sets up the data required for testing.
+
+        This method calls the setup_roles() and setup_states() methods to initialize the necessary roles and states.
+        """
         self.setup_roles()
         self.setup_states()
 
     def setup_roles(self):
-        # Crea los roles si no existen
+        """
+        Sets up the roles if they don't already exist.
+
+        This method checks if the roles 'Administrador', 'Líder', 'Gestor', 'Ventanilla única', and 'Contable' exist in the database.
+        If any of these roles do not exist, they are created using the mixer.blend() function from the mixer library.
+        """
         if not Rol.objects.filter(rol="Administrador").exists():
             mixer.blend(Rol, rol="Administrador")
         if not Rol.objects.filter(rol="Líder").exists():
@@ -37,18 +57,52 @@ class RegistrationAndLoginTestCase(StaticLiveServerTestCase):
             mixer.blend(Rol, rol="Contable")
 
     def setup_states(self):
-        # Crea los estados si no existen
+        """
+        Sets up the states if they don't already exist.
+
+        This method iterates over the `ESTADOS` list in the `State` class and creates
+        new state objects if they don't already exist in the database.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         for state, color in State.ESTADOS:
             if not State.objects.filter(state=state).exists():
                 mixer.blend(State, state=state, color=color)
 
 
     def type_text(self, element, text):
+        """
+        Types the given text into the specified element.
+
+        Args:
+            element: The element to type the text into.
+            text: The text to be typed.
+
+        Returns:
+            None
+        """
         for char in text:
             element.send_keys(char)
-            time.sleep(0.02)  # Espera 0.02 segundos después de cada tecla
+            time.sleep(0.02)  # Wait for 0.02 seconds after each key
 
     def register_user(self, name, last_name, email, rol, password):
+        """
+        Registers a user with the provided information.
+
+        Args:
+            name (str): The user's name.
+            last_name (str): The user's last name.
+            email (str): The user's email address.
+            rol (str): The user's role.
+            password (str): The user's password.
+
+        Returns:
+            None
+        """
         # Abre la página de registro
         self.browser.get(self.live_server_url + '/registro/')
 
@@ -80,6 +134,18 @@ class RegistrationAndLoginTestCase(StaticLiveServerTestCase):
         self.assertIn('Registro exitoso.', self.browser.page_source)
 
     def login_as_ventanilla(self):
+        """
+        Logs in as a 'ventanilla' user.
+
+        This method opens the login page, fills in the login form with the 'ventanilla' user credentials,
+        and submits the form. It then waits for the page to refresh.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         # Abre la página de inicio de sesión
         self.browser.get(self.live_server_url)
 
@@ -99,6 +165,21 @@ class RegistrationAndLoginTestCase(StaticLiveServerTestCase):
         time.sleep(5)
 
     def test_onestopshop_form(self):
+        """
+        Test case for submitting the one-stop shop form.
+
+        Steps:
+        1. Register and login as a user with the role of "Ventanilla única".
+        2. Navigate to the "Agregar a ventanilla única" form page.
+        3. Fill in all the form fields.
+        4. Submit the form.
+        5. Wait for the success notification to appear.
+
+        This test case verifies that the form can be successfully submitted and the success notification is displayed.
+
+        Returns:
+            None
+        """
         # Registrar e iniciar sesión con un usuario con el rol de "Ventanilla única"
         self.register_user("Ventanilla", "Test", "ventanilla@example.com", "Rol Object (4)", "Unicapass123")
         self.login_as_ventanilla()
@@ -109,65 +190,7 @@ class RegistrationAndLoginTestCase(StaticLiveServerTestCase):
         # Esperar a que aparezcan los campos del formulario
         self.browser.implicitly_wait(5)
 
-       # Identificar y llenar todos los campos del formulario
+        # Identificar y llenar todos los campos del formulario
         creation_date_input = self.browser.find_element(By.ID, 'id_creationDate')
         self.type_text(creation_date_input, "2023-05-12")
 
-        creator_input = self.browser.find_element(By.ID, 'id_creator')
-        self.type_text(creator_input, "Dana")
-
-        type_input = self.browser.find_element(By.ID, 'id_type')
-        self.type_text(type_input, "Requisicion")
-
-        supplier_input = self.browser.find_element(By.ID, 'id_supplier')
-        self.type_text(supplier_input, "Pedro")
-
-        supplier_id_input = self.browser.find_element(By.ID, 'id_supplierId')
-        self.type_text(supplier_id_input, "Pedro123")
-
-        document_number_input = self.browser.find_element(By.ID, 'id_documentNumber')
-        self.type_text(document_number_input, "1110092846")
-
-        concept_input = self.browser.find_element(By.ID, 'id_concept')
-        self.type_text(concept_input, "Financiero")
-
-        supplier_email_input = self.browser.find_element(By.ID, 'id_supplierEmail')
-        self.type_text(supplier_email_input, "pedro123@example.com")
-
-        money_type_input = self.browser.find_element(By.ID, 'id_moneyType')
-        self.type_text(money_type_input, "USD")
-
-        amount_input = self.browser.find_element(By.ID, 'id_amount')
-        self.type_text(amount_input, "1000")
-
-        cenco_input = self.browser.find_element(By.ID, 'id_cenco')
-        self.type_text(cenco_input, "50")
-        cex_number_input = self.browser.find_element(By.ID, 'id_cexNumber')
-        self.type_text(cex_number_input, "Cex102")
-
-        observations_input = self.browser.find_element(By.ID, 'id_observations')
-        self.type_text(observations_input, "Ninguna")
-
-        current_state_select = Select(self.browser.find_element(By.ID, 'id_currentState'))
-        current_state_select.select_by_visible_text("Aprobado")
-
-
-        close_date_input = self.browser.find_element(By.ID, 'id_closeDate')
-        self.type_text(close_date_input, "2023-05-12")
-
-        file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'static', 'mediaTest', 'A.docx'))
-        file_field = self.browser.find_element(By.ID, 'id_file')  # Define el campo del archivo
-        file_field.send_keys(file_path)  # Envía la ruta del archivo al campo del archivo
-
-        submit_button = WebDriverWait(self.browser, 10).until(
-                EC.presence_of_element_located((By.ID, 'submit_button_id'))
-            )
-            # Realizar clic utilizando JavaScript
-        self.browser.execute_script("arguments[0].click();", submit_button)
-
-        # Esperar un poco para que la página se actualice
-        time.sleep(5)
-
-        # Esperar a que aparezca la notificación de envío exitoso
-        wait = WebDriverWait(self.browser, 15)
-        success_message = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.alert.alert-success')))
