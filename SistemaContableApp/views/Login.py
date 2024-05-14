@@ -21,11 +21,8 @@ def index(request):
         HttpResponse: The HTTP response rendering the home page.
   
     """
-    
-    title = "¡Bienvenidos al Sistema Contable"
-    return render(request,'index.html', {
-        'title' : title 
-    })
+
+    return render(request,'index.html')
 
 
 def olvidar_contraseña(request):

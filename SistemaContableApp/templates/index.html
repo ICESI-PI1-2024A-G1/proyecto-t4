@@ -2,16 +2,23 @@
 {% load static %}
 {% block content %}
 {% include 'partials/error_modal.html' %}
-<html>
-    <head>
-        <link rel="stylesheet" type='text/css' href="{% static '/styles/error_modal.css' %}">
-    </head>
-    <body>
-    <main class="container">
-        <h1>{{title}} <span style="font-size: 40px;">🙌</span></h1>
-        <p>Por favor, haz clic en la ventana titulada "🖹Solicitud" para hacer  el proceso de creación de la solicitud. Una vez que hayas hecho clic en la ventana adecuada, podrás proceder con la creación de la solicitud. Si necesitas ayuda adicional, no dudes en preguntar.</p> 
-    </main>
-    </body>
-</html>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Título de tu sitio</title>
+  <link rel="stylesheet" type="text/css" href="{% static '/styles/index.css' %}">
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <h1>Bienvenido al sistema contable</h1>
+      <p>{{user.name}} {{user.last_name}}</p>
+    </div>
+    <div class="wave-bg"></div>
+  </div>
+</body>
+</html>
 {% endblock %}
