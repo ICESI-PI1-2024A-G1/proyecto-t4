@@ -6,8 +6,6 @@ from SistemaContableApp.views import  *
 from datetime import datetime, date
 
 
-class FormCreationViewTestCaseP(TestCase):
-
     def setUp(self):
    
         # Crear roles y grupos necesarios
@@ -32,56 +30,101 @@ class FormCreationViewTestCaseP(TestCase):
         self.client = Client()
 
     def test_createChargeAccountForm_allowed(self):
+        """
+        This test verifies that a user with the "Requester" role has permission to access the "viewChargeAccountForm" view.
+        Wait for an HTTP status code of 200 (OK).
+        It also checks if the form instance in the context is of type ChargeAccountForm.
+        """
         self.client.login(username='solicitante', password='password')
         response = self.client.get(reverse('viewChargeAccountForm'))
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.context['form'], ChargeAccountForm)
 
     def test_createChargeAccountForm_not_allowed(self):
+        """
+        This test verifies that a user with the "Accountant" role does not have permission to access the "viewChargeAccountForm" view.
+        Expect an HTTP status code of 302 (Redirect).
+        """
         self.client.login(username='contable', password='password')
         response = self.client.get(reverse('viewChargeAccountForm'))
         self.assertEqual(response.status_code, 302)
 
     def test_createRequisitionForm_allowed(self):
+        """
+        This test verifies that a user with the "Requisitioner" role has permission to access the "viewRequisitionForm" view.
+        Wait for an HTTP status code of 200 (OK).
+        It also checks if the form instance in the context is of type RequisitionForm.
+        """
         self.client.login(username='solicitante', password='password')
         response = self.client.get(reverse('viewRequisitionForm'))
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.context['form'], RequisitionForm)
 
     def test_createRequisitionForm_not_allowed(self):
+        """
+        This test verifies that a user with the "Accountant" role does not have permission to access the "viewRequisitionForm" view.
+        Expect an HTTP status code of 302 (Redirect).
+        """
         self.client.login(username='contable', password='password')
         response = self.client.get(reverse('viewRequisitionForm'))
         self.assertEqual(response.status_code, 302) 
 
     def test_createExteriorPaymentForm_allowed(self):
+        """
+        This test verifies that a user with the "Applicant" role has permission to access the "viewExteriorPaymentForm" view.
+        Wait for an HTTP status code of 200 (OK).
+        It also checks if the form instance in the context is of type ExteriorPaymentForm.
+        """
         self.client.login(username='solicitante', password='password')
         response = self.client.get(reverse('viewExteriorPaymentForm'))
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.context['form'], ExteriorPaymentForm)
 
     def test_createExteriorPaymentForm_not_allowed(self):
+        """
+        This test verifies that a user with the "Accountant" role does not have permission to access the "viewExteriorPaymentForm" view.
+        Expect an HTTP status code of 302 (Redirect).
+        """
         self.client.login(username='contable', password='password')
         response = self.client.get(reverse('viewExteriorPaymentForm'))
         self.assertEqual(response.status_code, 302)
 
     def test_createLegalizationForm_allowed(self):
+        """
+        This test verifies that a user with the "Applicant" role has permission to access the "viewLegalizationForm" view.
+        Wait for an HTTP status code of 200 (OK).
+        It also checks if the form instance in the context is of type TravelExpensesSolicitationForm.
+        """
         self.client.login(username='solicitante', password='password')
         response = self.client.get(reverse('viewLegalizationForm'))
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.context['solicitation_form'], TravelExpensesSolicitationForm)
 
     def test_createLegalizationForm_not_allowed(self):
+        """
+        This test verifies that a user with the "Accountant" role does not have permission to access the "viewLegalizationForm" view.
+        Expect an HTTP status code of 302 (Redirect).
+        """
         self.client.login(username='contable', password='password')
         response = self.client.get(reverse('viewLegalizationForm'))
         self.assertEqual(response.status_code, 302)
 
     def test_createAdvancePaymentForm_allowed(self):
+        """
+        This test verifies that a user with the "Applicant" role has permission to access the "viewAdvancePaymentForm" view.
+        Wait for an HTTP status code of 200 (OK).
+        It also checks if the form instance in the context is of type TravelAdvanceSolicitationForm.
+        """
         self.client.login(username='solicitante', password='password')
         response = self.client.get(reverse('viewAdvancePaymentForm'))
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.context['solicitation_form'], TravelAdvanceSolicitationForm)
 
     def test_createAdvancePaymentForm_not_allowed(self):
+        """
+        This test verifies that a user with the "Accountant" role does not have permission to access the "viewAdvancePaymentForm" view.
+        Expect an HTTP status code of 302 (Redirect).
+        """
         self.client.login(username='contable', password='password')
         response = self.client.get(reverse('viewAdvancePaymentForm'))
         self.assertEqual(response.status_code, 302) 
