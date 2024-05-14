@@ -6,8 +6,6 @@ from SistemaContableApp.views import  *
 from datetime import datetime, date
 
 
-class FormCreationViewTestCase(TestCase):
-a
     def setUp(self):
    
         # Crear roles y grupos necesarios

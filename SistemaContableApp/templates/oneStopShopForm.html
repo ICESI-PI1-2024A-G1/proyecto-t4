@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}  
+{% include 'partials/messages.html' %}
 {% include 'partials/error_modal.html' %}
 <!DOCTYPE html>
 <html lang="en">
@@ -10,8 +11,11 @@
         <title >Agregar a ventanilla unica</title>
         <link rel="stylesheet" href= "{% static '/styles/oneStopShopFormStyle.css' %}" >
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" type='text/css' href="{% static '/styles/messages.css' %}">
+        <link rel="stylesheet" type='text/css' href="{% static '/styles/error_modal.css' %}">
     </head>
 </html>
+
 
 <form method="post" enctype="multipart/form-data" class="following-form">
     {% csrf_token %}
@@ -82,13 +86,13 @@
 
         <p>
             <label for="id_amount">Cantidad:</label>
-            <input type="text" name="amount" required pattern="[0-9]*\.?[0-9]+" title="Ingrese solo números">
+            <input type="text" name="amount" required pattern="[0-9]*\.?[0-9]+" title="Ingrese solo números" id="id_amount">
 
         </p>
 
         <p>
             <label for="id_cenco">CENCO:</label>
-            <input type="text" name="cenco" maxlength="40" required pattern="\d+" title="Ingrese solo números enteros">
+            <input type="text" name="cenco" maxlength="40" required pattern="\d+" title="Ingrese solo números enteros" id="id_cenco">
         </p>
 
         <p>
@@ -137,7 +141,8 @@
             <input type="file" name="file" required="" id="id_file">
         </p>
     </div>
-    <button type="submit" class="btn btn-primary">Guardar</button>
+    <button type="submit" class="btn btn-primary" id="submit_button_id">Guardar</button>
+    
 </form>
 
 

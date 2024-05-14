@@ -1,13 +1,13 @@
-*{
-    margin : 0px;
-    padding : 0;
+* {
+    margin: 0px;
+    padding: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.heading{
-    
+.heading {
+
     position: sticky;
-   
+
 }
 
 h1 {
@@ -15,7 +15,7 @@ h1 {
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
     background: transparent;
-    padding: 7px; 
+    padding: 7px;
 }
 
 table {
@@ -35,29 +35,30 @@ th {
     top: 0px;
     background-color: lightblue;
     border-bottom: solid 5px #000;
-    color : white;
+    color: white;
     padding: 10px;
     z-index: 0;
 }
 
-.table-wrapper{
+.table-wrapper {
 
     max-height: 400px;
-    overflow-y: scroll ;
-    
+    overflow-y: scroll;
+
     margin: 0px;
 }
 
-th,td {
+th,
+td {
     border: 1px solid black;
-    
+
 
 }
 
-.outer-wrapper{
+.outer-wrapper {
     border: 1px solid black;
     box-shadow: 0px 0px 3px black;
-    margin: 20px ;
+    margin: 20px;
     border-radius: 5px;
     height: 95%;
     width: 98%;
@@ -71,35 +72,37 @@ body {
 
 td {
     text-align: center;
-    padding : 15px;
+    padding: 15px;
 }
 
-tr:nth-child(even){
+tr:nth-child(even) {
     background-color: #ddd;
 }
 
-tr:hover{
+tr:hover {
     background-color: #369681;
-    color : white;
+    color: white;
+    background-color: #7ddfc9;
+    color: rgb(0, 0, 0);
 }
 
 
-.fullViewButton{
+.fullViewButton {
     text-align: center;
 }
 
-.fullViewButton a{
+.fullViewButton a {
     display: inline-block;
     padding: 10px 20px;
     background-color: #ddd;
     color: black;
     text-decoration: none;
     border-radius: 5px;
-    border: 2px solid black; 
+    border: 2px solid black;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-.fullViewButton a:hover{
+.fullViewButton a:hover {
     color: white;
     background-color: #369681;
     border-radius: 5px;
@@ -108,7 +111,7 @@ tr:hover{
 }
 
 
-.edit-btn{
+.edit-btn {
     width: 20px;
     height: 20px;
     cursor: pointer;
@@ -116,21 +119,29 @@ tr:hover{
     background-size: cover;
     background-position: center;
     background-color: transparent;
-    border: none;  
+    border: none;
     float: right;
 }
 
 .popup {
-    display: none; /* Ocultar el popup por defecto */
-    position: fixed; /* Posición fija para que el popup se mantenga en su lugar incluso al hacer scroll */
-    top: 50%; /* Centrar verticalmente */
-    left: 50%; /* Centrar horizontalmente */
-    transform: translate(-50%, -50%); /* Centrar completamente */
+    display: none;
+    /* Ocultar el popup por defecto */
+    position: fixed;
+    /* Posición fija para que el popup se mantenga en su lugar incluso al hacer scroll */
+    top: 50%;
+    /* Centrar verticalmente */
+    left: 50%;
+    /* Centrar horizontalmente */
+    transform: translate(-50%, -50%);
+    /* Centrar completamente */
     background-color: #a3a1a1;
-    border: 1px solid #ccc; /* Borde del popup */
-    padding: 20px; /* Espaciado interno del contenido del popup */
+    border: 1px solid #ccc;
+    /* Borde del popup */
+    padding: 20px;
+    /* Espaciado interno del contenido del popup */
     border-radius: 5px;
-    z-index: 9999; /* Z-index para asegurar que esté por encima del resto del conte
+    z-index: 9999;
+    /* Z-index para asegurar que esté por encima del resto del conte
     
 }
 
@@ -139,19 +150,25 @@ tr:hover{
 }
 
 .close {
-    position: absolute; /* Posición absoluta para poder colocar el botón de cierre en la esquina */
-    top: 10px; /* Espacio desde la parte superior */
-    right: 10px; /* Espacio desde la derecha */
-    cursor: pointer; /* Cambiar cursor al pasar sobre el botón de cierre */
+    position: absolute;
+    /* Posición absoluta para poder colocar el botón de cierre en la esquina */
+    top: 10px;
+    /* Espacio desde la parte superior */
+    right: 10px;
+    /* Espacio desde la derecha */
+    cursor: pointer;
+    /* Cambiar cursor al pasar sobre el botón de cierre */
 }
 
 .close:hover {
-    color: red; /* Cambiar color del botón de cierre al pasar sobre él */
+    color: red;
+    /* Cambiar color del botón de cierre al pasar sobre él */
 }
 
 /* Estilos para el botón de guardar cambios */
 .popup-content button {
-    margin-top: 10px; /* Espacio superior para separar del formulario */
+    margin-top: 10px;
+    /* Espacio superior para separar del formulario */
     /* Otros estilos según tus preferencias */
 }
 
@@ -165,12 +182,12 @@ tr:hover{
     background-size: cover;
     background-position: center;
     background-color: transparent;
-    border: none; 
+    border: none;
 }
 
 /* Estilos para el comentario */
 
-.comentar-btn{
+.comentar-btn {
     width: 20px;
     height: 20px;
     cursor: pointer;
@@ -178,12 +195,12 @@ tr:hover{
     background-size: cover;
     background-position: center;
     background-color: transparent;
-    border: none;  
+    border: none;
     float: right;
 }
 
 /* Estilos para el botón de editar estados*/
-.estado-btn{
+.estado-btn {
     width: 20px;
     height: 20px;
     cursor: pointer;
@@ -191,7 +208,6 @@ tr:hover{
     background-size: cover;
     background-position: center;
     background-color: transparent;
-    border: none;  
+    border: none;
     float: right;
 }
-

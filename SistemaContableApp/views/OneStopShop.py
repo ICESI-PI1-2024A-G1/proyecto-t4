@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from SistemaContable import settings
 from SistemaContableApp.models import  *
 from SistemaContableApp.forms import *
 from django.shortcuts import get_object_or_404, render, redirect
@@ -8,6 +9,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.contrib.auth.decorators import login_required
 
 from SistemaContableApp.permissions import user_in_group
+from django.core.mail import send_mail
 
 
 allowed_groups1 = ['Administrador', 'Líder', 'Gestor', 'Ventanilla única','Contable']
@@ -168,16 +170,27 @@ def updateState(request, following_id):
                 following.save()
                 state_change = StateChange(following=following, state=new_state, description=description)
                 state_change.save()
+                # Enviar correo electrónico
+                send_state_change_email(following, new_state, description)
+
                 messages.success(request, 'Estado actualizado con éxito.')
             except State.DoesNotExist:
                 messages.error(request, 'El estado proporcionado no existe.')
         else:
-            messages.error(request, 'No se proporcionó ningún estado.')
-
-    
+            messages.error(request, 'No se proporcionó ningún estado.')    
 
     return redirect('fullOneStopShop')  # Redirigir a la página principal
 
+def send_state_change_email(following, new_state, description):
+    subject = 'Cambio de estado realizado'
+    message = f"El estado de la solicitud número {following.id} ha sido actualizado a '{new_state.state}'. Con la descripción: {description}."
+    from_email = settings.EMAIL_HOST_USER
+
+    # Obtenemos los correos electrónicos de los administradores
+    admin_emails = User.objects.filter(rol__rol='Administrador').values_list('email', flat=True)
+
+    # Enviamos el correo a todos los administradores
+    send_mail(subject, message, from_email, admin_emails)
 
 def changeHistory(request, following_id):
     following = Following.objects.get(pk=following_id)

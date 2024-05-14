@@ -6,6 +6,8 @@ from .views.get_users import get_users
 from .views.update_role import update_role
 from . import views
 from django.contrib.auth import views as auth_views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 urlpatterns = [
     path('', views.user_login, name='index'),
@@ -43,3 +45,6 @@ urlpatterns += [
         'document_root': settings.MEDIA_ROOT,
     })
 ]
+
+
+urlpatterns += staticfiles_urlpatterns()

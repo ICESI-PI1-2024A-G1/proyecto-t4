@@ -1,56 +1,228 @@
-## Configuration of Scenarios
-## LoginFormTest
+#### Descripción de los tests unitarios
 
-| Name  | Class           | Stage                                                                                                                                                                                                                       |
-| ------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| setUp1  | LoginFormTest   | Test the login form with valid data. Verifies that the login form is valid when provided with valid data.                                                                                                                  |
-| setUp2  | LoginFormTest   | Test the login form with invalid data. Verifies that the login form is invalid when provided with empty data.                                                                                                               |
+### LoginFormTest
+
+La clase `LoginFormTest` contiene pruebas para el formulario de inicio de sesión.
+
+#### test_login_form_valid
+
+- **Descripción**: Prueba del formulario de inicio de sesión con datos válidos.
+- **Resultado esperado**: Se espera que el formulario sea válido cuando se proporcionan datos válidos.
+
+#### test_login_form_invalid
+
+- **Descripción**: Prueba del formulario de inicio de sesión con datos inválidos.
+- **Resultado esperado**: Se espera que el formulario sea inválido cuando se proporcionan datos vacíos.
+
+### CustomUserCreationFormTest
+
+La clase `CustomUserCreationFormTest` contiene pruebas para el formulario de creación de usuario personalizado.
+
+#### test_custom_user_creation_form_valid
+
+- **Descripción**: Prueba del formulario de creación de usuario personalizado con datos válidos.
+- **Resultado esperado**: Se espera que el formulario sea válido cuando se proporcionan datos válidos.
+
+#### test_custom_user_creation_form_invalid
+
+- **Descripción**: Prueba del formulario de creación de usuario personalizado con datos inválidos.
+- **Resultado esperado**: Se espera que el formulario sea inválido cuando se proporcionan contraseñas que no coinciden o datos vacíos.
+
+### LoginFormAdditionalTest
+
+La clase `LoginFormAdditionalTest` contiene pruebas adicionales para el formulario de inicio de sesión.
+
+#### test_login_form_valid_additional
+
+- **Descripción**: Prueba adicional del formulario de inicio de sesión con datos válidos.
+- **Resultado esperado**: Se espera que el formulario sea válido cuando se proporcionan datos válidos.
+
+#### test_login_form_invalid_additional
+
+- **Descripción**: Prueba adicional del formulario de inicio de sesión con datos inválidos.
+- **Resultado esperado**: Se espera que el formulario sea inválido cuando se proporcionan datos vacíos.
+
+### CustomUserCreationFormAdditionalTest
+
+La clase `CustomUserCreationFormAdditionalTest` contiene pruebas adicionales para el formulario de creación de usuario personalizado.
+
+#### test_custom_user_creation_form_valid_additional
+
+- **Descripción**: Prueba adicional del formulario de creación de usuario personalizado con datos válidos.
+- **Resultado esperado**: Se espera que el formulario sea válido cuando se proporcionan datos válidos.
+
+#### test_custom_user_creation_form_invalid_additional
+
+- **Descripción**: Prueba adicional del formulario de creación de usuario personalizado con datos inválidos.
+- **Resultado esperado**: Se espera que el formulario sea inválido cuando se proporcionan contraseñas que no coinciden o datos vacíos.
+
+### LoginFormNewTests
+
+La clase `LoginFormNewTests` contiene pruebas nuevas para el formulario de inicio de sesión.
+
+#### test_login_form_valid_new
+
+- **Descripción**: Prueba nueva del formulario de inicio de sesión con datos válidos.
+- **Resultado esperado**: Se espera que el formulario sea válido cuando se proporcionan datos válidos.
+
+#### test_login_form_invalid_new
+
+- **Descripción**: Prueba nueva del formulario de inicio de sesión con datos inválidos.
+- **Resultado esperado**: Se espera que el formulario sea inválido cuando se proporcionan datos vacíos.
+
+### CustomUserCreationFormTestsNew
+
+La clase `CustomUserCreationFormTestsNew` contiene pruebas nuevas para el formulario de creación de usuario personalizado.
+
+#### test_custom_user_creation_form_valid_new
+
+- **Descripción**: Prueba nueva del formulario de creación de usuario personalizado con datos válidos.
+- **Resultado esperado**: Se espera que el formulario sea válido cuando se proporcionan datos válidos.
+
+#### test_custom_user_creation_form_invalid_new
+
+- **Descripción**: Prueba nueva del formulario de creación de usuario personalizado con datos inválidos.
+- **Resultado esperado**: Se espera que el formulario sea inválido cuando se proporcionan contraseñas que no coinciden o datos vacíos.
+
+### LoginFormExtraTestsNew
+
+La clase `LoginFormExtraTestsNew` contiene pruebas extras nuevas para el formulario de inicio de sesión.
+
+#### test_login_form_valid_extra_new
+
+- **Descripción**: Prueba extra nueva del formulario de inicio de sesión con datos válidos.
+- **Resultado esperado**: Se espera que el formulario sea válido cuando se proporcionan datos válidos.
+
+#### test_login_form_invalid_extra_new
+
+- **Descripción**: Prueba extra nueva del formulario de inicio de sesión con datos inválidos.
+- **Resultado esperado**: Se espera que el formulario sea inválido cuando se proporcionan datos vacíos.
+
+### CustomUserCreationFormExtraTestsNew
+
+La clase `CustomUserCreationFormExtraTestsNew` contiene pruebas extras nuevas para el formulario de creación de usuario personalizado.
+
+#### test_custom_user_creation_form_valid_extra_new
+
+- **Descripción**: Prueba extra nueva del formulario de creación de usuario personalizado con datos válidos.
+- **Resultado esperado**: Se espera que el formulario sea válido cuando se proporcionan datos válidos.
+
+#### test_custom_user_creation_form_invalid_extra_new
+
+- **Descripción**: Prueba extra nueva del formulario de creación de usuario personalizado con datos inválidos.
+- **Resultado esperado**: Se espera que el formulario sea inválido cuando se proporcionan contraseñas que no coinciden o datos vacíos.
+
+### LoginFormSpecialTests
+
+La clase `LoginFormSpecialTests` contiene pruebas especiales para el formulario de inicio de sesión.
+
+#### test_login_form_valid_special
+
+- **Descripción**: Prueba especial del formulario de inicio de sesión con datos especiales válidos.
+- **Resultado esperado**: Se espera que el formulario sea válido cuando se proporcionan datos válidos.
+
+#### test_login_form_invalid_special
+
+- **Descripción**: Prueba especial del formulario de inicio de sesión con datos especiales inválidos.
+- **Resultado esperado**: Se espera que el formulario sea inválido cuando se proporcionan datos vacíos.
+Clase `UserRequestViewsTest2` que contiene pruebas para las vistas relacionadas con las solicitudes de usuario.
+
+- **test_index_view**:
+  - **Descripción**: Prueba la vista de índice.
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
+
+- **test_login_view**:
+  - **Descripción**: Prueba la vista de inicio de sesión.
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
+
+- **test_registration_view**:
+  - **Descripción**: Prueba la vista de registro.
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
+
+- **test_about_us_view**:
+  - **Descripción**: Prueba la vista "Acerca de nosotros".
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
+
+- **test_contact_us_view**:
+  - **Descripción**: Prueba la vista "Contáctenos".
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
+
+- **test_services_view**:
+  - **Descripción**: Prueba la vista de "Servicios".
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
+
+- **test_products_view**:
+  - **Descripción**: Prueba la vista de "Productos".
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
+
+- **test_blog_view**:
+  - **Descripción**: Prueba la vista de "Blog".
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
+
+- **test_faq_view**:
+  - **Descripción**: Prueba la vista "Preguntas frecuentes".
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
+
+- **test_privacy_policy_view**:
+  - **Descripción**: Prueba la vista de "Política de privacidad".
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
 
 
+Clase `UserRequestViewsTest3` que contiene pruebas adicionales para las vistas relacionadas con las solicitudes de usuario.
 
-## CustomUserCreationFormTest
+- **test_index_view**:
+  - **Descripción**: Prueba la vista de índice.
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
 
-| Name  | Class                    | Stage                                                                                                                                                                                                                                     |
-| ------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| setUp1  | CustomUserCreationForm   | Test the custom user creation form with valid data. Verifies that the custom user creation form is valid when provided with valid data.                                                                                               |
-| setUp2  | CustomUserCreationForm   | Test the custom user creation form with invalid data. Verifies that the custom user creation form is invalid when provided with mismatched passwords or empty data.                                                             |
-### Test Objective
-The purpose of these tests is to verify the correct operation of the login and custom user creation forms. It ensures that the forms are valid when valid data is entered and invalid when incorrect or incomplete data is provided.
-### Test Cases
+- **test_login_view**:
+  - **Descripción**: Prueba la vista de inicio de sesión.
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
 
-| Class                    | Method                 | Stage  | input values                           | Expected results                                              |
-| ------------------------ | ---------------------- | ------ | -------------------------------------------- | --------------------------------------------------------------- |
-| LoginFormTest            | test_login_form_valid  | setUp1 | {'username': 'testuser', 'password': 'testpassword'} | El formulario debe ser válido                                   |
-| LoginFormTest            | test_login_form_invalid| setUp2 | {'username': '', 'password': ''}             | El formulario debe ser inválido                                 |
-| CustomUserCreationFormTest | test_custom_user_creation_form_valid | setUp1 | {'first_name': 'John', 'last_name': 'Doe', 'email': 'johndoe@example.com', 'password1': 'testpassword', 'password2': 'testpassword'} | El formulario debe ser válido                          |
-| CustomUserCreationFormTest | test_custom_user_creation_form_invalid | setUp2 | {'first_name': 'John', 'last_name': 'Doe', 'email': 'johndoe@example.com', 'password1': 'testpassword', 'password2': 'differentpassword'} | El formulario debe ser inválido debido a contraseñas diferentes |
-| CustomUserCreationFormTest | test_custom_user_creation_form_invalid | setUp2 | {}                                           | The form must be invalid due to empty data           |
+- **test_registration_view**:
+  - **Descripción**: Prueba la vista de registro.
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
 
-## Configuration of Scenarios
+- **test_about_us_view**:
+  - **Descripción**: Prueba la vista "Acerca de nosotros".
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
 
-## UserRequestViewsTest
+- **test_contact_us_view**:
+  - **Descripción**: Prueba la vista "Contáctenos".
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
 
-| Name  | Class                | Stage                                          |
-| ------- | -------------------- | ---------------------------------------------- |
-| setUp1  | UserRequestViewsTest | Set up the test environment for index view     |
-| setUp2  | UserRequestViewsTest | Set up the test environment for forgot password view |
-| setUp3  | UserRequestViewsTest | Set up the test environment for user login view |
-| setUp4  | UserRequestViewsTest | Set up the test environment for registration view |
-| setUp5  | UserRequestViewsTest | Set up the test environment for password reset request view |
+- **test_services_view**:
+  - **Descripción**: Prueba la vista de "Servicios".
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
+
+- **test_products_view**:
+  - **Descripción**: Prueba la vista de "Productos".
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
+
+- **test_blog_view**:
+  - **Descripción**: Prueba la vista de "Blog".
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
+
+- **test_faq_view**:
+  - **Descripción**: Prueba la vista "Preguntas frecuentes".
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
+
+- **test_terms_of_service_view**:
+  - **Descripción**: Prueba la vista de "Términos de servicio".
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
 
 
+Clase `UserRequestViewsTest4` que contiene pruebas adicionales para las vistas relacionadas con las solicitudes de usuario.
 
-### Test Objective
-The objective of these tests is to verify the correct operation of views related to user management, such as login, password recovery, and user registration. It ensures that these views return an  status code and utilize the correct templates corresponding to each functionality.
+- **test_index_view**:
+  - **Descripción**: Prueba la vista de índice.
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
 
-### Test Cases
+- **test_login_view**:
+  - **Descripción**: Prueba la vista de inicio de sesión.
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
 
-| Class                   | Method                      | Stage      | Input Values                                     | Expected Result                                                     |
-| ----------------------- | --------------------------- | ---------- | ------------------------------------------------- | -------------------------------------------------------------------- |
-| UserRequestViewsTest    | test_index_view             | setUp1     | -                                               | Returns a status code 200 and uses the template 'registration/login.html' |
-| UserRequestViewsTest    | test_forgot_password_view   | setUp2     | -                                               | Returns a status code 200 and uses the template 'registration/password_reset_form.html' |
-| UserRequestViewsTest    | test_user_login_view        | setUp3     | -                                               | Returns a status code 200 and uses the template 'registration/login.html' |
-| UserRequestViewsTest    | test_registration_view      | setUp4     | -                                               | Returns a status code 200 and uses the template 'registration/registro.html' |
-| UserRequestViewsTest    | test_password_reset_request_view | setUp5 | -                                               | Returns a status code 200 and uses the template 'registration/password_reset_form.html' |
-| UserRequestViewsTest    | test_successful_user_login  | setUp1     | {'email': 'test@example.com', 'password': 'password'} | Redirects to the index page after a successful login |
-| UserRequestViewsTest    | test_successful_password_reset_request | - | {'email': 'test@example.com'}                   | Redirects to 'password_reset_done' after a successful password reset request |
+- **test_registration_view**:
+  -
+
+ **Descripción**: Prueba la vista de registro.
+  - **Resultado Esperado**: Se espera que la respuesta tenga un código de estado 200 (OK).
