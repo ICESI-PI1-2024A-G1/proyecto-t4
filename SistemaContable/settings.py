@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django_renderpdf',
     'multiupload',
     'openpyxl',
+    'django_selenium_test',
     
 ]
 
