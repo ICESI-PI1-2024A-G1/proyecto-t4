@@ -147,6 +147,23 @@
   - Mocked a GET request to the 'delete_user' view.
   - Asserts that the HTTP status code is 302 (Redirection).
 
+## Tests unitarios totales
+
+### user model:
+#### Total: 3 tests
+
+### user update:  
+#### Total: 2 tests
+
+### user views:
+#### Total: 5 tests
+
+### update User Permission:
+#### Total: 5 tests
+
+
+### Total Final: 15 tests
+
 ## Update User Permission E2E Tests
 
 ### Test Case: updateUserPermissionTests
@@ -201,3 +218,7 @@
   2. Log in as the 'Lider' user.
   3. Attempt to access the 'user_list' view.
   4. Verify the appropriate error message is displayed.
+
+
+## Tests E2E totales: 
+### 2 tests E2E
