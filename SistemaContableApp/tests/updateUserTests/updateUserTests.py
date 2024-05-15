@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User, Group
 from SistemaContableApp.models import  *
 from SistemaContableApp.views import  *
-a
+
 class UserModelTestCase(TestCase):
     def setUp(self):
         self.rol_admin = Rol.objects.create(rol='Administrador')

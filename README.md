@@ -1,3 +1,12 @@
+## Participantes:
+
+- Pablo Fernando Pineda Patiño
+- Leidy Daniela Londoño Candelo 
+- Nayeli Suarez Portillo 
+- Yeison Antonio Rodriguez Zuluaga 
+- Isabella Huila Cerón
+
+
 # Gestión contable
 
 El presente proyecto tiene como objetivo proporcionar un sistema en donde se pueda gestionar las solicitudes contables. Este sistema permite a los usuarios completar formularios específicos para cada tipo de solicitud y enviarlos para su procesamiento. Además de estas funcionalidades, el proyecto incluye características adicionales como la generación de documentos PDF a partir de la información del formulario y el envío de solicitudes a la oficina de ventanilla única para su gestión.
@@ -11,20 +20,116 @@ Los objetivos específicos del proyecto son los siguientes:
 -	Generación de Documentos: Crear documentos PDF a partir de la información ingresada en los formularios de solicitud, facilitando el envío estructurado y organizado de la información para su revisión y procesamiento.
 -	Búsqueda y Recuperación de Información: Proporcionar funcionalidades de búsqueda y recuperación de solicitudes previamente registradas, permitiendo a los usuarios con permisos adecuados encontrar y analizar la información de manera eficiente.
 ## Notas adicionales
-- La función sendFormAsPdf se encarga de enviar el formulario como un archivo PDF adjunto por correo electrónico. Si se desea cambiar el correo electrónico al que se envían los formularios, simplemente se puede modificar el valor de las variables email o recipient_email dentro de las funciones createExteriorPaymentForm, createChargeAccountForm y createRequisitionForm.
+Para el correcto funcionamiento del programa debe instalar todas las dependencias necesarias con el comando `pip install -r requirements.txt`
 
--	Para el correcto funcionamiento del filtro en el diseño de los campos de los formularios adaptados al HTML, es necesario descargar e instalar el paquete django-widget-tweaks. Esto se puede hacer mediante el comando pip install django-widget-tweaks.
-- Para el funcionamiento adecuado de la generación de archivos PDF, se deben descargar e instalar los siguientes paquetes:
-- 	django-renderpdf: Instalable a través de pip install django-renderpdf.
-o	GTK for Windows Runtime Environment Installer: Se puede descargar desde el siguiente enlace: GTK for Windows Runtime Environment Installer.
--	El apartado de formulario para agregar en ventanilla única es lo que permite crear y enviar las solicitudes en ventanilla única mediante la completitud de distintos campos y archivos adjuntos, actualmente este apartado solo permite adjuntar un único documento adjunto, pero para el futuro se espera puedan ser más.
--	La función de búsqueda y filtrado actualmente realiza la búsqueda mediante los campos más relevantes que se puedan considerar de la solicitud, pero aun así cabe la posibilidad de agregar más “queryset” con palabras que se consideren claves dentro de los campos de las solicitudes.
-- Para el correcto funcionamiento del programa, es necesario descargar django.multiupload, esto con el comando "pip install django-multiupload"; actualmente este apartado no está siendo utilizado, pero se usó durante el desarrollo en etapas anteriores del proyecto. Aunque no se esté utilizando en la versión actual, se debe instalar y ya en próximos feat tomará una elección al respecto.
+Con el siguiente comando se corren todos los tests unitarios de un solo intento: `python manage.py test SistemaContableApp.tests.testMain`
 
-## Participantes:
+Con los siguientes comandos calcula el coverage: 
+1. `coverage run  manage.py test SistemaContableApp.tests.testMain`
+2. `coverage report`
 
-- Pablo Fernando Pineda Patiño
-- Leidy Daniela Londoño Candelo 
-- Nayeli Suarez Portillo 
-- Yeison Antonio Rodriguez Zuluaga 
-- Isabella Huila Cerón
+(Hay un coverage del 94%)
+
+
+Con los siguientes comandos corre las pruebas automatizadas: 
+`python manage.py test SistemaContableApp.tests.loginTest.seleniumLogin.RegistrationAndLoginTestCase.test_registro_e_inicio_sesion`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequests.RequestsTestCase.test_charge_account_form`
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequests.RequestsTestCase.test_exterior_payment_form`
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequests.RequestsTestCase.test_requisition_form`
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequests.RequestsTestCase.test_legalization_form`
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequests.RequestsTestCase.test_advance_payment_form`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequestPermission.RequestsPermissionTestCase.test_solicitante_can_access_create_charge_account_form`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequestPermission.RequestsPermissionTestCase.test_admin_can_access_create_charge_account_form`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequestPermission.RequestsPermissionTestCase.test_contable_cannot_access_create_charge_account_form`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequestPermission.RequestsPermissionTestCase.test_admin_can_access_create_Requisition_Form`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequestPermission.RequestsPermissionTestCase.test_solicitante_can_access_create_Requisition_Form`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequestPermission.RequestsPermissionTestCase.test_contable_cannot_access_create_Requisition_Form`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequestPermission.RequestsPermissionTestCase.test_admin_can_access_create_exterior_paymentForm`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequestPermission.RequestsPermissionTestCase.test_solicitante_can_access_create_exterior_paymentForm`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequestPermission.RequestsPermissionTestCase.test_contable_cannot_access_create_exterior_paymentForm`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequestPermission.RequestsPermissionTestCase.test_solicitante_can_access_create_legalization_form`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequestPermission.RequestsPermissionTestCase.test_admin_can_access_create_legalization_form`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequestPermission.RequestsPermissionTestCase.test_contable_cannot_access_create_exterior_paymentForm`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequestPermission.RequestsPermissionTestCase.test_admin_can_access_create_advance_payment_form`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequestPermission.RequestsPermissionTestCase.test_solicitante_can_access_create_advance_payment_form`
+
+`python manage.py test SistemaContableApp.tests.requestByUserTests.seleniumRequestPermission.RequestsPermissionTestCase.test_contable_cannot_access_create_exterior_paymentForm`
+
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopForm.FormTestCase.test_onestopshop_form`
+
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_admin_can_access_summary_one_stop_shop_view`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_lider_can_access_summary_one_stop_shop_view`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_gestor_can_access_summary_one_stop_shop_view`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_solicitante_cannot_access_summary_one_stop_shop_view`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_gestor_can_access_full_one_stop_shop_view`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_admin_can_access_full_one_stop_shop_view`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_solicitante_cannot_access_full_one_stop_shop_view`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_ventanilla_can_access_one_stop_shop_form_view`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_admin_cannot_access_access_one_stop_shop_form_view`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_lider_cannot_access_access_one_stop_shop_form_view`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_gestor_cannot_access_access_one_stop_shop_form_view`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_update_state_allowed_user`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_update_state_not_allowed_users`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_approval_comment_not_allowed_user`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_acceptance_state_not_allowed_user`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_revision_state_not_allowed_user`
+
+`python manage.py test SistemaContableApp.tests.oneStopShopTests.seleniumOneStopShopPermissionTest.OneStopShopPermissionTestCase.test_approval_state_not_allowed_user`
+
+
+`python manage.py test SistemaContableApp.tests.updateUserPermissionTests.seleniumUpdateUserPermissionTests.updateUserPermissionTests.test_admin_can_access_user_list`
+
+`python manage.py test SistemaContableApp.tests.updateUserPermissionTests.seleniumUpdateUserPermissionTests.updateUserPermissionTeststest_lider_cannot_access_user_list`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
