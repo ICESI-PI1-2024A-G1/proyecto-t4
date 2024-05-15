@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, Group
 from SistemaContableApp.models import  *
 from SistemaContableApp.views import  *
 
-a
+
 class updateUserPermissionTestCase(TestCase):
 
     def setUp(self):
