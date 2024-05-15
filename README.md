@@ -24,6 +24,13 @@ Para el correcto funcionamiento del programa debe instalar todas las dependencia
 
 Con el siguiente comando se corren todos los tests unitarios de un solo intento: `python manage.py test SistemaContableApp.tests.testMain`
 
+Con los siguientes comandos calcula el coverage: 
+1. `coverage run  manage.py test SistemaContableApp.tests.testMain`
+2. `coverage report`
+
+(Hay un coverage del 94%)
+
+
 Con los siguientes comandos corre las pruebas automatizadas: 
 `python manage.py test SistemaContableApp.tests.loginTest.seleniumLogin.RegistrationAndLoginTestCase.test_registro_e_inicio_sesion`
 
