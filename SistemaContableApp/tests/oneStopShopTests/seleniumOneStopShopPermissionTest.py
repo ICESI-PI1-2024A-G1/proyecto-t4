@@ -81,17 +81,17 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         """
        
         # Crea los roles si no existen
-        if not Rol.objects.filter(rol="Rol object (1)").exists():
+        if not Rol.objects.filter(rol="Administrador").exists():
             mixer.blend(Rol, rol="Administrador")
-        if not Rol.objects.filter(rol="Rol object (2)").exists():
+        if not Rol.objects.filter(rol="Líder").exists():
             mixer.blend(Rol, rol="Líder")
-        if not Rol.objects.filter(rol="Rol object (3)").exists():
+        if not Rol.objects.filter(rol="Gestor").exists():
             mixer.blend(Rol, rol="Gestor")
-        if not Rol.objects.filter(rol="Rol object (4)").exists():
+        if not Rol.objects.filter(rol="Ventanilla única").exists():
             mixer.blend(Rol, rol="Ventanilla única")
-        if not Rol.objects.filter(rol="Rol object (5)").exists():
+        if not Rol.objects.filter(rol="Contable").exists():
             mixer.blend(Rol, rol="Contable")
-        if not Rol.objects.filter(rol="Rol object (6)").exists():
+        if not Rol.objects.filter(rol="Solicitante").exists():
             mixer.blend(Rol, rol="Solicitante")
 
     def register_user(self, name, last_name, email, rol, password):
@@ -176,7 +176,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         Test that a user with the 'admin' role can access the 'summaryOneStopShopView' view.
         """
         # Registrar un usuario con el rol 'Administrador'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (1)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Administrador", "micontraseña")
 
         # Iniciar sesión como el usuario 'Administrador'
         self.login("juan.perez@example.com", "micontraseña")
@@ -193,7 +193,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         Test that a user with the 'Líder' role can access the 'summaryOneStopShopView' view.
         """
         # Registrar un usuario con el rol 'Líder'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (2)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Líder", "micontraseña")
 
         # Iniciar sesión como el usuario 'Líder'
         self.login("juan.perez@example.com", "micontraseña")
@@ -210,7 +210,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         Test that a user with the 'Gestor' role can access the 'summaryOneStopShopView' view.
         """
         # Registrar un usuario con el rol 'Gestor'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (3)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Gestor", "micontraseña")
 
         # Iniciar sesión como el usuario 'Gestor'
         self.login("juan.perez@example.com", "micontraseña")
@@ -228,7 +228,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         and the appropriate error message is displayed.
         """
         # Registrar un usuario con el rol 'Solicitante'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (6)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Solicitante", "micontraseña")
 
         # Iniciar sesión como el usuario 'Solicitante'
         self.login("juan.perez@example.com", "micontraseña")
@@ -248,7 +248,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         Test that a user with the 'Gestor' role can access the 'fullOneStopShopView' view.
         """
         # Registrar un usuario con el rol 'Gestor'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (3)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Gestor", "micontraseña")
 
         # Iniciar sesión como el usuario 'Gestor'
         self.login("juan.perez@example.com", "micontraseña")
@@ -258,14 +258,14 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
 
         # Verificar que se muestra el título
         title_element = self.browser.find_element(By.CSS_SELECTOR, '.heading')
-        self.assertEqual(title_element.text, 'Centro de compatido de servicios')
+        self.assertEqual(title_element.text, 'Centro compartido de servicios')
 
     def test_admin_can_access_full_one_stop_shop_view(self):
         """
         Test that a user with the 'Administrador' role can access the 'fullOneStopShopView' view.
         """
         # Registrar un usuario con el rol 'Administrador'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (1)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Administrador", "micontraseña")
 
         # Iniciar sesión como el usuario 'Administrador'
         self.login("juan.perez@example.com", "micontraseña")
@@ -275,7 +275,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
 
         # Verificar que se muestra el título
         title_element = self.browser.find_element(By.CSS_SELECTOR, '.heading')
-        self.assertEqual(title_element.text, 'Centro de compatido de servicios')
+        self.assertEqual(title_element.text, 'Centro compartido de servicios')
 
     def test_solicitante_cannot_access_full_one_stop_shop_view(self):
         """
@@ -283,7 +283,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         and the appropriate error message is displayed.
         """
         # Registrar un usuario con el rol 'Solicitante'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (6)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Solicitante", "micontraseña")
 
         # Iniciar sesión como el usuario 'Solicitante'
         self.login("juan.perez@example.com", "micontraseña")
@@ -303,7 +303,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         Test that a user with the 'Ventanilla única' role can access the 'oneStopShopFormView' view.
         """
         # Registrar un usuario con el rol 'Ventanilla única'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (4)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Ventanilla única", "micontraseña")
 
         # Iniciar sesión como el usuario 'Ventanilla única'
         self.login("juan.perez@example.com", "micontraseña")
@@ -321,7 +321,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         and the appropriate error message is displayed.
         """
         # Registrar un usuario con el rol 'Administrador'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (1)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Administrador", "micontraseña")
 
         # Iniciar sesión como el usuario 'Administrador'
         self.login("juan.perez@example.com", "micontraseña")
@@ -342,7 +342,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         and the appropriate error message is displayed.
         """
         # Registrar un usuario con el rol 'Lider'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (2)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Líder", "micontraseña")
 
         # Iniciar sesión como el usuario 'Lider'
         self.login("juan.perez@example.com", "micontraseña")
@@ -363,7 +363,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         and the appropriate error message is displayed.
         """
         # Registrar un usuario con el rol 'Gestor'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (3)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Gestor", "micontraseña")
 
         # Iniciar sesión como el usuario 'Gestor'
         self.login("juan.perez@example.com", "micontraseña")
@@ -385,7 +385,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         tests that the Administrador or Gestor user can update the status correctly
         """
         # Registrar un usuario con permisos
-        self.register_user("Juan", "Pérez", "usuario@example.com", "Rol object (1)", "micontraseña")
+        self.register_user("Juan", "Pérez", "usuario@example.com", "Administrador", "micontraseña")
 
         # Crear un nuevo objeto Following
         following = Following.objects.create(
@@ -440,7 +440,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         no pueden actualizar el estado de un following.
         """
         # Registrar un usuario sin permisos
-        self.register_user("Juan", "Pérez", "usuario@example.com", "Rol object (4)", "micontraseña")
+        self.register_user("Juan", "Pérez", "usuario@example.com", "Ventanilla única", "micontraseña")
 
         # Crear un nuevo objeto Following
         following = Following.objects.create(
@@ -503,7 +503,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         Test que un usuario sin el rol 'Administrador' o 'Gestor' no puede agregar un comentario de aprobación.
         """
         # Registrar un usuario sin permisos
-        self.register_user("Juan", "Pérez", "usuario@example.com", "Rol object (2)", "micontraseña")
+        self.register_user("Juan", "Pérez", "usuario@example.com", "Líder", "micontraseña")
 
         # Crear un nuevo objeto Following
         following = Following.objects.create(
@@ -562,7 +562,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         Test que un usuario sin el rol 'Administrador' o 'Gestor' no puede editar el estado de aceptación.
         """
         # Registrar un usuario sin permisos
-        self.register_user("Juan", "Pérez", "usuario@example.com", "Rol object (2)", "micontraseña")
+        self.register_user("Juan", "Pérez", "usuario@example.com", "Líder", "micontraseña")
 
         # Crear un nuevo objeto Following
         following = Following.objects.create(
@@ -619,7 +619,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         Test que un usuario sin el rol 'Administrador' o 'Gestor' no puede editar el estado de aceptación.
         """
         # Registrar un usuario sin permisos
-        self.register_user("Juan", "Pérez", "usuario@example.com", "Rol object (2)", "micontraseña")
+        self.register_user("Juan", "Pérez", "usuario@example.com", "Líder", "micontraseña")
 
         # Crear un nuevo objeto Following
         following = Following.objects.create(
@@ -678,7 +678,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         Test que un usuario sin el rol 'Administrador' o 'Gestor' no puede editar el estado de revisión.
         """
         # Registrar un usuario sin permisos
-        self.register_user("Juan", "Pérez", "usuario@example.com", "Rol object (2)", "micontraseña")
+        self.register_user("Juan", "Pérez", "usuario@example.com", "Líder", "micontraseña")
 
         # Crear un nuevo objeto Following
         following = Following.objects.create(
@@ -736,7 +736,7 @@ class OneStopShopPermissionTestCase(StaticLiveServerTestCase):
         Test que un usuario sin el rol 'Administrador' o 'Gestor' no puede editar el estado de aprobación.
         """
         # Registrar un usuario sin permisos
-        self.register_user("Juan", "Pérez", "usuario@example.com", "Rol object (2)", "micontraseña")
+        self.register_user("Juan", "Pérez", "usuario@example.com", "Líder", "micontraseña")
 
         # Crear un nuevo objeto Following
         following = Following.objects.create(

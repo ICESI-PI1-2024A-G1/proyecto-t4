@@ -1,9 +1,10 @@
 from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 
-class RegistrationAndLoginTestCase(LiveServerTestCase):
+class RegistrationAndLoginTestCase(StaticLiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Chrome()  # O el navegador que prefieras
         self.browser.implicitly_wait(10)
@@ -66,4 +67,4 @@ class RegistrationAndLoginTestCase(LiveServerTestCase):
         time.sleep(5)
 
         # Verifica si se ha iniciado sesión correctamente
-        self.assertIn('¡Bienvenidos al Sistema Contable', self.browser.page_source)
+        self.assertIn('Bienvenido al sistema contable', self.browser.page_source)

@@ -332,7 +332,7 @@ class Rol(models.Model):
         verbose_name= 'Rol'
         verbose_name_plural= 'Rols'
         
-    def _str_(self):
+    def __str__(self):
         """"
         Unicode representation of Rol
         """

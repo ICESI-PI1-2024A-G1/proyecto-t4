@@ -67,17 +67,17 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         """
        
         # Crea los roles si no existen
-        if not Rol.objects.filter(rol="Rol object (1)").exists():
+        if not Rol.objects.filter(rol="Administrador").exists():
             mixer.blend(Rol, rol="Administrador")
-        if not Rol.objects.filter(rol="Rol object (2)").exists():
+        if not Rol.objects.filter(rol="Líder").exists():
             mixer.blend(Rol, rol="Líder")
-        if not Rol.objects.filter(rol="Rol object (3)").exists():
+        if not Rol.objects.filter(rol="Gestor").exists():
             mixer.blend(Rol, rol="Gestor")
-        if not Rol.objects.filter(rol="Rol object (4)").exists():
+        if not Rol.objects.filter(rol="Ventanilla única").exists():
             mixer.blend(Rol, rol="Ventanilla única")
-        if not Rol.objects.filter(rol="Rol object (5)").exists():
+        if not Rol.objects.filter(rol="Contable").exists():
             mixer.blend(Rol, rol="Contable")
-        if not Rol.objects.filter(rol="Rol object (6)").exists():
+        if not Rol.objects.filter(rol="Solicitante").exists():
             mixer.blend(Rol, rol="Solicitante")
 
     def register_user(self, name, last_name, email, rol, password):
@@ -162,7 +162,7 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         Test that a user with the 'Solicitante' role can access the 'createChargeAccountForm' view.
         """
         # Registrar un usuario con el rol 'Solicitante'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (6)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Solicitante", "micontraseña")
 
         # Iniciar sesión como el usuario 'Solicitante'
         self.login("juan.perez@example.com", "micontraseña")
@@ -179,7 +179,7 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         Test that a user with the 'Administrador' role can access the 'createChargeAccountForm' view.
         """
         # Registrar un usuario con el rol 'Administrador'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (1)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Administrador", "micontraseña")
 
         # Iniciar sesión como el usuario 'Administrador'
         self.login("juan.perez@example.com", "micontraseña")
@@ -199,7 +199,7 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         and the appropriate error message is displayed.
         """
         # Registrar un usuario con el rol 'Contable'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (5)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Contable", "micontraseña")
 
         # Iniciar sesión como el usuario 'Contable'
         self.login("juan.perez@example.com", "micontraseña")
@@ -219,7 +219,7 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         Test that a user with the 'Admin' role can access the 'createRequisitionForm' view.
         """
         # Registrar un usuario con el rol 'Administrador'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (1)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Administrador", "micontraseña")
 
         # Iniciar sesión como el usuario 'Solicitante'
         self.login("juan.perez@example.com", "micontraseña")
@@ -236,7 +236,7 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         Test that a user with the 'Solicitante' role can access the 'createRequisitionForm' view.
         """
         # Registrar un usuario con el rol 'Solicitante'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (6)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Solicitante", "micontraseña")
 
         # Iniciar sesión como el usuario 'Solicitante'
         self.login("juan.perez@example.com", "micontraseña")
@@ -254,7 +254,7 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         and the appropriate error message is displayed.
         """
         # Registrar un usuario con el rol 'Contable'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (5)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Contable", "micontraseña")
 
         # Iniciar sesión como el usuario 'Contable'
         self.login("juan.perez@example.com", "micontraseña")
@@ -274,7 +274,7 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         Test that a user with the 'Admin' role can access the 'createExteriorPaymentForm' view.
         """
         # Registrar un usuario con el rol 'Administrador'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (1)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Administrador", "micontraseña")
 
         # Iniciar sesión como el usuario 'Administrador'
         self.login("juan.perez@example.com", "micontraseña")
@@ -291,7 +291,7 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         Test that a user with the 'Solicitante' role can access the 'createExteriorPaymentForm' view.
         """
         # Registrar un usuario con el rol 'Solicitante'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (6)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Solicitante", "micontraseña")
 
         # Iniciar sesión como el usuario 'Solicitante'
         self.login("juan.perez@example.com", "micontraseña")
@@ -309,7 +309,7 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         and the appropriate error message is displayed.
         """
         # Registrar un usuario con el rol 'Contable'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (5)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Contable", "micontraseña")
 
         # Iniciar sesión como el usuario 'Contable'
         self.login("juan.perez@example.com", "micontraseña")
@@ -329,7 +329,7 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         Test that a user with the 'Solicitante' role can access the 'createLegalizationForm' view.
         """
         # Registrar un usuario con el rol 'Solicitante'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (6)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Solicitante", "micontraseña")
 
         # Iniciar sesión como el usuario 'Solicitante'
         self.login("juan.perez@example.com", "micontraseña")
@@ -346,7 +346,7 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         Test that a user with the 'Administrador' role can access the 'createLegalizationForm' view.
         """
         # Registrar un usuario con el rol 'Administrador'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (1)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Administrador", "micontraseña")
 
         # Iniciar sesión como el usuario 'Administrador'
         self.login("juan.perez@example.com", "micontraseña")
@@ -364,7 +364,7 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         and the appropriate error message is displayed.
         """
         # Registrar un usuario con el rol 'Contable'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (5)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Contable", "micontraseña")
 
         # Iniciar sesión como el usuario 'Contable'
         self.login("juan.perez@example.com", "micontraseña")
@@ -384,7 +384,7 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         Test that a user with the 'Administrador' role can access the 'createAdvancePaymentForm' view.
         """
         # Registrar un usuario con el rol 'Administrador'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (1)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Administrador", "micontraseña")
 
         # Iniciar sesión como el usuario 'Administrador'
         self.login("juan.perez@example.com", "micontraseña")
@@ -401,7 +401,7 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         Test that a user with the 'Solicitante' role can access the 'createAdvancePaymentForm' view.
         """
         # Registrar un usuario con el rol 'Solicitante'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (6)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Solicitante", "micontraseña")
 
         # Iniciar sesión como el usuario 'Solicitante'
         self.login("juan.perez@example.com", "micontraseña")
@@ -419,7 +419,7 @@ class RequestsPermissionTestCase(StaticLiveServerTestCase):
         and the appropriate error message is displayed.
         """
         # Registrar un usuario con el rol 'Contable'
-        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Rol object (5)", "micontraseña")
+        self.register_user("Juan", "Pérez", "juan.perez@example.com", "Contable", "micontraseña")
 
         # Iniciar sesión como el usuario 'Contable'
         self.login("juan.perez@example.com", "micontraseña")
