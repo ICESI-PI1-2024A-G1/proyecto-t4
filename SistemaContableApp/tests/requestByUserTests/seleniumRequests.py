@@ -68,15 +68,15 @@ class RequestsTestCase(StaticLiveServerTestCase):
         """
        
         # Crea los roles si no existen
-        if not Rol.objects.filter(rol="Rol object (1)").exists():
+        if not Rol.objects.filter(rol="Administrador").exists():
             mixer.blend(Rol, rol="Administrador")
-        if not Rol.objects.filter(rol="Rol object (2)").exists():
+        if not Rol.objects.filter(rol="Líder").exists():
             mixer.blend(Rol, rol="Líder")
-        if not Rol.objects.filter(rol="Rol object (3)").exists():
+        if not Rol.objects.filter(rol="Gestor").exists():
             mixer.blend(Rol, rol="Gestor")
-        if not Rol.objects.filter(rol="Rol object (4)").exists():
+        if not Rol.objects.filter(rol="Ventanilla única").exists():
             mixer.blend(Rol, rol="Ventanilla única")
-        if not Rol.objects.filter(rol="Rol object (5)").exists():
+        if not Rol.objects.filter(rol="Contable").exists():
             mixer.blend(Rol, rol="Contable")
 
     def register_user(self, name, last_name, email, rol, password):
@@ -164,7 +164,7 @@ class RequestsTestCase(StaticLiveServerTestCase):
         forms_button = self.browser.find_element(By.CSS_SELECTOR, 'a.nav-link.dropdown-toggle')
         forms_button.click()
 
-        chargeAccount_button = self.browser.find_element(By.XPATH, '//*[@id="offcanvasNavbar"]/div[2]/ul/li[4]/ul/li[1]/a')
+        chargeAccount_button = self.browser.find_element(By.XPATH, '//*[@id="offcanvasNavbar"]/div[2]/ul/li[3]/ul/li[1]/a')
         chargeAccount_button.click()
         
     def navigate_to_exterior_payment_form(self):
@@ -181,7 +181,7 @@ class RequestsTestCase(StaticLiveServerTestCase):
         forms_button = self.browser.find_element(By.CSS_SELECTOR, 'a.nav-link.dropdown-toggle')
         forms_button.click()
 
-        chargeAccount_button = self.browser.find_element(By.XPATH, '//*[@id="offcanvasNavbar"]/div[2]/ul/li[4]/ul/li[3]/a')
+        chargeAccount_button = self.browser.find_element(By.XPATH, '//*[@id="offcanvasNavbar"]/div[2]/ul/li[3]/ul/li[3]/a')
         chargeAccount_button.click()
         
     def navigate_to_requisition_form(self):
@@ -200,7 +200,7 @@ class RequestsTestCase(StaticLiveServerTestCase):
 
         forms_button.click()
 
-        chargeAccount_button = self.browser.find_element(By.XPATH, '//*[@id="offcanvasNavbar"]/div[2]/ul/li[4]/ul/li[5]/a')
+        chargeAccount_button = self.browser.find_element(By.XPATH, '//*[@id="offcanvasNavbar"]/div[2]/ul/li[3]/ul/li[5]/a')
         actions = ActionChains(self.browser)
         actions.move_to_element(chargeAccount_button).perform()
 
@@ -221,7 +221,7 @@ class RequestsTestCase(StaticLiveServerTestCase):
         forms_button = self.browser.find_element(By.CSS_SELECTOR, 'a.nav-link.dropdown-toggle')
         forms_button.click()
 
-        chargeAccount_button = self.browser.find_element(By.XPATH, '//*[@id="offcanvasNavbar"]/div[2]/ul/li[4]/ul/li[2]/a')
+        chargeAccount_button = self.browser.find_element(By.XPATH, '//*[@id="offcanvasNavbar"]/div[2]/ul/li[3]/ul/li[2]/a')
         chargeAccount_button.click()
   
 
@@ -241,7 +241,7 @@ class RequestsTestCase(StaticLiveServerTestCase):
         forms_button = self.browser.find_element(By.CSS_SELECTOR, 'a.nav-link.dropdown-toggle')
         forms_button.click()
 
-        chargeAccount_button = self.browser.find_element(By.XPATH, '//*[@id="offcanvasNavbar"]/div[2]/ul/li[4]/ul/li[4]/a')
+        chargeAccount_button = self.browser.find_element(By.XPATH, '//*[@id="offcanvasNavbar"]/div[2]/ul/li[3]/ul/li[4]/a')
         chargeAccount_button.click()
         
 
@@ -257,7 +257,7 @@ class RequestsTestCase(StaticLiveServerTestCase):
         navigates to the charge account request form, fills in all required fields,
         submits the form, and verifies that a success message is displayed.
         """
-        self.register_user("Administrador", "Test", "administrador@example.com", "Rol object (1)", "Adminpass123")
+        self.register_user("Administrador", "Test", "administrador@example.com", "Administrador", "Adminpass123")
         self.login_as_admin()
         self.navigate_to_charge_account_form()
 
@@ -322,7 +322,7 @@ class RequestsTestCase(StaticLiveServerTestCase):
         submits the form, and verifies that a success message is displayed.
         """
         
-        self.register_user("Administrador", "Test", "administrador@example.com", "Rol Object (1)", "Adminpass123")
+        self.register_user("Administrador", "Test", "administrador@example.com", "Administrador", "Adminpass123")
         self.login_as_admin()
         self.navigate_to_exterior_payment_form()
         
@@ -384,7 +384,7 @@ class RequestsTestCase(StaticLiveServerTestCase):
         submits the form, and verifies that a success message is displayed.
         """
         
-        self.register_user("Administrador", "Test", "administrador@example.com", "Rol Object (1)", "Adminpass123")
+        self.register_user("Administrador", "Test", "administrador@example.com", "Administrador", "Adminpass123")
         self.login_as_admin()
         self.navigate_to_requisition_form()
          # Llenar los campos del formulario
@@ -446,7 +446,7 @@ class RequestsTestCase(StaticLiveServerTestCase):
         submits the form, and verifies that a success message is displayed.
         """
         
-        self.register_user("Administrador", "Test", "administrador@example.com", "Rol object (1)", "Adminpass123")
+        self.register_user("Administrador", "Test", "administrador@example.com", "Administrador", "Adminpass123")
         self.login_as_admin()
 
         # Navegar al formulario de legalización
@@ -536,7 +536,7 @@ class RequestsTestCase(StaticLiveServerTestCase):
         submits the form, and verifies that a success message is displayed.
         """
         
-        self.register_user("Administrador", "Test", "administrador@example.com", "Rol object (1)", "Adminpass123")
+        self.register_user("Administrador", "Test", "administrador@example.com", "Administrador", "Adminpass123")
         self.login_as_admin()
 
         # Navegar al formulario de solicitud de anticipo

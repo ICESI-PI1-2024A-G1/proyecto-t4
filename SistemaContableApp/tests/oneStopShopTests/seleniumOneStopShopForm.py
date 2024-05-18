@@ -181,7 +181,7 @@ class FormTestCase(StaticLiveServerTestCase):
             None
         """
         # Registrar e iniciar sesión con un usuario con el rol de "Ventanilla única"
-        self.register_user("Ventanilla", "Test", "ventanilla@example.com", "Rol Object (4)", "Unicapass123")
+        self.register_user("Ventanilla", "Test", "ventanilla@example.com", "Ventanilla única", "Unicapass123")
         self.login_as_ventanilla()
 
         # Navegar hasta la página del formulario "Agregar a ventanilla única"
